@@ -1,0 +1,6 @@
+{
+  "parent": "artifex:item/handheld_long_base",
+  "textures": {
+    "layer0": "artifex:item/golden_odachi"
+  }
+}

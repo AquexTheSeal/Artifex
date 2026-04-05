@@ -1,0 +1,6 @@
+{
+  "parent": "artifex:item/handheld_long_middle",
+  "textures": {
+    "layer0": "artifex:item/wooden_javelin"
+  }
+}

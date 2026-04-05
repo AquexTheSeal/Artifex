@@ -1,0 +1,6 @@
+{
+  "parent": "artifex:item/bow_long",
+  "textures": {
+    "layer0": "artifex:item/netherite_longbow_pulling_1"
+  }
+}

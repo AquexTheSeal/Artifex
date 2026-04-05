@@ -1,0 +1,6 @@
+{
+  "parent": "artifex:item/crossbow_long",
+  "textures": {
+    "layer0": "artifex:item/golden_arbalest_firework"
+  }
+}

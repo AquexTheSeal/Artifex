@@ -1,0 +1,6 @@
+{
+  "parent": "artifex:item/chakram",
+  "textures": {
+    "layer0": "artifex:item/netherite_chakram"
+  }
+}
