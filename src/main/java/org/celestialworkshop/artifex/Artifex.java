@@ -6,8 +6,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.registry.AFCreativeTabs;
 import org.celestialworkshop.artifex.registry.AFItems;
+import org.celestialworkshop.artifex.registry.AFSoundEvents;
+import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.slf4j.Logger;
 
 @Mod(Artifex.MODID)
@@ -20,8 +23,12 @@ public class Artifex {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
+        AFSpecialties.SPECIALTIES.register(modEventBus);
         AFCreativeTabs.CREATIVE_TABS.register(modEventBus);
         AFItems.ITEMS.register(modEventBus);
+        AFSoundEvents.SOUND_EVENTS.register(modEventBus);
+
+        AFNetwork.register();
     }
 
     public static ResourceLocation prefix(String path) {

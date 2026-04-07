@@ -1,0 +1,20 @@
+{
+  "arbalest_loaded": {
+    "sounds": [
+      "artifex:arbalest_loaded"
+    ],
+    "subtitle": "artifex.subtitle.arbalest_loaded"
+  },
+  "arbalest_shoot": {
+    "sounds": [
+      "artifex:arbalest_shoot"
+    ],
+    "subtitle": "artifex.subtitle.arbalest_shoot"
+  },
+  "arbalest_start": {
+    "sounds": [
+      "artifex:arbalest_start"
+    ],
+    "subtitle": "artifex.subtitle.arbalest_start"
+  }
+}

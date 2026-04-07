@@ -45,7 +45,7 @@ public class AFItemModelProvider extends ItemModelProvider {
     public void basicParentedItem(Item item, String parent) {
         ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
         this.getBuilder(loc.toString()).parent(new ModelFile.UncheckedModelFile(parent))
-                .texture("layer0", new ResourceLocation(loc.getNamespace(), "item/" + loc.getPath()));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "item/" + loc.getPath()));
     }
 
     public void bowItem(Item item, String parentLocation) {
@@ -54,15 +54,15 @@ public class AFItemModelProvider extends ItemModelProvider {
         ModelFile parent = new ModelFile.UncheckedModelFile(parentLocation);
         this.getBuilder(loc.toString())
                 .parent(parent)
-                .texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath))
-                .override().predicate(new ResourceLocation("pulling"), 1).model(getBuilder(itemPath + "_pulling_0")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_pulling_0")))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath))
+                .override().predicate(ResourceLocation.parse("pulling"), 1).model(getBuilder(itemPath + "_pulling_0")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_pulling_0")))
                 .end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.65F).model(getBuilder(itemPath + "_pulling_1")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_pulling_1")))
+                .override().predicate(ResourceLocation.parse("pulling"), 1).predicate(ResourceLocation.parse("pull"), 0.65F).model(getBuilder(itemPath + "_pulling_1")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_pulling_1")))
                 .end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.9F).model(getBuilder(itemPath + "_pulling_2")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_pulling_2")))
+                .override().predicate(ResourceLocation.parse("pulling"), 1).predicate(ResourceLocation.parse("pull"), 1.0F).model(getBuilder(itemPath + "_pulling_2")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_pulling_2")))
                 .end();
     }
 
@@ -72,21 +72,21 @@ public class AFItemModelProvider extends ItemModelProvider {
         ModelFile parent = new ModelFile.UncheckedModelFile(parentLocation);
         this.getBuilder(loc.toString())
                 .parent(parent)
-                .texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_standby"))
-                .override().predicate(new ResourceLocation("pulling"), 1).model(getBuilder(itemPath + "_pulling_0")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_pulling_0")))
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_standby"))
+                .override().predicate(ResourceLocation.parse("pulling"), 1).model(getBuilder(itemPath + "_pulling_0")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_pulling_0")))
                 .end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 0.58f).model(getBuilder(itemPath + "_pulling_1")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_pulling_1")))
+                .override().predicate(ResourceLocation.parse("pulling"), 1).predicate(ResourceLocation.parse("pull"), 0.58f).model(getBuilder(itemPath + "_pulling_1")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_pulling_1")))
                 .end()
-                .override().predicate(new ResourceLocation("pulling"), 1).predicate(new ResourceLocation("pull"), 1.0f).model(getBuilder(itemPath + "_pulling_2")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_pulling_2")))
+                .override().predicate(ResourceLocation.parse("pulling"), 1).predicate(ResourceLocation.parse("pull"), 1.0f).model(getBuilder(itemPath + "_pulling_2")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_pulling_2")))
                 .end()
-                .override().predicate(new ResourceLocation("charged"), 1).model(getBuilder(itemPath + "_arrow")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_arrow")))
+                .override().predicate(ResourceLocation.parse("charged"), 1).model(getBuilder(itemPath + "_arrow")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_arrow")))
                 .end()
-                .override().predicate(new ResourceLocation("charged"), 1).predicate(new ResourceLocation("firework"), 1).model(getBuilder(itemPath + "_firework")
-                        .parent(parent).texture("layer0", new ResourceLocation(loc.getNamespace(), itemPath + "_firework")))
+                .override().predicate(ResourceLocation.parse("charged"), 1).predicate(ResourceLocation.parse("firework"), 1).model(getBuilder(itemPath + "_firework")
+                        .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_firework")))
                 .end();
     }
 }

@@ -1,6 +1,0 @@
-{
-  "parent": "artifex:item/crossbow_long",
-  "textures": {
-    "layer0": "artifex:item/wooden_arbalest_pulling_1"
-  }
-}

@@ -14,7 +14,6 @@ import java.util.List;
 public class AFItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Artifex.MODID);
-    // Datagen purposes
     public static final List<AFMaterial> MATERIALS = new ObjectArrayList<>();
 
     public static final AFMaterial WOODEN_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "wooden").tier(Tiers.WOOD)

@@ -17,7 +17,7 @@
     {
       "model": "artifex:item/iron_bow_pulling_2",
       "predicate": {
-        "minecraft:pull": 0.9,
+        "minecraft:pull": 1.0,
         "minecraft:pulling": 1.0
       }
     }

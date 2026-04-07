@@ -1,6 +1,0 @@
-{
-  "parent": "artifex:item/chakram",
-  "textures": {
-    "layer0": "artifex:item/golden_chakram"
-  }
-}

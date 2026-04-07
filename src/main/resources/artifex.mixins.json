@@ -5,8 +5,15 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "artifex.refmap.json",
   "mixins": [
+    "BowItemMixin",
+    "CrossbowItemMixin",
+    "LivingSwapItemsEventMixin",
+    "PlayerMixin",
+    "ProjectileWeaponItemMixin"
   ],
   "client": [
+    "ItemInHandRendererMixin",
+    "LocalPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

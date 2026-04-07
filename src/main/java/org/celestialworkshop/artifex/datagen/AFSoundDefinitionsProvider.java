@@ -7,6 +7,7 @@ import net.minecraftforge.common.data.SoundDefinition;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 import net.minecraftforge.registries.RegistryObject;
 import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.registry.AFSoundEvents;
 
 public class AFSoundDefinitionsProvider extends SoundDefinitionsProvider {
 
@@ -16,6 +17,23 @@ public class AFSoundDefinitionsProvider extends SoundDefinitionsProvider {
 
     @Override
     public void registerSounds() {
+        for (AFSoundEvents.AutoGenSound sound : AFSoundEvents.AUTO_GEN_SOUNDS) {
+            if (sound.variants() > 1) {
+                this.variantSound(sound.sound(), sound.variants());
+            } else {
+                if (sound.stream()) {
+                    this.music(sound.sound());
+                } else {
+                    this.basicSound(sound.sound());
+                }
+            }
+        }
+    }
+
+    private void music(RegistryObject<SoundEvent> sound) {
+        this.add(sound.get(), subtitledSound(sound.getId().getPath())
+                .with(sound(Artifex.prefix(sound.getId().getPath())).stream())
+        );
     }
 
     private void basicSound(RegistryObject<SoundEvent> sound) {
