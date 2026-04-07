@@ -1,5 +1,6 @@
 package org.celestialworkshop.artifex.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -23,9 +23,6 @@ import java.util.Optional;
 
 @Mixin(CrossbowItem.class)
 public abstract class CrossbowItemMixin extends ProjectileWeaponItem {
-
-    @Shadow
-    protected abstract SoundEvent getStartSound(int pEnchantmentLevel);
 
     public CrossbowItemMixin(Properties p_43009_) {
         super(p_43009_);
@@ -58,6 +55,17 @@ public abstract class CrossbowItemMixin extends ProjectileWeaponItem {
             }
         }
         return flag;
+    }
+
+    @ModifyExpressionValue(
+            method = "onUseTick",
+            at = @At(value = "CONSTANT", args = "floatValue=0.2F")
+    )
+    private float changeLoadingThreshold(float original, @Local(argsOnly = true) ItemStack crossbowStack) {
+        if (crossbowStack.getItem() instanceof AFCrossbowItem ext && ext.playChargeSoundEarlier()) {
+            return original / 3.0F;
+        }
+        return original;
     }
 
     @WrapOperation(

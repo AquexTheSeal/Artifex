@@ -3,16 +3,23 @@ package org.celestialworkshop.artifex;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
+import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
+import org.celestialworkshop.artifex.client.renderer.AFThrowableProjectileRenderer;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
 import org.celestialworkshop.artifex.item.base.AFBowItem;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
+import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
+import org.celestialworkshop.artifex.registry.AFEntities;
 
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class AFClientSetup {
@@ -47,8 +54,21 @@ public class AFClientSetup {
     }
 
     @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(AFEntities.THROWABLE_PROJECTILE.get(), AFThrowableProjectileRenderer::new);
+    }
+
+    @SubscribeEvent
     public static void registerTooltipComponents(RegisterClientTooltipComponentFactoriesEvent event) {
         event.register(SpecialtyTooltip.class, component -> component);
     }
 
+    @SubscribeEvent
+    public static void registerItemDecorations(RegisterItemDecorationsEvent event) {
+        for (Item obj : ForgeRegistries.ITEMS.getValues()) {
+            if (obj instanceof AFThrowableTieredItem) {
+                event.register(obj, new AFAmmoDecoration());
+            }
+        }
+    }
 }

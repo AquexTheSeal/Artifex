@@ -20,7 +20,8 @@ public class AFNetwork {
         int id = 0;
 
         // S2C
-        INSTANCE.registerMessage(id++, AFEntityActionPacket.class, AFEntityActionPacket::encode, AFEntityActionPacket::decode, AFEntityActionPacket::handle);
+        INSTANCE.registerMessage(id++, S2CEntityActionPacket.class, S2CEntityActionPacket::encode, S2CEntityActionPacket::decode, S2CEntityActionPacket::handle);
+        INSTANCE.registerMessage(id++, S2CSyncAmmoPacket.class, S2CSyncAmmoPacket::encode, S2CSyncAmmoPacket::decode, S2CSyncAmmoPacket::handle);
     }
 
     public static void sendToAll(Object packet) {

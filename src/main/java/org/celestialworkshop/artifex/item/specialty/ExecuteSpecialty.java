@@ -1,9 +1,13 @@
 package org.celestialworkshop.artifex.item.specialty;
 
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.api.AFSpecialty;
+
+import javax.annotation.Nullable;
 
 public class ExecuteSpecialty extends AFSpecialty {
 
@@ -13,25 +17,28 @@ public class ExecuteSpecialty extends AFSpecialty {
 
     @Override
     public void onPostMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, boolean wasCritical, int specialityLevel) {
+        this.triggerExecute(attacker, target, null, specialityLevel);
+    }
+
+    @Override
+    public float onDamageRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, float originalDamage, boolean wasCrit, int specialityLevel) {
+        this.triggerExecute(attacker, target, ammo, specialityLevel);
+        return originalDamage;
+    }
+
+    public void triggerExecute(LivingEntity attacker, LivingEntity target, @Nullable Entity directEntity, int specialityLevel) {
         float targetHpPercent = target.getHealth() / target.getMaxHealth();
         if (targetHpPercent <= this.calculateHpThreshold(specialityLevel)) {
             if (attacker.getRandom().nextFloat() <= this.calculateChance(specialityLevel)) {
-                DamageSource damageSource = attacker.damageSources().genericKill();
+                DamageSource damageSource = attacker.damageSources().indirectMagic(attacker, directEntity);
                 if (target.getMaxHealth() > this.calculateLimitedHp(specialityLevel)) {
                     target.hurt(damageSource, this.calculateDamageLimit(specialityLevel));
                 } else {
-                    if (target.hurt(damageSource, target.getMaxHealth())) {
-                        target.kill();
-                    }
+                    target.hurt(damageSource, Float.MAX_VALUE);
                 }
             }
         }
     }
-
-//    @Override
-//    public float onDamageRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, float originalDamage, boolean wasCrit, int specialityLevel) {
-//        return originalDamage * specialityLevel;
-//    }
 
     @Override
     public Object[] getDisplayDescriptionArgs(int level) {
@@ -48,14 +55,14 @@ public class ExecuteSpecialty extends AFSpecialty {
     }
 
     private float calculateChance(int level) {
-        return Math.min(1.0f, 0.5f + (level * 0.1f));
+        return Math.min(1.0f, 0.4f + (level * 0.1f));
     }
 
     private float calculateDamageLimit(int level) {
-        return 10f + (level * 5f);
+        return 5f + (level * 5f);
     }
 
     private float calculateLimitedHp(int level) {
-        return 100f + (level * 10f);
+        return 90f + (level * 10f);
     }
 }

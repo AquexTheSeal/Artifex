@@ -11,23 +11,23 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public record AFEntityActionPacket(int id, Action action, Map<String, Float> parameters) {
+public record S2CEntityActionPacket(int id, Action action, Map<String, Float> parameters) {
 
-    public static void encode(AFEntityActionPacket packet, FriendlyByteBuf buffer) {
+    public static void encode(S2CEntityActionPacket packet, FriendlyByteBuf buffer) {
         buffer.writeInt(packet.id);
         buffer.writeEnum(packet.action);
         packet.action.getEncoder().accept(packet, buffer);
     }
 
-    public static AFEntityActionPacket decode(FriendlyByteBuf buffer) {
+    public static S2CEntityActionPacket decode(FriendlyByteBuf buffer) {
         int id = buffer.readInt();
         Action action = buffer.readEnum(Action.class);
         Map<String, Float> params = new Object2FloatArrayMap<>();
         action.getDecoder().accept(params, buffer);
-        return new AFEntityActionPacket(id, action, params);
+        return new S2CEntityActionPacket(id, action, params);
     }
 
-    public static void handle(AFEntityActionPacket packet, Supplier<NetworkEvent.Context> context) {
+    public static void handle(S2CEntityActionPacket packet, Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             ClientLevel level = Minecraft.getInstance().level;
             Map<String, Float> parameters = packet.parameters();
@@ -60,15 +60,15 @@ public record AFEntityActionPacket(int id, Action action, Map<String, Float> par
             params.put("DeltaZ", buffer.readFloat());
         });
 
-        public final BiConsumer<AFEntityActionPacket, FriendlyByteBuf> encoder;
+        public final BiConsumer<S2CEntityActionPacket, FriendlyByteBuf> encoder;
         public final BiConsumer<Map<String, Float>, FriendlyByteBuf> decoder;
 
-        Action(BiConsumer<AFEntityActionPacket, FriendlyByteBuf> encoder, BiConsumer<Map<String, Float>, FriendlyByteBuf> decoder) {
+        Action(BiConsumer<S2CEntityActionPacket, FriendlyByteBuf> encoder, BiConsumer<Map<String, Float>, FriendlyByteBuf> decoder) {
             this.encoder = encoder;
             this.decoder = decoder;
         }
 
-        public BiConsumer<AFEntityActionPacket, FriendlyByteBuf> getEncoder() {
+        public BiConsumer<S2CEntityActionPacket, FriendlyByteBuf> getEncoder() {
             return encoder;
         }
 

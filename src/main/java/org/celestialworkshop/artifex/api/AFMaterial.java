@@ -1,5 +1,6 @@
 package org.celestialworkshop.artifex.api;
 
+import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.Item;
@@ -17,6 +18,8 @@ import java.util.List;
 public class AFMaterial {
 
     private static final ObjectArrayList<AFMaterial> ALL_MATERIALS = new ObjectArrayList<>();
+    private static final Reference2ObjectOpenHashMap<Item, AFWeaponType> ITEM_TO_WEAPON_TYPE = new Reference2ObjectOpenHashMap<>();
+
     private final Object2ObjectOpenHashMap<AFWeaponType, RegistryObject<Item>> registeredWeaponsMap = new Object2ObjectOpenHashMap<>();
 
     public final Tier itemTier;
@@ -38,7 +41,11 @@ public class AFMaterial {
                 continue;
             }
 
-            RegistryObject<Item> result = builder.itemRegister.register(itemId, () -> weaponType.getMaker().create(this));
+            RegistryObject<Item> result = builder.itemRegister.register(itemId, () -> {
+                Item item = weaponType.getMaker().create(this);
+                ITEM_TO_WEAPON_TYPE.put(item, weaponType);
+                return item;
+            });
             registeredWeaponsMap.put(weaponType, result);
 
         }
@@ -55,16 +62,11 @@ public class AFMaterial {
     }
 
     public static boolean isWeaponType(Item item, AFWeaponType weaponType) {
-        if (item == null || weaponType == null) {
-            return false;
-        }
-        for (AFMaterial material : ALL_MATERIALS) {
-            Item weaponItem = material.getWeapon(weaponType);
-            if (weaponItem != null && weaponItem == item) {
-                return true;
-            }
-        }
-        return false;
+        return getWeaponType(item) == weaponType;
+    }
+
+    public static @Nullable AFWeaponType getWeaponType(Item item) {
+        return item != null ? ITEM_TO_WEAPON_TYPE.get(item) : null;
     }
 
     public Tier getItemTier() {

@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.item.base.ArtifexItemProperties;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
-import java.awt.*;
 import java.text.DecimalFormat;
 
 public class AFSpecialty {
@@ -25,7 +24,7 @@ public class AFSpecialty {
         return category;
     }
 
-    public float onDamageMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, float originalDamage, boolean isCritical, int specialityLevel) {
+    public float onDamageMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, float originalDamage, boolean wasCrit, int specialityLevel) {
         return originalDamage;
     }
 
@@ -40,6 +39,9 @@ public class AFSpecialty {
         return originalDamage;
     }
 
+//    public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
+//    }
+
     public static boolean hasSpecialty(Item item, AFSpecialty specialty) {
         return item instanceof ArtifexItemProperties artifexItem && artifexItem.getSpecialties().containsKey(specialty);
     }
@@ -49,7 +51,7 @@ public class AFSpecialty {
     }
 
     public MutableComponent getDisplayName(int level) {
-        Component levelComponent = Component.translatable("enchantment.level." + (level + 1));
+        Component levelComponent = Component.translatable("enchantment.level." + level);
         Component translatedComponent = Component.translatable(this.getDisplayNameKey());
         return Component.literal(translatedComponent.getString() + " " + levelComponent.getString());
     }

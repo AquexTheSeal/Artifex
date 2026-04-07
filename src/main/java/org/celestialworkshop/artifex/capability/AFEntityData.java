@@ -19,10 +19,12 @@ public class AFEntityData implements INBTSerializable<CompoundTag> {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
+        tag.put("BoundItem", boundItemStack.save(new CompoundTag()));
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
+        boundItemStack = ItemStack.of(nbt.getCompound("BoundItem"));
     }
 }

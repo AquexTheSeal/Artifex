@@ -2,26 +2,27 @@ package org.celestialworkshop.artifex.capability;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.Entity;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.CapabilityToken;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AFEntityDataCapability {
-    public static final Capability<AFEntityData> INSTANCE = CapabilityManager.get(new CapabilityToken<>(){});
+public class AFAmmoDataCapability {
+    public static final Capability<AFAmmoData> INSTANCE = CapabilityManager.get(new CapabilityToken<>() {});
 
-    public static LazyOptional<AFEntityData> get(Entity entity) {
-        return entity.getCapability(INSTANCE);
+    public static LazyOptional<AFAmmoData> get(ItemStack stack) {
+        return stack.getCapability(INSTANCE);
     }
 
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        private final AFEntityData handler = new AFEntityData();
-        private final LazyOptional<AFEntityData> lazyHandler = LazyOptional.of(() -> handler);
+        private final AFAmmoData handler;
+        private final LazyOptional<AFAmmoData> lazyHandler;
+
+        public Provider(ItemStack stack, int maxAmmo) {
+            this.handler = new AFAmmoData(stack, maxAmmo);
+            this.lazyHandler = LazyOptional.of(() -> handler);
+        }
 
         @NotNull
         @Override
@@ -45,6 +46,6 @@ public class AFEntityDataCapability {
     }
 
     public static void register(RegisterCapabilitiesEvent event) {
-        event.register(AFEntityData.class);
+        event.register(AFAmmoData.class);
     }
 }

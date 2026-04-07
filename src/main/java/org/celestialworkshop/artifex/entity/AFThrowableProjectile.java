@@ -1,0 +1,181 @@
+package org.celestialworkshop.artifex.entity;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
+import org.celestialworkshop.artifex.network.AFNetwork;
+import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.registry.AFEntities;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class AFThrowableProjectile extends AbstractArrow {
+
+    public static final EntityDataAccessor<ItemStack> HELD_STACK = SynchedEntityData.defineId(AFThrowableProjectile.class, EntityDataSerializers.ITEM_STACK);
+    public @Nullable SoundEvent hitSound;
+
+    public AFThrowableProjectile(EntityType<? extends AFThrowableProjectile> entityType, Level level) {
+        super(entityType, level);
+    }
+
+    public AFThrowableProjectile(Level level, LivingEntity shooter) {
+        super(AFEntities.THROWABLE_PROJECTILE.get(), shooter, level);
+    }
+
+    public AFThrowableProjectile(Level level, double x, double y, double z) {
+        super(AFEntities.THROWABLE_PROJECTILE.get(), x, y, z, level);
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult pResult) {
+        Entity entity = pResult.getEntity();
+        Entity owner = this.getOwner();
+        DamageSource damagesource;
+        if (owner == null) {
+            damagesource = this.damageSources().arrow(this, this);
+        } else {
+            damagesource = this.damageSources().arrow(this, owner);
+            if (owner instanceof LivingEntity le) {
+                le.setLastHurtMob(owner);
+            }
+        }
+
+        if (entity.hurt(damagesource, (float)this.getBaseDamage())) {
+            if (entity instanceof LivingEntity le) {
+                if (!this.level().isClientSide && owner instanceof LivingEntity leOwner) {
+                    EnchantmentHelper.doPostHurtEffects(le, leOwner);
+                    EnchantmentHelper.doPostDamageEffects(leOwner, le);
+                }
+
+                this.doPostHurtEffects(le);
+
+                this.playSound(this.getHitSound(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+            }
+        } else {
+            if (!this.level().isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
+                if (this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                    this.spawnAtLocation(this.getPickupItem(), 0.1F);
+                }
+                this.discard();
+            }
+        }
+    }
+
+    public SoundEvent getHitSound() {
+        if (this.hitSound != null) {
+            return this.hitSound;
+        }
+        return SoundEvents.ARROW_HIT;
+    }
+
+    public void setHitSound(@Nullable SoundEvent hitSound) {
+        this.hitSound = hitSound;
+    }
+
+    @Override
+    protected boolean tryPickup(Player pPlayer) {
+        if (this.pickup != Pickup.ALLOWED) {
+            return super.tryPickup(pPlayer);
+        }
+        ItemStack pickupItem = this.getPickupItem();
+        Inventory inventory = pPlayer.getInventory();
+
+        List<Integer> slots = new ArrayList<>();
+        slots.add(Inventory.SLOT_OFFHAND);
+        slots.add(inventory.selected);
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            if (i != Inventory.SLOT_OFFHAND && i != inventory.selected) {
+                slots.add(i);
+            }
+        }
+
+        for (int i : slots) {
+            ItemStack stack = inventory.getItem(i);
+            if (matchesExceptAmmo(pickupItem, stack)) {
+                boolean success = AFAmmoDataCapability.get(stack).map(cap -> {
+                    if (!cap.isFull()) {
+                        cap.add(1);
+                        if (pPlayer instanceof ServerPlayer serverPlayer) {
+                            AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(i, cap.getAmmo()));
+                        }
+                        return true;
+                    }
+                    return false;
+                }).orElse(false);
+
+                if (success) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean matchesExceptAmmo(ItemStack projectile, ItemStack inventory) {
+        if (!projectile.is(inventory.getItem())) return false;
+
+        CompoundTag tag1 = projectile.getTag();
+        CompoundTag tag2 = inventory.getTag();
+
+        if (tag1 == null && tag2 == null) return true;
+        if (tag1 == null || tag2 == null) return false;
+
+        CompoundTag stripped1 = tag1.copy();
+        CompoundTag stripped2 = tag2.copy();
+
+        stripped1.remove("Damage");
+        stripped2.remove("Damage");
+
+        return stripped1.equals(stripped2);
+    }
+
+    @Override
+    protected @NotNull ItemStack getPickupItem() {
+        return this.getHeldStack();
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(HELD_STACK, ItemStack.EMPTY);
+    }
+
+    public ItemStack getHeldStack() {
+        return this.entityData.get(HELD_STACK);
+    }
+
+    public void setHeldStack(ItemStack heldStack) {
+        this.entityData.set(HELD_STACK, heldStack);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag pCompound) {
+        super.addAdditionalSaveData(pCompound);
+        pCompound.put("HeldItem", this.getHeldStack().save(new CompoundTag()));
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.setHeldStack(ItemStack.of(pCompound.getCompound("HeldItem")));
+    }
+}

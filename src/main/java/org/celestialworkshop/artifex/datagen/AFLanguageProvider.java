@@ -21,6 +21,8 @@ public class AFLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
 
+        this.add("item_group.artifex.artifex", "Artifex");
+
         this.add("tooltip.artifex.specialty", "Weapon Class Specialties");
 
         this.addSpecialty(AFSpecialties.EXECUTE.get(), "Execute", "Targets with %s health have a %s chance to be instantly killed (Only %s damage is dealt if the target’s maximum health exceeds %s).");

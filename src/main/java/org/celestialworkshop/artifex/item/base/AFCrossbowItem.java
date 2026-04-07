@@ -9,7 +9,7 @@ import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
-import org.celestialworkshop.artifex.network.AFEntityActionPacket;
+import org.celestialworkshop.artifex.network.S2CEntityActionPacket;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
@@ -66,9 +66,13 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
 
     public float getChargingSpeedReductionScale(ItemStack crossbowStack) {
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
-            return 3.0F;
+            return 3.0F - (this.getMaterial().getItemTier().getSpeed() * 0.08F);
         }
-        return 1.0F;
+        return 1.2F - (this.getMaterial().getItemTier().getSpeed() * 0.05F);
+    }
+
+    public boolean playChargeSoundEarlier() {
+        return AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST);
     }
 
     public void modifyArrowProperties(ItemStack crossbowStack, AbstractArrow arrow) {
@@ -85,7 +89,7 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
             params.put("DeltaX", (float) arrow.getDeltaMovement().x());
             params.put("DeltaY", (float) arrow.getDeltaMovement().y());
             params.put("DeltaZ", (float) arrow.getDeltaMovement().z());
-            AFNetwork.sendToTrackingEntity(arrow, new AFEntityActionPacket(arrow.getId(), AFEntityActionPacket.Action.FORCE_SYNC_DELTA, params));
+            AFNetwork.sendToTrackingEntity(arrow, new S2CEntityActionPacket(arrow.getId(), S2CEntityActionPacket.Action.FORCE_SYNC_DELTA, params));
         }
     }
 
