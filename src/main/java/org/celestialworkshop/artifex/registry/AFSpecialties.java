@@ -25,8 +25,6 @@ public class AFSpecialties {
     public static final RegistryObject<AFSpecialty> ARMOR_PIERCER = SPECIALTIES.register("armor_piercer", () -> new AFSpecialty(AFSpecialty.Category.BENEFICIAL));
     public static final RegistryObject<AFSpecialty> SHOCKWAVE = SPECIALTIES.register("shockwave", () -> new AFSpecialty(AFSpecialty.Category.BENEFICIAL));
 
-    public static final RegistryObject<AFSpecialty> THROWABLE = SPECIALTIES.register("throwable", () -> new AFSpecialty(AFSpecialty.Category.NEUTRAL));
-
     public static final RegistryObject<AFSpecialty> TWO_HANDED = SPECIALTIES.register("two_handed", () -> new AFSpecialty(AFSpecialty.Category.HARMFUL));
 
 }

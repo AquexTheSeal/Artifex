@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
@@ -78,6 +79,22 @@ public class AFThrowableProjectile extends AbstractArrow {
                 this.discard();
             }
         }
+
+        if (owner != null && !this.level().isClientSide) {
+            this.shootFromRotation(this, -15, -this.getYRot() + 180, 0.0F, 0.2F, 0.5F);
+            this.hasImpulse = true;
+        } else if (owner == null) {
+            this.setDeltaMovement(this.getDeltaMovement().scale(-0.1D));
+        }
+    }
+
+    @Override
+    protected @Nullable EntityHitResult findHitEntity(Vec3 pStartVec, Vec3 pEndVec) {
+        EntityHitResult result = super.findHitEntity(pStartVec, pEndVec);
+        if (result != null) {
+            return result.getEntity() == this.getOwner() ? null : result;
+        }
+        return null;
     }
 
     public SoundEvent getHitSound() {

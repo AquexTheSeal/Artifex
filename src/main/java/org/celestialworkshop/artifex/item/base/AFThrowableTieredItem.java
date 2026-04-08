@@ -120,7 +120,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
         if (type != null) {
             switch (type) {
                 case SPEAR, JAVELIN: {
-                    return -0.3F;
+                    return -0.35F;
                 }
             }
         }

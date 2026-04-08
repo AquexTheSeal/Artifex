@@ -32,8 +32,6 @@ public class AFLanguageProvider extends LanguageProvider {
         this.addSpecialty(AFSpecialties.ARMOR_PIERCER.get(), "Armor Piercer", "Deals bonus damage based on the target's protection, scaled at a %s:%s ratio of armor to power.");
         this.addSpecialty(AFSpecialties.SHOCKWAVE.get(), "Shockwave", "Critical hits create a shockwave that knocks nearby targets up that deals %s damage.");
 
-        this.addSpecialty(AFSpecialties.THROWABLE.get(), "Throwable", "This weapon can be thrown as a projectile.");
-
         this.addSpecialty(AFSpecialties.TWO_HANDED.get(), "Two-Handed", "Hides your off-hand when held; cannot be equipped in the off-hand slot.");
 
         for (RegistryObject<Item> item : AFItems.ITEMS.getEntries()) {

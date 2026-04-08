@@ -1,6 +1,5 @@
 package org.celestialworkshop.artifex.item.base;
 
-import it.unimi.dsi.fastutil.objects.Object2FloatArrayMap;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.CrossbowItem;
@@ -9,8 +8,6 @@ import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
-import org.celestialworkshop.artifex.network.S2CEntityActionPacket;
-import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 import org.jetbrains.annotations.Nullable;
@@ -83,13 +80,13 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
 
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(2.0F));
-
-            // Force sync delta movement because high velocities de-sync.
-            Object2FloatArrayMap<String> params = new Object2FloatArrayMap<>();
-            params.put("DeltaX", (float) arrow.getDeltaMovement().x());
-            params.put("DeltaY", (float) arrow.getDeltaMovement().y());
-            params.put("DeltaZ", (float) arrow.getDeltaMovement().z());
-            AFNetwork.sendToTrackingEntity(arrow, new S2CEntityActionPacket(arrow.getId(), S2CEntityActionPacket.Action.FORCE_SYNC_DELTA, params));
+            arrow.hasImpulse = true;
+//            // Force sync delta movement because high velocities de-sync.
+//            Object2FloatArrayMap<String> params = new Object2FloatArrayMap<>();
+//            params.put("DeltaX", (float) arrow.getDeltaMovement().x());
+//            params.put("DeltaY", (float) arrow.getDeltaMovement().y());
+//            params.put("DeltaZ", (float) arrow.getDeltaMovement().z());
+//            AFNetwork.sendToTrackingEntity(arrow, new S2CEntityActionPacket(arrow.getId(), S2CEntityActionPacket.Action.FORCE_SYNC_DELTA, params));
         }
     }
 

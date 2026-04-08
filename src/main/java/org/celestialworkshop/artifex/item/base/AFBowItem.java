@@ -56,7 +56,7 @@ public class AFBowItem extends BowItem implements ArtifexItemProperties, AFExten
         });
 
         if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
-            original.setDeltaMovement(original.getDeltaMovement().scale(1.5F));
+            original.setDeltaMovement(original.getDeltaMovement().scale(2.0F));
         }
     }
 }
