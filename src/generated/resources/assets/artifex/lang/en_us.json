@@ -99,6 +99,7 @@
   "item.artifex.wooden_shortsword": "Wooden Shortsword",
   "item.artifex.wooden_sickle": "Wooden Sickle",
   "item.artifex.wooden_spear": "Wooden Spear",
+  "item_group.artifex.artifex": "Artifex",
   "material_specialty.artifex.armor_piercer": "Armor Piercer",
   "material_specialty.artifex.armor_piercer_description": "Deals bonus damage based on the target's protection, scaled at a %s:%s ratio of armor to power.",
   "material_specialty.artifex.execute": "Execute",
@@ -111,8 +112,6 @@
   "material_specialty.artifex.shockwave_description": "Critical hits create a shockwave that knocks nearby targets up that deals %s damage.",
   "material_specialty.artifex.sweeping": "Sweeping",
   "material_specialty.artifex.sweeping_description": "Sweeping attacks deal extra damage equal to %s of the focused damage.",
-  "material_specialty.artifex.throwable": "Throwable",
-  "material_specialty.artifex.throwable_description": "This weapon can be thrown as a projectile.",
   "material_specialty.artifex.two_handed": "Two-Handed",
   "material_specialty.artifex.two_handed_description": "Hides your off-hand when held; cannot be equipped in the off-hand slot.",
   "tooltip.artifex.specialty": "Weapon Class Specialties"

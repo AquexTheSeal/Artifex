@@ -119,6 +119,12 @@ dependencies {
 
     implementation fg.deobf("curse.maven:blessfulled-1182590:${blessfulled_version}")
 
+    compileOnly fg.deobf("curse.maven:better-combat-by-daedelus-639842:${better_combat_version}")
+    runtimeOnly fg.deobf("curse.maven:cloth-config-348521:${cloth_config_version}")
+    runtimeOnly fg.deobf("curse.maven:playeranimator-658587:${player_animator_version}")
+    runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}")
+    runtimeOnly fg.deobf("curse.maven:selene-499980:${moonlight_version}")
+
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
 }

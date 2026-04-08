@@ -45,7 +45,7 @@ public class AFBowItem extends BowItem implements ArtifexItemProperties, AFExten
 
     public float getDrawSpeedMultiplier() {
         if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
-            return 0.5F;
+            return 0.7F;
         }
         return 1.0F;
     }
@@ -56,7 +56,7 @@ public class AFBowItem extends BowItem implements ArtifexItemProperties, AFExten
         });
 
         if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
-            original.setDeltaMovement(original.getDeltaMovement().scale(2.0F));
+            original.setDeltaMovement(original.getDeltaMovement().scale(1.8F));
         }
     }
 }

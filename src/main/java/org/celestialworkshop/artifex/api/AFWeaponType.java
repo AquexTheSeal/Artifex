@@ -36,7 +36,7 @@ public enum AFWeaponType {
             AFSpecialties.SHOCKWAVE.get(), 1
     ))),
 
-    GREATSWORD("greatsword", mat -> new AFTieredItem(mat, 5.0F, 0.85F, -0.1F, 1.5F, true, () -> Map.of(
+    GREATSWORD("greatsword", mat -> new AFTieredItem(mat, 5.0F, 0.85F, -0.1F, 0.5F, true, () -> Map.of(
             AFSpecialties.TWO_HANDED.get(), 1
     ))),
 
