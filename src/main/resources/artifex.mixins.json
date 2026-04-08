@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "artifex.refmap.json",
   "mixins": [
+    "AbstractArrowMixin",
     "BowItemMixin",
     "CrossbowItemMixin",
     "LivingSwapItemsEventMixin",

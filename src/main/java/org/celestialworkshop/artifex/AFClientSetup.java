@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
-import org.celestialworkshop.artifex.client.renderer.AFThrowableProjectileRenderer;
+import org.celestialworkshop.artifex.client.renderer.ThrownWeaponProjectileRenderer;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
 import org.celestialworkshop.artifex.item.base.AFBowItem;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
@@ -55,7 +55,7 @@ public class AFClientSetup {
 
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(AFEntities.THROWABLE_PROJECTILE.get(), AFThrowableProjectileRenderer::new);
+        event.registerEntityRenderer(AFEntities.THROWABLE_PROJECTILE.get(), ThrownWeaponProjectileRenderer::new);
     }
 
     @SubscribeEvent

@@ -21,9 +21,8 @@ public class ExecuteSpecialty extends AFSpecialty {
     }
 
     @Override
-    public float onDamageRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, float originalDamage, boolean wasCrit, int specialityLevel) {
+    public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
         this.triggerExecute(attacker, target, ammo, specialityLevel);
-        return originalDamage;
     }
 
     public void triggerExecute(LivingEntity attacker, LivingEntity target, @Nullable Entity directEntity, int specialityLevel) {

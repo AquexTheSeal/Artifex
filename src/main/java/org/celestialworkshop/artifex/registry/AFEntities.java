@@ -6,13 +6,13 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.celestialworkshop.artifex.Artifex;
-import org.celestialworkshop.artifex.entity.AFThrowableProjectile;
+import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 
 public class AFEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Artifex.MODID);
 
-    public static final RegistryObject<EntityType<AFThrowableProjectile>> THROWABLE_PROJECTILE = ENTITIES.register("throwable_projectile",
-            () -> EntityType.Builder.<AFThrowableProjectile>of(AFThrowableProjectile::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<ThrownWeaponProjectile>> THROWABLE_PROJECTILE = ENTITIES.register("throwable_projectile",
+            () -> EntityType.Builder.<ThrownWeaponProjectile>of(ThrownWeaponProjectile::new, MobCategory.MISC)
                     .sized(0.75F, 0.75F)
                     .updateInterval(10)
                     .build("throwable_projectile")

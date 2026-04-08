@@ -17,7 +17,7 @@ import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
-import org.celestialworkshop.artifex.entity.AFThrowableProjectile;
+import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
 
@@ -63,7 +63,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
         if (pLivingEntity instanceof Player player) {
             pStack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(player.getUsedItemHand()));
 
-            AFThrowableProjectile projectile = new AFThrowableProjectile(pLevel, player);
+            ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(pLevel, player);
             float maxVelocity = this.getBaseVelocity();
             float calculatedVelocity = Math.min((timeElapsed / 20F) * maxVelocity, maxVelocity);
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, maxVelocity, 1.0F);

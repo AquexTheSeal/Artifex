@@ -63,9 +63,9 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
 
     public float getChargingSpeedReductionScale(ItemStack crossbowStack) {
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
-            return 3.0F - (this.getMaterial().getItemTier().getSpeed() * 0.08F);
+            return 3.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
         }
-        return 1.2F - (this.getMaterial().getItemTier().getSpeed() * 0.05F);
+        return 1.2F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
     }
 
     public boolean playChargeSoundEarlier() {
@@ -81,6 +81,7 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(2.0F));
             arrow.hasImpulse = true;
+
 //            // Force sync delta movement because high velocities de-sync.
 //            Object2FloatArrayMap<String> params = new Object2FloatArrayMap<>();
 //            params.put("DeltaX", (float) arrow.getDeltaMovement().x());

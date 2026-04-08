@@ -39,8 +39,8 @@ public class AFSpecialty {
         return originalDamage;
     }
 
-//    public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
-//    }
+    public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
+    }
 
     public static boolean hasSpecialty(Item item, AFSpecialty specialty) {
         return item instanceof ArtifexItemProperties artifexItem && artifexItem.getSpecialties().containsKey(specialty);

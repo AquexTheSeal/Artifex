@@ -20,6 +20,7 @@ public enum AFWeaponType {
     ))),
 
     DAGGER("dagger", mat -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.15F, -0.25F, false, 3, 4.0F, () -> Map.of(
+            AFSpecialties.EXECUTE.get(), 20
     ))),
 
     SICKLE("sickle", mat -> new AFTieredItem(mat, 2.0F, 1.8F, 0.1F, 0.0F, true, () -> Map.of(
@@ -49,10 +50,11 @@ public enum AFWeaponType {
     ))),
 
     BOW("bow", mat -> new AFBowItem(mat, () -> Map.of(
+            AFSpecialties.EXECUTE.get(), 20
     ))),
 
     CROSSBOW("crossbow", mat -> new AFCrossbowItem(mat, () -> Map.of(
-
+            AFSpecialties.EXECUTE.get(), 20
     ))),
 
     JAVELIN("javelin", mat -> new AFThrowableTieredItem(mat, 3.0F, 1.2F, 0.0F, 0.75F, false, 4.5F, 3.0F, () -> Map.of(

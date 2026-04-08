@@ -10,17 +10,17 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
-import org.celestialworkshop.artifex.entity.AFThrowableProjectile;
+import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 
-public class AFThrowableProjectileRenderer extends EntityRenderer<AFThrowableProjectile> {
+public class ThrownWeaponProjectileRenderer extends EntityRenderer<ThrownWeaponProjectile> {
 
-    public AFThrowableProjectileRenderer(EntityRendererProvider.Context context) {
+    public ThrownWeaponProjectileRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public void render(AFThrowableProjectile pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
+    public void render(ThrownWeaponProjectile pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight) {
         if (pEntity.getHeldStack().getItem() instanceof AFThrowableTieredItem throwableItem) {
             pPoseStack.pushPose();
             pPoseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(pPartialTicks, pEntity.yRotO, pEntity.getYRot()) - 90.0F));
@@ -39,7 +39,7 @@ public class AFThrowableProjectileRenderer extends EntityRenderer<AFThrowablePro
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AFThrowableProjectile pEntity) {
+    public ResourceLocation getTextureLocation(ThrownWeaponProjectile pEntity) {
         return null;
     }
 }

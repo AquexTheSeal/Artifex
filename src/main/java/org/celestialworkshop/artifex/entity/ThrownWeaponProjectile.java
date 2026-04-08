@@ -19,7 +19,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
+import org.celestialworkshop.artifex.item.base.ArtifexItemProperties;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEntities;
@@ -28,21 +30,22 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class AFThrowableProjectile extends AbstractArrow {
+public class ThrownWeaponProjectile extends AbstractArrow {
 
-    public static final EntityDataAccessor<ItemStack> HELD_STACK = SynchedEntityData.defineId(AFThrowableProjectile.class, EntityDataSerializers.ITEM_STACK);
+    public static final EntityDataAccessor<ItemStack> HELD_STACK = SynchedEntityData.defineId(ThrownWeaponProjectile.class, EntityDataSerializers.ITEM_STACK);
     public @Nullable SoundEvent hitSound;
 
-    public AFThrowableProjectile(EntityType<? extends AFThrowableProjectile> entityType, Level level) {
+    public ThrownWeaponProjectile(EntityType<? extends ThrownWeaponProjectile> entityType, Level level) {
         super(entityType, level);
     }
 
-    public AFThrowableProjectile(Level level, LivingEntity shooter) {
+    public ThrownWeaponProjectile(Level level, LivingEntity shooter) {
         super(AFEntities.THROWABLE_PROJECTILE.get(), shooter, level);
     }
 
-    public AFThrowableProjectile(Level level, double x, double y, double z) {
+    public ThrownWeaponProjectile(Level level, double x, double y, double z) {
         super(AFEntities.THROWABLE_PROJECTILE.get(), x, y, z, level);
     }
 
@@ -60,7 +63,14 @@ public class AFThrowableProjectile extends AbstractArrow {
             }
         }
 
-        if (entity.hurt(damagesource, (float)this.getBaseDamage())) {
+        float damage = (float) this.getBaseDamage();
+        if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof ArtifexItemProperties materialItem) {
+            for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+                damage = entry.getKey().onDamageRanged(leOwner, leTarget, this.getHeldStack(), this, damage, this.isCritArrow(), entry.getValue());
+            }
+        }
+
+        if (entity.hurt(damagesource, damage)) {
             if (entity instanceof LivingEntity le) {
                 if (!this.level().isClientSide && owner instanceof LivingEntity leOwner) {
                     EnchantmentHelper.doPostHurtEffects(le, leOwner);
@@ -68,6 +78,12 @@ public class AFThrowableProjectile extends AbstractArrow {
                 }
 
                 this.doPostHurtEffects(le);
+
+                if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof ArtifexItemProperties materialItem) {
+                    for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+                        entry.getKey().onPostRanged(leOwner, leTarget, this.getHeldStack(), this, this.isCritArrow(), entry.getValue());
+                    }
+                }
 
                 this.playSound(this.getHitSound(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
             }
