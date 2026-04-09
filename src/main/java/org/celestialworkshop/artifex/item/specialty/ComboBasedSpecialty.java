@@ -16,7 +16,7 @@ public class ComboBasedSpecialty extends AFSpecialty {
     }
 
     public static void manageComboStack(LivingEntity attacker, ItemStack itemStack) {
-        if (attacker instanceof ServerPlayer serverPlayer) {
+        if (attacker instanceof ServerPlayer serverPlayer && serverPlayer.getAttackStrengthScale(0) > 0.9F) {
             AFEntityData entityData = AFEntityDataCapability.get(attacker).resolve().get();
             entityData.incrementComboCount(itemStack);
             AFNetwork.sendToPlayer(serverPlayer, new S2CSyncComboStatePacket(itemStack, entityData.comboCount, entityData.comboTimer));

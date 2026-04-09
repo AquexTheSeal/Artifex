@@ -17,16 +17,16 @@ public class ComboOverlay {
                 if (cap.comboCount > 0) {
 
                     int barLen = 48;
-                    int barScale = Math.max(0, Mth.floor(barLen * ((cap.comboTimer - instance.getPartialTick()) / cap.getMaxComboTime())));
+                    int barScale = Math.max(0, Mth.floor(barLen * ((cap.comboTimer - partialTick) / cap.getMaxComboTime())));
                     int barX = (screenWidth / 2) - (barLen / 2);
                     int barY = (screenHeight / 2) - 12;
-                    guiGraphics.fill(barX, barY, barX + barLen, barY + 2, 0xFF000000);
-                    guiGraphics.fill(barX, barY, barX + barScale, barY + 2, 0xFFff0000);
+
+                    guiGraphics.fill(barX, barY, barX + barScale, barY + 2, 0xAAFFFFFF);
 
                     guiGraphics.renderItem(cap.comboItemStack, barX, barY - 16);
 
                     String display = "" + cap.comboCount;
-                    guiGraphics.drawString(gui.getFont(), display, barX + 16, barY - 8, 0xFFff0000);
+                    guiGraphics.drawString(gui.getFont(), display, barX + 16, barY - 8, 0xAAFFFFFF);
                 }
             });
         }

@@ -1,10 +1,7 @@
 package org.celestialworkshop.artifex.api;
 
 import net.minecraft.world.item.Item;
-import org.celestialworkshop.artifex.item.base.AFBowItem;
-import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
-import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
-import org.celestialworkshop.artifex.item.base.AFTieredItem;
+import org.celestialworkshop.artifex.item.base.*;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
 import java.util.Map;
@@ -80,6 +77,16 @@ public enum AFWeaponType {
     ODACHI("odachi", mat -> new AFTieredItem(mat, 3.0F, 1.5F, 0.0F, 0.50F, true, () -> Map.of(
             AFSpecialties.SWEEPING.get(), 2,
             AFSpecialties.TWO_HANDED.get(), 1
+    ))),
+
+    BUCKLER("buckler", mat -> new AFShieldItem(mat, () -> Map.of(
+    ))),
+
+    SHIELD("shield", mat -> new AFShieldItem(mat, () -> Map.of(
+    ))),
+
+    WAR_DOOR("war_door", mat -> new AFShieldItem(mat, () -> Map.of(
+
     )));
 
     private final String name;

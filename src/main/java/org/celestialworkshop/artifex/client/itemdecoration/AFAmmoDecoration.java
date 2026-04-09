@@ -14,11 +14,13 @@ public class AFAmmoDecoration implements IItemDecorator {
             if (!cap.isFull(stack)) {
                 int barWidth = (int) (13.0F * (float) cap.getAmmo() / (float) cap.getMaxAmmo(stack));
 
-                int barY = yOffset + 14;
+                int barY = yOffset + 1;
                 int barX = xOffset + 2;
 
                 guiGraphics.pose().pushPose();
                 guiGraphics.pose().translate(0, 0, 200);
+
+                guiGraphics.fill(barX, barY, barX + 13, barY + 2, 0xFF000000);
 
                 guiGraphics.fill(barX, barY, barX + 13, barY + 1, cap.isEmpty() ? 0xFFff0000 : 0xFF000000);
                 guiGraphics.fill(barX, barY, barX + barWidth, barY + 1, 0xFF4FC3F7);

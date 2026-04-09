@@ -72,6 +72,7 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         }
 
         if (entity.hurt(damagesource, damage)) {
+            entity.invulnerableTime = 0;
             if (entity instanceof LivingEntity le) {
                 if (!this.level().isClientSide && owner instanceof LivingEntity leOwner) {
                     EnchantmentHelper.doPostHurtEffects(le, leOwner);
