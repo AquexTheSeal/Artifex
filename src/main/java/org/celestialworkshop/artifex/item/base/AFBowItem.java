@@ -8,13 +8,14 @@ import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AFBowItem extends BowItem implements ArtifexItemProperties, AFExtension {
+public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
 
     private final AFMaterial material;
     private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
@@ -35,11 +36,10 @@ public class AFBowItem extends BowItem implements ArtifexItemProperties, AFExten
         return this.specialtyMapSupplier.get();
     }
 
-    public @Nullable SoundEvent getDrawSound() {
-        return null;
-    }
-
-    public @Nullable SoundEvent getShootSound() {
+    public @Nullable SoundEvent getShootSoundOverride() {
+        if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
+            return AFSoundEvents.LONGBOW_SHOOT.get();
+        }
         return null;
     }
 

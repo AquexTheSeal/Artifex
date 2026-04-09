@@ -1,11 +1,15 @@
 package org.celestialworkshop.artifex.item.specialty;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.api.AFSpecialty;
+import org.celestialworkshop.artifex.registry.AFParticleTypes;
+import org.celestialworkshop.artifex.registry.AFSoundEvents;
 
 import javax.annotation.Nullable;
 
@@ -34,6 +38,10 @@ public class ExecuteSpecialty extends AFSpecialty {
                     target.hurt(damageSource, this.calculateDamageLimit(specialityLevel));
                 } else {
                     target.hurt(damageSource, Float.MAX_VALUE);
+                    if (attacker.level() instanceof ServerLevel server) {
+                        server.sendParticles(AFParticleTypes.EXECUTE.get(), target.getX(), target.getY(1.0), target.getZ(), 0, 0, 0, 0, 0);
+                        server.playSound(null, target.blockPosition(), AFSoundEvents.EXECUTE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+                    }
                 }
             }
         }

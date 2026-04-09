@@ -8,8 +8,7 @@ import net.minecraftforge.registries.RegistryBuilder;
 import net.minecraftforge.registries.RegistryObject;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.item.specialty.ExecuteSpecialty;
-import org.celestialworkshop.artifex.item.specialty.SweepingSpecialty;
+import org.celestialworkshop.artifex.item.specialty.*;
 
 import java.util.function.Supplier;
 
@@ -20,10 +19,10 @@ public class AFSpecialties {
 
     public static final RegistryObject<AFSpecialty> EXECUTE = SPECIALTIES.register("execute", () -> new ExecuteSpecialty(AFSpecialty.Category.BENEFICIAL));
     public static final RegistryObject<AFSpecialty> SWEEPING = SPECIALTIES.register("sweeping", () -> new SweepingSpecialty(AFSpecialty.Category.BENEFICIAL));
-    public static final RegistryObject<AFSpecialty> IMPACT_COMBO = SPECIALTIES.register("impact_combo", () -> new AFSpecialty(AFSpecialty.Category.BENEFICIAL));
-    public static final RegistryObject<AFSpecialty> FINESSE = SPECIALTIES.register("finesse", () -> new AFSpecialty(AFSpecialty.Category.BENEFICIAL));
-    public static final RegistryObject<AFSpecialty> ARMOR_PIERCER = SPECIALTIES.register("armor_piercer", () -> new AFSpecialty(AFSpecialty.Category.BENEFICIAL));
-    public static final RegistryObject<AFSpecialty> SHOCKWAVE = SPECIALTIES.register("shockwave", () -> new AFSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> IMPACT_COMBO = SPECIALTIES.register("impact_combo", () -> new ImpactComboSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> FINESSE = SPECIALTIES.register("finesse", () -> new FinesseSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> ARMOR_PIERCER = SPECIALTIES.register("armor_piercer", () -> new ArmorPiercerSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> SHOCKWAVE = SPECIALTIES.register("shockwave", () -> new ShockwaveSpecialty(AFSpecialty.Category.BENEFICIAL));
 
     public static final RegistryObject<AFSpecialty> TWO_HANDED = SPECIALTIES.register("two_handed", () -> new AFSpecialty(AFSpecialty.Category.HARMFUL));
 

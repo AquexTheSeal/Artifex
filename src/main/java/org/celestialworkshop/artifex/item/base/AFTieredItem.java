@@ -3,6 +3,7 @@ package org.celestialworkshop.artifex.item.base;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -16,12 +17,13 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
+import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AFTieredItem extends TieredItem implements ArtifexItemProperties {
+public class AFTieredItem extends TieredItem implements AFPropertyItem {
 
     private final AFMaterial material;
     private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
@@ -72,6 +74,14 @@ public class AFTieredItem extends TieredItem implements ArtifexItemProperties {
     }
 
     @Override
+    public boolean hurtEnemy(ItemStack pStack, LivingEntity pTarget, LivingEntity pAttacker) {
+        pStack.hurtAndBreak(1, pAttacker, (entity) -> {
+            entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+        });
+        return true;
+    }
+
+    @Override
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
         return this.canSweep && ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction);
     }
@@ -80,5 +90,13 @@ public class AFTieredItem extends TieredItem implements ArtifexItemProperties {
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if (enchantment == Enchantments.SWEEPING_EDGE && !this.canSweep) return false;
         return enchantment.category == EnchantmentCategory.WEAPON;
+    }
+
+    @Override
+    public int getComboTime() {
+        if (AFMaterial.isWeaponType(this, AFWeaponType.KNUCKLES)) {
+            return 10;
+        }
+        return AFPropertyItem.super.getComboTime();
     }
 }

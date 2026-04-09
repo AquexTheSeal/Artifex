@@ -7,7 +7,7 @@ import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
-import org.celestialworkshop.artifex.item.base.ArtifexItemProperties;
+import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class AFClientEvents {
@@ -16,7 +16,7 @@ public class AFClientEvents {
     public static void onGatherTooltipComponents(RenderTooltipEvent.GatherComponents event) {
         ItemStack stack = event.getItemStack();
 
-        if (stack.getItem() instanceof ArtifexItemProperties af && !af.getSpecialties().isEmpty()) {
+        if (stack.getItem() instanceof AFPropertyItem af && !af.getSpecialties().isEmpty()) {
             event.getTooltipElements().add(Either.right(new SpecialtyTooltip(af.getSpecialties())));
         }
     }

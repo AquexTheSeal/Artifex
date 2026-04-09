@@ -7,11 +7,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.celestialworkshop.artifex.network.AFNetwork;
-import org.celestialworkshop.artifex.registry.AFCreativeTabs;
-import org.celestialworkshop.artifex.registry.AFEntities;
-import org.celestialworkshop.artifex.registry.AFItems;
-import org.celestialworkshop.artifex.registry.AFSoundEvents;
-import org.celestialworkshop.artifex.registry.AFSpecialties;
+import org.celestialworkshop.artifex.registry.*;
 import org.slf4j.Logger;
 
 @Mod(Artifex.MODID)
@@ -29,6 +25,8 @@ public class Artifex {
         AFItems.ITEMS.register(modEventBus);
         AFEntities.ENTITIES.register(modEventBus);
         AFSoundEvents.SOUND_EVENTS.register(modEventBus);
+        AFParticleTypes.PARTICLE_TYPES.register(modEventBus);
+        AFEnchantments.ENCHANTMENTS.register(modEventBus);
 
         AFNetwork.register();
     }

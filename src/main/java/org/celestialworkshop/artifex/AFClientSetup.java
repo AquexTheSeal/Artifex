@@ -6,20 +6,23 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
-import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
+import org.celestialworkshop.artifex.client.overlay.ComboOverlay;
+import org.celestialworkshop.artifex.particle.ExecuteParticle;
+import org.celestialworkshop.artifex.particle.ShockwaveParticle;
 import org.celestialworkshop.artifex.client.renderer.ThrownWeaponProjectileRenderer;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
 import org.celestialworkshop.artifex.item.base.AFBowItem;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.registry.AFEntities;
+import org.celestialworkshop.artifex.registry.AFParticleTypes;
 
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class AFClientSetup {
@@ -54,6 +57,11 @@ public class AFClientSetup {
     }
 
     @SubscribeEvent
+    public static void registerGuiOverlays(RegisterGuiOverlaysEvent ev) {
+        ev.registerAbove(VanillaGuiOverlay.EXPERIENCE_BAR.id(), "combo_bar_overlay", ComboOverlay::render);
+    }
+
+    @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(AFEntities.THROWABLE_PROJECTILE.get(), ThrownWeaponProjectileRenderer::new);
     }
@@ -61,6 +69,12 @@ public class AFClientSetup {
     @SubscribeEvent
     public static void registerTooltipComponents(RegisterClientTooltipComponentFactoriesEvent event) {
         event.register(SpecialtyTooltip.class, component -> component);
+    }
+
+    @SubscribeEvent
+    public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(AFParticleTypes.EXECUTE.get(), ExecuteParticle.Provider::new);
+        event.registerSpriteSet(AFParticleTypes.SHOCKWAVE.get(), ShockwaveParticle.Provider::new);
     }
 
     @SubscribeEvent

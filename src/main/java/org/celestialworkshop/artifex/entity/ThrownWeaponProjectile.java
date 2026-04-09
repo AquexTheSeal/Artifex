@@ -21,10 +21,11 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
-import org.celestialworkshop.artifex.item.base.ArtifexItemProperties;
+import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEntities;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -64,7 +65,7 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         }
 
         float damage = (float) this.getBaseDamage();
-        if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof ArtifexItemProperties materialItem) {
+        if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof AFPropertyItem materialItem) {
             for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
                 damage = entry.getKey().onDamageRanged(leOwner, leTarget, this.getHeldStack(), this, damage, this.isCritArrow(), entry.getValue());
             }
@@ -79,7 +80,7 @@ public class ThrownWeaponProjectile extends AbstractArrow {
 
                 this.doPostHurtEffects(le);
 
-                if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof ArtifexItemProperties materialItem) {
+                if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof AFPropertyItem materialItem) {
                     for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
                         entry.getKey().onPostRanged(leOwner, leTarget, this.getHeldStack(), this, this.isCritArrow(), entry.getValue());
                     }
@@ -143,10 +144,10 @@ public class ThrownWeaponProjectile extends AbstractArrow {
 
         for (int i : slots) {
             ItemStack stack = inventory.getItem(i);
-            if (matchesExceptAmmo(pickupItem, stack)) {
-                boolean success = AFAmmoDataCapability.get(stack).map(cap -> {
-                    if (!cap.isFull()) {
-                        cap.add(1);
+            if (ItemStackUtil.sameItemMatchesEnchantments(pickupItem, stack)) {
+                return AFAmmoDataCapability.get(stack).map(cap -> {
+                    if (!cap.isFull(stack)) {
+                        cap.add(stack, 1);
                         if (pPlayer instanceof ServerPlayer serverPlayer) {
                             AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(i, cap.getAmmo()));
                         }
@@ -154,31 +155,9 @@ public class ThrownWeaponProjectile extends AbstractArrow {
                     }
                     return false;
                 }).orElse(false);
-
-                if (success) {
-                    return true;
-                }
             }
         }
         return false;
-    }
-
-    private boolean matchesExceptAmmo(ItemStack projectile, ItemStack inventory) {
-        if (!projectile.is(inventory.getItem())) return false;
-
-        CompoundTag tag1 = projectile.getTag();
-        CompoundTag tag2 = inventory.getTag();
-
-        if (tag1 == null && tag2 == null) return true;
-        if (tag1 == null || tag2 == null) return false;
-
-        CompoundTag stripped1 = tag1.copy();
-        CompoundTag stripped2 = tag2.copy();
-
-        stripped1.remove("Damage");
-        stripped2.remove("Damage");
-
-        return stripped1.equals(stripped2);
     }
 
     @Override

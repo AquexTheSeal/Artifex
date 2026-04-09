@@ -22,6 +22,7 @@ public class AFNetwork {
         // S2C
         INSTANCE.registerMessage(id++, S2CEntityActionPacket.class, S2CEntityActionPacket::encode, S2CEntityActionPacket::decode, S2CEntityActionPacket::handle);
         INSTANCE.registerMessage(id++, S2CSyncAmmoPacket.class, S2CSyncAmmoPacket::encode, S2CSyncAmmoPacket::decode, S2CSyncAmmoPacket::handle);
+        INSTANCE.registerMessage(id++, S2CSyncComboStatePacket.class, S2CSyncComboStatePacket::encode, S2CSyncComboStatePacket::decode, S2CSyncComboStatePacket::handle);
     }
 
     public static void sendToAll(Object packet) {

@@ -3,17 +3,40 @@ package org.celestialworkshop.artifex.capability;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 
 public class AFEntityData implements INBTSerializable<CompoundTag> {
 
-    public ItemStack boundItemStack = ItemStack.EMPTY;
+    private ItemStack boundItemStack = ItemStack.EMPTY;
 
+    public ItemStack comboItemStack = ItemStack.EMPTY;
+
+    public int comboCount;
+    public int maxComboCount = 5;
+
+    public int comboTimer;
+
+    // BOUND STACK
     public void setBoundItemStack(ItemStack boundItemStack) {
         this.boundItemStack = boundItemStack;
     }
 
     public ItemStack getBoundItemStack() {
         return boundItemStack;
+    }
+
+    // COMBO COUNTER
+    public void incrementComboCount(ItemStack stack) {
+        this.comboItemStack = stack;
+        this.comboCount = Math.min(this.maxComboCount, this.comboCount + 1);
+        this.comboTimer = this.getMaxComboTime();
+    }
+
+    public int getMaxComboTime() {
+        if (comboItemStack.getItem() instanceof AFPropertyItem item) {
+            return item.getComboTime();
+        }
+        return 20;
     }
 
     @Override

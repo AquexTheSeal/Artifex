@@ -11,8 +11,8 @@ public class AFAmmoDecoration implements IItemDecorator {
     @Override
     public boolean render(GuiGraphics guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
         AFAmmoDataCapability.get(stack).ifPresent(cap -> {
-            if (!cap.isFull()) {
-                int barWidth = (int) (13.0F * (float) cap.getAmmo() / (float) cap.getMaxAmmo());
+            if (!cap.isFull(stack)) {
+                int barWidth = (int) (13.0F * (float) cap.getAmmo() / (float) cap.getMaxAmmo(stack));
 
                 int barY = yOffset + 14;
                 int barX = xOffset + 2;

@@ -19,8 +19,8 @@ public class AFAmmoDataCapability {
         private final AFAmmoData handler;
         private final LazyOptional<AFAmmoData> lazyHandler;
 
-        public Provider(ItemStack stack, int maxAmmo) {
-            this.handler = new AFAmmoData(stack, maxAmmo);
+        public Provider(ItemStack stack) {
+            this.handler = new AFAmmoData(stack);
             this.lazyHandler = LazyOptional.of(() -> handler);
         }
 

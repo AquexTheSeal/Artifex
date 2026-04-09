@@ -16,5 +16,23 @@
       "artifex:arbalest_start"
     ],
     "subtitle": "artifex.subtitle.arbalest_start"
+  },
+  "execute": {
+    "sounds": [
+      "artifex:execute"
+    ],
+    "subtitle": "artifex.subtitle.execute"
+  },
+  "longbow_shoot": {
+    "sounds": [
+      "artifex:longbow_shoot"
+    ],
+    "subtitle": "artifex.subtitle.longbow_shoot"
+  },
+  "shockwave": {
+    "sounds": [
+      "artifex:shockwave"
+    ],
+    "subtitle": "artifex.subtitle.shockwave"
   }
 }

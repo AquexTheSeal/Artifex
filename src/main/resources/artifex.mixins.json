@@ -6,8 +6,11 @@
   "refmap": "artifex.refmap.json",
   "mixins": [
     "AbstractArrowMixin",
+    "AnvilMenuMixin",
     "BowItemMixin",
     "CrossbowItemMixin",
+    "EnchantmentHelperMixin",
+    "ItemStackMixin",
     "LivingSwapItemsEventMixin",
     "PlayerMixin",
     "ProjectileWeaponItemMixin"

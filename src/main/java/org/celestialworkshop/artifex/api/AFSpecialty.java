@@ -8,7 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.celestialworkshop.artifex.item.base.ArtifexItemProperties;
+import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
 import java.text.DecimalFormat;
@@ -43,7 +43,7 @@ public class AFSpecialty {
     }
 
     public static boolean hasSpecialty(Item item, AFSpecialty specialty) {
-        return item instanceof ArtifexItemProperties artifexItem && artifexItem.getSpecialties().containsKey(specialty);
+        return item instanceof AFPropertyItem artifexItem && artifexItem.getSpecialties().containsKey(specialty);
     }
 
     public ResourceLocation getIcon() {

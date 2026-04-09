@@ -3,18 +3,14 @@ package org.celestialworkshop.artifex.capability;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 
 public class AFAmmoData implements INBTSerializable<CompoundTag> {
 
-    private final ItemStack itemStack;
-    private final int maxAmmo;
-
     private int ammo = 0;
 
-    public AFAmmoData(ItemStack stack, int maxAmmo) {
-        itemStack = stack;
-        this.maxAmmo = maxAmmo;
-        this.setAmmo(this.maxAmmo);
+    public AFAmmoData(ItemStack stack) {
+        this.setAmmo(this.getMaxAmmo(stack));
     }
 
     public int getAmmo() {
@@ -25,24 +21,24 @@ public class AFAmmoData implements INBTSerializable<CompoundTag> {
         this.ammo = count;
     }
 
-    public int getMaxAmmo() {
-        return maxAmmo;
+    public int getMaxAmmo(ItemStack stack) {
+        return stack.getItem() instanceof AFThrowableTieredItem throwable ? throwable.getMaximumAmmo(stack) : 0;
     }
 
     public void consume(int amount) {
         setAmmo(Math.max(0, getAmmo() - amount));
     }
 
-    public void add(int amount) {
-        setAmmo(Math.min(getMaxAmmo(), getAmmo() + amount));
+    public void add(ItemStack stack, int amount) {
+        setAmmo(Math.min(getMaxAmmo(stack), getAmmo() + amount));
     }
 
     public boolean isEmpty() {
         return getAmmo() <= 0;
     }
 
-    public boolean isFull() {
-        return getAmmo() >= getMaxAmmo();
+    public boolean isFull(ItemStack stack) {
+        return getAmmo() >= getMaxAmmo(stack);
     }
 
     @Override

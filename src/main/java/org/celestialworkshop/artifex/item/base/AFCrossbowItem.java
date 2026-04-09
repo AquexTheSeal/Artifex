@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AFCrossbowItem extends CrossbowItem implements ArtifexItemProperties, AFExtension {
+public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFExtension {
 
     private final AFMaterial material;
     private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
@@ -65,7 +65,7 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return 3.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
         }
-        return 1.2F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
+        return 1.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.05F);
     }
 
     public boolean playChargeSoundEarlier() {
@@ -81,13 +81,6 @@ public class AFCrossbowItem extends CrossbowItem implements ArtifexItemPropertie
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(2.0F));
             arrow.hasImpulse = true;
-
-//            // Force sync delta movement because high velocities de-sync.
-//            Object2FloatArrayMap<String> params = new Object2FloatArrayMap<>();
-//            params.put("DeltaX", (float) arrow.getDeltaMovement().x());
-//            params.put("DeltaY", (float) arrow.getDeltaMovement().y());
-//            params.put("DeltaZ", (float) arrow.getDeltaMovement().z());
-//            AFNetwork.sendToTrackingEntity(arrow, new S2CEntityActionPacket(arrow.getId(), S2CEntityActionPacket.Action.FORCE_SYNC_DELTA, params));
         }
     }
 

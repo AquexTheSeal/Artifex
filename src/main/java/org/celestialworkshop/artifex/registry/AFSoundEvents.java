@@ -14,6 +14,12 @@ public class AFSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Artifex.MODID);
     public static final List<AutoGenSound> AUTO_GEN_SOUNDS = new ObjectArrayList<>();
 
+    public static final RegistryObject<SoundEvent> EXECUTE = registerSoundEvent("execute");
+
+    public static final RegistryObject<SoundEvent> SHOCKWAVE = registerSoundEvent("shockwave");
+
+    public static final RegistryObject<SoundEvent> LONGBOW_SHOOT = registerSoundEvent("longbow_shoot");
+
     public static final RegistryObject<SoundEvent> ARBALEST_START = registerSoundEvent("arbalest_start");
     public static final RegistryObject<SoundEvent> ARBALEST_LOADED = registerSoundEvent("arbalest_loaded");
     public static final RegistryObject<SoundEvent> ARBALEST_SHOOT = registerSoundEvent("arbalest_shoot");

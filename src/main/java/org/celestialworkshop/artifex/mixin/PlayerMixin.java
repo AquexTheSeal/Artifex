@@ -12,8 +12,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.item.base.ArtifexItemProperties;
+import org.celestialworkshop.artifex.item.base.AFPropertyItem;
+import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -64,10 +66,10 @@ public abstract class PlayerMixin extends LivingEntity {
     private float modifyMeleeDamage(float damage, Entity target) {
         float result = damage;
         if (target instanceof LivingEntity livingTarget) {
-            Item item = this.cdx$getAttackingItem().getItem();
-            if (item instanceof ArtifexItemProperties materialItem) {
+            Item item = this.artifex$getAttackingItemStack().getItem();
+            if (item instanceof AFPropertyItem materialItem) {
                 for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
-                    result = entry.getKey().onDamageMelee(this, livingTarget, this.cdx$getAttackingItem(), result, this.af$CriticalProcess, entry.getValue());
+                    result = entry.getKey().onDamageMelee(this, livingTarget, this.artifex$getAttackingItemStack(), result, this.af$CriticalProcess, entry.getValue());
                 }
             }
         }
@@ -80,10 +82,10 @@ public abstract class PlayerMixin extends LivingEntity {
     ))
     private boolean modifySweepingDamage(LivingEntity sweepTarget, DamageSource source, float sweepDamage, @Local(ordinal = 0) float originalDamage) {
         float result = sweepDamage;
-        Item item = this.cdx$getAttackingItem().getItem();
-        if (item instanceof ArtifexItemProperties materialItem) {
+        Item item = this.artifex$getAttackingItemStack().getItem();
+        if (item instanceof AFPropertyItem materialItem) {
             for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
-                result = entry.getKey().onDamageSweep(this, sweepTarget, this.cdx$getAttackingItem(), result, originalDamage, entry.getValue());
+                result = entry.getKey().onDamageSweep(this, sweepTarget, this.artifex$getAttackingItemStack(), result, originalDamage, entry.getValue());
             }
         }
         return sweepTarget.hurt(source, result);
@@ -95,11 +97,14 @@ public abstract class PlayerMixin extends LivingEntity {
     ))
     private void triggerPostAttack(Entity pTarget, CallbackInfo ci) {
         if (pTarget instanceof LivingEntity livingTarget) {
-            Item item = this.cdx$getAttackingItem().getItem();
-            if (item instanceof ArtifexItemProperties materialItem) {
+            Item item = this.artifex$getAttackingItemStack().getItem();
+            if (item instanceof AFPropertyItem materialItem) {
                 for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
-                    entry.getKey().onPostMelee(this, livingTarget, this.cdx$getAttackingItem(), this.af$CriticalProcess, entry.getValue());
+                    entry.getKey().onPostMelee(this, livingTarget, this.artifex$getAttackingItemStack(), this.af$CriticalProcess, entry.getValue());
                 }
+            }
+            if (ItemStackUtil.hasComboBasedWeapon(this.artifex$getAttackingItemStack())) {
+                ComboBasedSpecialty.manageComboStack(this, this.artifex$getAttackingItemStack());
             }
             this.af$CriticalProcess = false;
         }
@@ -114,7 +119,7 @@ public abstract class PlayerMixin extends LivingEntity {
     }
 
     @Unique
-    private ItemStack cdx$getAttackingItem() {
+    private ItemStack artifex$getAttackingItemStack() {
         return this.getMainHandItem();
     }
 }

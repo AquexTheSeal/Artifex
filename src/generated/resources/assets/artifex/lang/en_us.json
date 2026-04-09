@@ -1,4 +1,8 @@
 {
+  "enchantment.artifex.puncture": "Puncture",
+  "enchantment.artifex.puncture.desc": "Increases damage for thrown projectiles.",
+  "enchantment.artifex.stockpile": "Stockpile",
+  "enchantment.artifex.stockpile.desc": "Increases the weapon's ammo capacity.",
   "item.artifex.diamond_arbalest": "Diamond Arbalest",
   "item.artifex.diamond_battleaxe": "Diamond Battleaxe",
   "item.artifex.diamond_bow": "Diamond Bow",
@@ -101,18 +105,19 @@
   "item.artifex.wooden_spear": "Wooden Spear",
   "item_group.artifex.artifex": "Artifex",
   "material_specialty.artifex.armor_piercer": "Armor Piercer",
-  "material_specialty.artifex.armor_piercer_description": "Deals bonus damage based on the target's protection, scaled at a %s:%s ratio of armor to power.",
+  "material_specialty.artifex.armor_piercer_description": "Deals %s extra damage for every point of armor the target has.",
   "material_specialty.artifex.execute": "Execute",
   "material_specialty.artifex.execute_description": "Targets with %s health have a %s chance to be instantly killed (Only %s damage is dealt if the target’s maximum health exceeds %s).",
   "material_specialty.artifex.finesse": "Finesse",
-  "material_specialty.artifex.finesse_description": "Successive attacks build momentum, increasing your attack speed with each hit by %s up to %s.",
+  "material_specialty.artifex.finesse_description": "Successive attacks build momentum, increasing your movement speed with each hit by %s up to 5 stacks.",
   "material_specialty.artifex.impact_combo": "Impact Combo",
-  "material_specialty.artifex.impact_combo_description": "Successive attacks build momentum, increasing damage with each hit by %s up to a maximum of %s.",
+  "material_specialty.artifex.impact_combo_description": "Successive attacks build momentum, increasing damage with each hit by %s up to a maximum of 5 stacks.",
   "material_specialty.artifex.shockwave": "Shockwave",
   "material_specialty.artifex.shockwave_description": "Critical hits create a shockwave that knocks nearby targets up that deals %s damage.",
   "material_specialty.artifex.sweeping": "Sweeping",
   "material_specialty.artifex.sweeping_description": "Sweeping attacks deal extra damage equal to %s of the focused damage.",
   "material_specialty.artifex.two_handed": "Two-Handed",
   "material_specialty.artifex.two_handed_description": "Hides your off-hand when held; cannot be equipped in the off-hand slot.",
-  "tooltip.artifex.specialty": "Weapon Class Specialties"
+  "tooltip.artifex.specialty": "Weapon Class Specialties",
+  "tooltip.artifex.throwable_ammo_stack": "< Ammo: %s/%s >"
 }

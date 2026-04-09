@@ -1,16 +1,69 @@
 package org.celestialworkshop.artifex;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
+import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
- 
+import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
+import org.celestialworkshop.artifex.network.AFNetwork;
+import org.celestialworkshop.artifex.network.S2CSyncComboStatePacket;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
+
+import java.util.Map;
+
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AFCommonEvents {
+
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            AFEntityDataCapability.get(event.player).ifPresent(cap -> {
+
+                ItemStack handItem = event.player.getMainHandItem();
+                boolean endCombo = false;
+
+                if (cap.comboCount > 0) {
+                    cap.comboTimer = Math.max(cap.comboTimer - 1, 0);
+
+                    if (cap.comboTimer == 0) {
+                        if (event.side == LogicalSide.SERVER) {
+                            endCombo = true;
+                        }
+                    }
+
+                    if (event.side == LogicalSide.SERVER) {
+                        if (!ItemStackUtil.sameItemMatchesEnchantments(cap.comboItemStack, handItem)) {
+                            endCombo = true;
+                        }
+                    }
+                } else {
+                    cap.comboTimer = 0;
+                }
+
+                if (endCombo) {
+                    if (cap.comboItemStack.getItem() instanceof AFPropertyItem af) {
+                        for (Map.Entry<AFSpecialty, Integer> specialty : af.getSpecialties().entrySet()) {
+                            if (specialty.getKey() instanceof ComboBasedSpecialty comboBasedSpecialty) {
+                                comboBasedSpecialty.onComboEnd(event.player, cap.comboItemStack, specialty.getValue());
+                            }
+                        }
+                    }
+                    cap.comboCount = 0;
+                    cap.comboItemStack = ItemStack.EMPTY;
+                    AFNetwork.sendToPlayer((ServerPlayer) event.player, new S2CSyncComboStatePacket(cap.comboItemStack, cap.comboCount, cap.comboTimer));
+                }
+            });
+        }
+    }
  
     @SubscribeEvent
     public static void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event) {
@@ -22,7 +75,7 @@ public class AFCommonEvents {
     @SubscribeEvent
     public static void onAttachCapabilitiesItemStack(AttachCapabilitiesEvent<ItemStack> event) {
         if (event.getObject().getItem() instanceof AFThrowableTieredItem af) {
-            AFAmmoDataCapability.Provider provider = new AFAmmoDataCapability.Provider(event.getObject(), af.getMaximumAmmo());
+            AFAmmoDataCapability.Provider provider = new AFAmmoDataCapability.Provider(event.getObject());
             event.addCapability(Artifex.prefix("ammo"), provider);
             event.addListener(provider::invalidate);
         }

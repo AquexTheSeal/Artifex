@@ -1,5 +1,7 @@
 package org.celestialworkshop.artifex.item.base;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -11,7 +13,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
@@ -20,7 +24,10 @@ import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.registry.AFEnchantments;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -66,9 +73,11 @@ public class AFThrowableTieredItem extends AFTieredItem {
             ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(pLevel, player);
             float maxVelocity = this.getBaseVelocity();
             float calculatedVelocity = Math.min((timeElapsed / 20F) * maxVelocity, maxVelocity);
-            projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, maxVelocity, 1.0F);
+            projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, calculatedVelocity, 1.0F);
             projectile.setHeldStack(pStack.copy());
-            projectile.setBaseDamage(this.getThrownBaseDamage() + (this.getMaterial().getItemTier().getAttackDamageBonus() * 1.2F));
+
+            float punctureAdd = pStack.getEnchantmentLevel(AFEnchantments.PUNCTURE.get()) * 0.75F;
+            projectile.setBaseDamage(this.getThrownBaseDamage() + punctureAdd + (this.getMaterial().getItemTier().getAttackDamageBonus() * 1.2F));
 
             if (player.getAbilities().instabuild) {
                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
@@ -91,7 +100,11 @@ public class AFThrowableTieredItem extends AFTieredItem {
         }
     }
 
-    public int getMaximumAmmo() {
+    public int getMaximumAmmo(ItemStack stack) {
+        int stockpileLevel = stack.getEnchantmentLevel(AFEnchantments.STOCKPILE.get());
+        if (stockpileLevel > 0) {
+            return 16 + stockpileLevel * 8;
+        }
         return 16;
     }
 
@@ -125,5 +138,18 @@ public class AFThrowableTieredItem extends AFTieredItem {
             }
         }
         return -0.2F;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
+        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        AFAmmoDataCapability.get(pStack).ifPresent(cap -> {
+            pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_ammo_stack", cap.getAmmo(), cap.getMaxAmmo(pStack)).withStyle(ChatFormatting.GRAY));
+        });
+    }
+
+    @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment.category.canEnchant(this);
     }
 }
