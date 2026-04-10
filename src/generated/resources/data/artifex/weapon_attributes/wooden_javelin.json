@@ -1,7 +1,7 @@
 {
   "parent": "bettercombat:lance",
   "attributes": {
-    "attack_range": 3.5,
+    "attack_range": 3.0,
     "attacks": [
       {
         "animation": "bettercombat:one_handed_stab",

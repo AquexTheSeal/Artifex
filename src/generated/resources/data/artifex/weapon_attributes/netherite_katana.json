@@ -1,6 +1,7 @@
 {
   "parent": "bettercombat:katana",
   "attributes": {
+    "attack_range": 2.75,
     "attacks": [],
     "category": "af_katana",
     "pose": "bettercombat:pose_two_handed_katana",

@@ -21,19 +21,29 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                 Item weapon = material.getWeapon(weaponType);
                 switch (weaponType) {
                     case KNUCKLES -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:claw", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:claw", new WeaponAttributes(
+                                2.15, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case SHORTSWORD -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:sword", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:sword", new WeaponAttributes(
+                                2.25, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case DAGGER -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:dagger", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:dagger", new WeaponAttributes(
+                                2.0, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case SICKLE -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:sickle", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:sickle", new WeaponAttributes(
+                                2.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case BATTLEAXE -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:double_axe", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:double_axe", new WeaponAttributes(
+                                2.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case FLANGED_MACE -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:mace", new WeaponAttributes(
@@ -54,11 +64,13 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                         ));
                     }
                     case GREATSWORD -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:claymore", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:claymore", new WeaponAttributes(
+                                2.75, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case JAVELIN -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:lance", new WeaponAttributes(
-                                3.5, null, null, false, "af_javelin", new WeaponAttributes.Attack[]{
+                                3.0, null, null, false, "af_javelin", new WeaponAttributes.Attack[]{
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.FORWARD_BOX,
@@ -82,7 +94,7 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                     }
                     case SPEAR -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:lance", new WeaponAttributes(
-                                3.5, null, null, false, "af_spear", new WeaponAttributes.Attack[]{
+                                3.0, null, null, false, "af_spear", new WeaponAttributes.Attack[]{
                                 new WeaponAttributes.Attack(
                                         new WeaponAttributes.Condition[]{},
                                         WeaponAttributes.HitBoxShape.FORWARD_BOX,
@@ -93,17 +105,23 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                         ));
                     }
                     case GLAIVE -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:glaive", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:glaive", new WeaponAttributes(
+                                3.25, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case HALBERD -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:halberd", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:halberd", new WeaponAttributes(
+                                3.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case SCYTHE -> {
-                        this.addAttribute(weapon, new AttributesContainer("bettercombat:scythe", null));
+                        this.addAttribute(weapon, new AttributesContainer("bettercombat:scythe", new WeaponAttributes(
+                                3.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                        ));
                     }
                     case KATANA -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:katana", new WeaponAttributes(
-                                0.0, "bettercombat:pose_two_handed_katana", null, false, "af_katana", new WeaponAttributes.Attack[]{}
+                                2.75, "bettercombat:pose_two_handed_katana", null, false, "af_katana", new WeaponAttributes.Attack[]{}
                         )));
                     }
                     case ODACHI -> {
