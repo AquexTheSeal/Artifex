@@ -27,13 +27,16 @@ public class AFItemModelProvider extends ItemModelProvider {
         for (AFWeaponType weaponType : material.getAvailableWeaponTypes()) {
             Item weapon = material.getWeapon(weaponType);
             switch (weaponType) {
-                case KNUCKLES, SHORTSWORD, DAGGER, SICKLE, BATTLEAXE, FLANGED_MACE, KATANA -> this.handheldItem(weapon);
+                case KNUCKLES -> this.basicParentedItem(weapon, "artifex:item/knuckles", "0");
+                case SHORTSWORD, DAGGER, SICKLE, BATTLEAXE, FLANGED_MACE, KATANA -> this.handheldItem(weapon);
                 case JAVELIN, SPEAR, GLAIVE, HALBERD -> this.basicParentedItem(weapon, "artifex:item/handheld_long_middle");
                 case GREATSWORD, ODACHI, SCYTHE -> this.basicParentedItem(weapon, "artifex:item/handheld_long_base");
                 case CROSSBOW -> this.crossbowItem(weapon, "item/crossbow");
                 case ARBALEST -> this.crossbowItem(weapon, "artifex:item/crossbow_long");
                 case BOW -> this.bowItem(weapon, "item/bow");
                 case LONGBOW -> this.bowItem(weapon, "artifex:item/bow_long");
+                case SHIELD, BUCKLER -> this.shieldItem(weapon, "artifex:item/shield");
+                case WAR_DOOR -> this.shieldItem(weapon, "artifex:item/shield_long");
             }
         }
     }
@@ -43,9 +46,13 @@ public class AFItemModelProvider extends ItemModelProvider {
     }
 
     public void basicParentedItem(Item item, String parent) {
+        this.basicParentedItem(item, parent, "layer0");
+    }
+
+    public void basicParentedItem(Item item, String parent, String textureKey) {
         ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
         this.getBuilder(loc.toString()).parent(new ModelFile.UncheckedModelFile(parent))
-                .texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "item/" + loc.getPath()));
+                .texture(textureKey, ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "item/" + loc.getPath()));
     }
 
     public void bowItem(Item item, String parentLocation) {
@@ -87,6 +94,19 @@ public class AFItemModelProvider extends ItemModelProvider {
                 .end()
                 .override().predicate(ResourceLocation.parse("charged"), 1).predicate(ResourceLocation.parse("firework"), 1).model(getBuilder(itemPath + "_firework")
                         .parent(parent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath + "_firework")))
+                .end();
+    }
+
+    public void shieldItem(Item item, String parentLocation) {
+        ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
+        String itemPath = "item/" + loc.getPath();
+        ModelFile parent = new ModelFile.UncheckedModelFile(parentLocation);
+        ModelFile blockingParent = new ModelFile.UncheckedModelFile(parentLocation + "_blocking");
+        this.getBuilder(loc.toString())
+                .parent(parent)
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath))
+                .override().predicate(ResourceLocation.parse("blocking"), 1).model(getBuilder(itemPath + "_blocking")
+                        .parent(blockingParent).texture("layer0", ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), itemPath)))
                 .end();
     }
 }

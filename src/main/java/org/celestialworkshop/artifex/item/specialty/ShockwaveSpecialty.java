@@ -39,7 +39,7 @@ public class ShockwaveSpecialty extends AFSpecialty {
         List<Entity> entities = target.level().getEntities(attacker, area, entity -> entity instanceof LivingEntity && entity != target && entity != attacker);
 
         for (Entity entity : entities) {
-            if (entity instanceof LivingEntity living) {
+            if (entity instanceof LivingEntity living && (!(target instanceof Player) || !(entity instanceof Player))) {
                 DamageSource source = attacker instanceof Player pl ? attacker.damageSources().playerAttack(pl) : attacker.damageSources().mobAttack(attacker);
                 living.hurt(source, damage);
                 living.push(0, 0.4, 0);

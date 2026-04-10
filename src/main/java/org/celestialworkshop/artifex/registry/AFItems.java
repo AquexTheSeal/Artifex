@@ -17,18 +17,23 @@ public class AFItems {
     public static final List<AFMaterial> MATERIALS = new ObjectArrayList<>();
 
     public static final AFMaterial WOODEN_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "wooden").tier(Tiers.WOOD)
-            .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST)
+            .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST, AFWeaponType.BUCKLER, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)
             .build());
     public static final AFMaterial STONE_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "stone").tier(Tiers.STONE)
-            .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST)
+            .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST, AFWeaponType.BUCKLER, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)
             .build());
     public static final AFMaterial IRON_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "iron").tier(Tiers.IRON)
+            .blacklist()
             .build());
     public static final AFMaterial GOLD_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "golden").tier(Tiers.GOLD)
+            .blacklist()
             .build());
     public static final AFMaterial DIAMOND_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "diamond").tier(Tiers.DIAMOND)
+            .blacklist(AFWeaponType.BUCKLER, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)
             .build());
     public static final AFMaterial NETHERITE_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "netherite").tier(Tiers.NETHERITE)
+            .blacklist(AFWeaponType.BUCKLER, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)
+            .properties(() -> new Item.Properties().fireResistant())
             .build());
 
     public static AFMaterial registerGeneralMaterial(AFMaterial material) {

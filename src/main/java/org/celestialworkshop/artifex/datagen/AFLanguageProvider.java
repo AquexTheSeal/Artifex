@@ -31,7 +31,7 @@ public class AFLanguageProvider extends LanguageProvider {
         this.addSpecialty(AFSpecialties.EXECUTE.get(), "Execute", "Targets with %s health have a %s chance to be instantly killed (Only %s damage is dealt if the target’s maximum health exceeds %s).");
         this.addSpecialty(AFSpecialties.SWEEPING.get(), "Sweeping", "Sweeping attacks deal extra damage equal to %s of the focused damage.");
         this.addSpecialty(AFSpecialties.IMPACT_COMBO.get(), "Impact Combo", "Successive attacks build momentum, increasing damage with each hit by %s up to a maximum of 5 stacks.");
-        this.addSpecialty(AFSpecialties.FINESSE.get(), "Finesse", "Successive attacks build momentum, increasing your movement speed with each hit by %s up to 5 stacks.");
+        this.addSpecialty(AFSpecialties.FINESSE.get(), "Finesse", "Successive attacks build momentum, increasing your attack speed with each hit by %s up to 5 stacks.");
         this.addSpecialty(AFSpecialties.ARMOR_PIERCER.get(), "Armor Piercer", "Deals %s extra damage for every point of armor the target has.");
         this.addSpecialty(AFSpecialties.SHOCKWAVE.get(), "Shockwave", "Critical hits create a shockwave that knocks nearby targets up that deals %s damage.");
 

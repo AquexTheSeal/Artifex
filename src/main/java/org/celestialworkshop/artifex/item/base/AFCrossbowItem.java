@@ -21,7 +21,7 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
 
     public AFCrossbowItem(AFMaterial material, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
-        super(material.getItemProperties());
+        super(material.getItemPropertiesSupplier().get().durability(material.getItemTier().getUses()));
         this.material = material;
         this.specialtyMapSupplier = specialtyMapSupplier;
     }

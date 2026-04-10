@@ -21,7 +21,7 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
 
     public AFBowItem(AFMaterial material, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
-        super(material.getItemProperties());
+        super(material.getItemPropertiesSupplier().get().durability(material.getItemTier().getUses()));
         this.material = material;
         this.specialtyMapSupplier = specialtyMapSupplier;
     }

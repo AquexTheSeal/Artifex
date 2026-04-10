@@ -13,7 +13,6 @@ public enum AFWeaponType {
 
     SHORTSWORD("shortsword", mat -> new AFTieredItem(mat, 2.0F, 2.0F, 0.0F, -0.20F, true, () -> Map.of(
             AFSpecialties.FINESSE.get(), 1,
-            AFSpecialties.IMPACT_COMBO.get(), 1,
             AFSpecialties.EXECUTE.get(), 1
     ))),
 
@@ -79,13 +78,13 @@ public enum AFWeaponType {
             AFSpecialties.TWO_HANDED.get(), 1
     ))),
 
-    BUCKLER("buckler", mat -> new AFShieldItem(mat, () -> Map.of(
+    BUCKLER("buckler", mat -> new AFShieldItem(mat, 0.0F, () -> Map.of(
     ))),
 
-    SHIELD("shield", mat -> new AFShieldItem(mat, () -> Map.of(
+    SHIELD("shield", mat -> new AFShieldItem(mat, 0.0F, () -> Map.of(
     ))),
 
-    WAR_DOOR("war_door", mat -> new AFShieldItem(mat, () -> Map.of(
+    WAR_DOOR("war_door", mat -> new AFShieldItem(mat, -0.1F, () -> Map.of(
 
     )));
 

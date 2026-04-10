@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "artifex:item/knuckles",
   "textures": {
-    "layer0": "artifex:item/wooden_knuckles"
+    "0": "artifex:item/wooden_knuckles"
   }
 }

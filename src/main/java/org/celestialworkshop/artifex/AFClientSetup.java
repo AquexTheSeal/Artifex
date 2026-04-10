@@ -1,6 +1,7 @@
 package org.celestialworkshop.artifex;
 
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
@@ -14,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
 import org.celestialworkshop.artifex.client.overlay.ComboOverlay;
+import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.particle.ExecuteParticle;
 import org.celestialworkshop.artifex.particle.ShockwaveParticle;
 import org.celestialworkshop.artifex.client.renderer.ThrownWeaponProjectileRenderer;
@@ -24,12 +26,14 @@ import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.registry.AFEntities;
 import org.celestialworkshop.artifex.registry.AFParticleTypes;
 
+import java.util.Map;
+
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class AFClientSetup {
 
     @SubscribeEvent
     public static void onFMLClientSetupEvent(FMLClientSetupEvent event) {
-        ForgeRegistries.ITEMS.getEntries().forEach(item -> {
+        for (Map.Entry<ResourceKey<Item>, Item> item : ForgeRegistries.ITEMS.getEntries()) {
             if (item.getValue() instanceof AFBowItem afBow) {
                 ItemProperties.register(item.getValue(), ResourceLocation.parse("pull"), (stack, level, entity, seed) -> {
                     if (entity == null || entity.getUseItem() != stack) {
@@ -41,7 +45,8 @@ public class AFClientSetup {
                 });
                 ItemProperties.register(item.getValue(), ResourceLocation.parse("pulling"), (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
             }
-            if (item.getValue() instanceof AFCrossbowItem afCrossbow) {
+
+            if (item.getValue() instanceof AFCrossbowItem) {
                 ItemProperties.register(item.getValue(), ResourceLocation.parse("pull"), (stack, level, entity, seed) -> {
                     if (entity == null) {
                         return 0.0F;
@@ -53,7 +58,11 @@ public class AFClientSetup {
                 ItemProperties.register(item.getValue(), ResourceLocation.parse("charged"), (stack, level, entity, seed) -> CrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
                 ItemProperties.register(item.getValue(), ResourceLocation.parse("firework"), (stack, level, entity, seed) -> CrossbowItem.isCharged(stack) && CrossbowItem.containsChargedProjectile(stack, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F);
             }
-        });
+
+            if (item.getValue() instanceof AFShieldItem) {
+                ItemProperties.register(item.getValue(), ResourceLocation.parse("blocking"), (stack, level, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+            }
+        }
     }
 
     @SubscribeEvent

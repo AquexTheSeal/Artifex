@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class AFMaterial {
 
@@ -23,9 +24,9 @@ public class AFMaterial {
     private final Object2ObjectOpenHashMap<AFWeaponType, RegistryObject<Item>> registeredWeaponsMap = new Object2ObjectOpenHashMap<>();
 
     public final Tier itemTier;
-    public final Item.Properties itemProperties;
+    public final Supplier<Item.Properties> itemProperties;
 
-    public AFMaterial(Builder builder, Tier itemTier, Item.Properties itemProperties) {
+    public AFMaterial(Builder builder, Tier itemTier, Supplier<Item.Properties> itemProperties) {
         this.itemTier = itemTier;
         this.itemProperties = itemProperties;
         this.registerWeapons(builder);
@@ -73,7 +74,7 @@ public class AFMaterial {
         return itemTier;
     }
 
-    public Item.Properties getItemProperties() {
+    public Supplier<Item.Properties> getItemPropertiesSupplier() {
         return itemProperties;
     }
 
@@ -86,7 +87,7 @@ public class AFMaterial {
         protected final String materialId;
 
         private Tier itemTier = Tiers.WOOD;
-        private Item.Properties itemProperties = new Item.Properties();
+        private Supplier<Item.Properties> itemProperties = Item.Properties::new;
         private final List<AFWeaponType> weaponTypeBlacklist = new ObjectArrayList<>();
 
         public Builder(DeferredRegister<Item> itemRegister, String materialId) {
@@ -99,7 +100,7 @@ public class AFMaterial {
             return this;
         }
 
-        public Builder properties(Item.Properties properties) {
+        public Builder properties(Supplier<Item.Properties> properties) {
             this.itemProperties = properties;
             return this;
         }

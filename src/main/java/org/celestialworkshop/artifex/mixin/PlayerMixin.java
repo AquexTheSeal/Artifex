@@ -1,5 +1,7 @@
 package org.celestialworkshop.artifex.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -9,10 +11,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.item.base.AFPropertyItem;
+import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
@@ -41,6 +45,24 @@ public abstract class PlayerMixin extends LivingEntity {
 
     protected PlayerMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    @WrapOperation(
+            method = "disableShield",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/ItemCooldowns;addCooldown(Lnet/minecraft/world/item/Item;I)V"
+            )
+    )
+    public void disableShield(ItemCooldowns instance, Item pItem, int pTicks, Operation<Void> original) {
+        if (pItem instanceof AFShieldItem afShieldItem) {
+            float mult = afShieldItem.getShieldDisableMultiplier((Player) (Object) this);
+            if (mult > 0.0F) {
+                original.call(instance, pItem, (int) (pTicks * mult));
+            }
+        } else {
+            original.call(instance, pItem, pTicks);
+        }
     }
 
     @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
