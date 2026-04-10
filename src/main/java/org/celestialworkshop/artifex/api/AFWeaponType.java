@@ -33,7 +33,7 @@ public enum AFWeaponType {
             AFSpecialties.SHOCKWAVE.get(), 1
     ))),
 
-    GREATSWORD("greatsword", mat -> new AFTieredItem(mat, 5.0F, 0.85F, -0.1F, 0.5F, true, () -> Map.of(
+    GREATSWORD("greatsword", mat -> new AFTieredItem(mat, 5.0F, 0.85F, -0.1F, 1.0F, true, () -> Map.of(
             AFSpecialties.TWO_HANDED.get(), 1
     ))),
 
@@ -54,10 +54,10 @@ public enum AFWeaponType {
     JAVELIN("javelin", mat -> new AFThrowableTieredItem(mat, 3.0F, 1.2F, 0.0F, 0.75F, false, 4.5F, 3.0F, () -> Map.of(
     ))),
 
-    SPEAR("spear", mat -> new AFThrowableTieredItem(mat, 3.0F, 1.1F, 0.0F, 1.0F, false, 5.0F, 2.5F, () -> Map.of(
+    SPEAR("spear", mat -> new AFThrowableTieredItem(mat, 3.0F, 1.1F, 0.0F, 1.2F, false, 5.0F, 2.5F, () -> Map.of(
     ))),
 
-    GLAIVE("glaive", mat -> new AFTieredItem(mat, 3.5F, 1.6F, 0.0F, 1.0F, true, () -> Map.of(
+    GLAIVE("glaive", mat -> new AFTieredItem(mat, 3.5F, 1.6F, 0.0F, 1.1F, true, () -> Map.of(
             AFSpecialties.TWO_HANDED.get(), 1
     ))),
 
