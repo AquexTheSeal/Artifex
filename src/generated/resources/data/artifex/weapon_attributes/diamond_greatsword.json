@@ -1,7 +1,7 @@
 {
   "parent": "bettercombat:claymore",
   "attributes": {
-    "attack_range": 2.75,
+    "attack_range": 3.25,
     "attacks": []
   }
 }

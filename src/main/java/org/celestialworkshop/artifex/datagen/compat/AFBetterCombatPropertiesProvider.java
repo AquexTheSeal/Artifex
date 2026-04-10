@@ -22,7 +22,7 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                 switch (weaponType) {
                     case KNUCKLES -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:claw", new WeaponAttributes(
-                                2.15, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                2.25, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case SHORTSWORD -> {
@@ -32,7 +32,7 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                     }
                     case DAGGER -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:dagger", new WeaponAttributes(
-                                2.0, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                2.25, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case SICKLE -> {
@@ -47,7 +47,7 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                     }
                     case FLANGED_MACE -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:mace", new WeaponAttributes(
-                                0, null, null, false, null, new WeaponAttributes.Attack[]{
+                                2.5, null, null, false, null, new WeaponAttributes.Attack[]{
                                 new WeaponAttributes.Attack(
                                         new WeaponAttributes.Condition[]{},
                                         WeaponAttributes.HitBoxShape.VERTICAL_PLANE,
@@ -65,12 +65,12 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                     }
                     case GREATSWORD -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:claymore", new WeaponAttributes(
-                                2.75, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                3.25, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case JAVELIN -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:lance", new WeaponAttributes(
-                                3.0, null, null, false, "af_javelin", new WeaponAttributes.Attack[]{
+                                3.5, null, null, false, "af_javelin", new WeaponAttributes.Attack[]{
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.FORWARD_BOX,
@@ -94,7 +94,7 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                     }
                     case SPEAR -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:lance", new WeaponAttributes(
-                                3.0, null, null, false, "af_spear", new WeaponAttributes.Attack[]{
+                                3.5, null, null, false, "af_spear", new WeaponAttributes.Attack[]{
                                 new WeaponAttributes.Attack(
                                         new WeaponAttributes.Condition[]{},
                                         WeaponAttributes.HitBoxShape.FORWARD_BOX,

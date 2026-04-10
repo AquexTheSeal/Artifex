@@ -1,6 +1,7 @@
 {
   "parent": "bettercombat:mace",
   "attributes": {
+    "attack_range": 2.5,
     "attacks": [
       {
         "angle": 90.0,
