@@ -1,3 +1,49 @@
 {
-  "parent": "bettercombat:lance"
+  "parent": "bettercombat:lance",
+  "attributes": {
+    "attack_range": 3.5,
+    "attacks": [
+      {
+        "animation": "bettercombat:one_handed_stab",
+        "conditions": [],
+        "damage_multiplier": 0.8500000238418579,
+        "hitbox": "FORWARD_BOX",
+        "swing_sound": {
+          "id": "bettercombat:spear_stab",
+          "pitch": 1.0,
+          "randomness": 0.1,
+          "volume": 1.0
+        },
+        "upswing": 0.5
+      },
+      {
+        "animation": "bettercombat:one_handed_stab",
+        "conditions": [],
+        "damage_multiplier": 0.8500000238418579,
+        "hitbox": "FORWARD_BOX",
+        "swing_sound": {
+          "id": "bettercombat:spear_stab",
+          "pitch": 1.0,
+          "randomness": 0.1,
+          "volume": 1.0
+        },
+        "upswing": 0.5
+      },
+      {
+        "animation": "bettercombat:dual_handed_stab",
+        "conditions": [],
+        "damage_multiplier": 1.149999976158142,
+        "hitbox": "FORWARD_BOX",
+        "swing_sound": {
+          "id": "bettercombat:spear_stab",
+          "pitch": 1.0,
+          "randomness": 0.1,
+          "volume": 1.0
+        },
+        "upswing": 0.5
+      }
+    ],
+    "category": "af_javelin",
+    "two_handed": false
+  }
 }

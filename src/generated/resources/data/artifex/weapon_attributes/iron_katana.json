@@ -1,3 +1,9 @@
 {
-  "parent": "bettercombat:katana"
+  "parent": "bettercombat:katana",
+  "attributes": {
+    "attacks": [],
+    "category": "af_katana",
+    "pose": "bettercombat:pose_two_handed_katana",
+    "two_handed": false
+  }
 }

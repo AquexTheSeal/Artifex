@@ -30,6 +30,7 @@
         },
         "upswing": 0.5
       }
-    ]
+    ],
+    "two_handed": false
   }
 }
