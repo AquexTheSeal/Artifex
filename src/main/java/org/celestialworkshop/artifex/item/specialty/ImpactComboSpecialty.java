@@ -35,6 +35,6 @@ public class ImpactComboSpecialty extends ComboBasedSpecialty {
     }
 
     private float calculateDamageIncrement(int level) {
-        return level * 0.15f;
+        return level * 0.1f;
     }
 }

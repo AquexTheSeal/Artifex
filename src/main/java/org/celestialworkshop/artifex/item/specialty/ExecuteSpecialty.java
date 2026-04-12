@@ -37,7 +37,7 @@ public class ExecuteSpecialty extends AFSpecialty {
                 if (target.getMaxHealth() > this.calculateLimitedHp(specialityLevel)) {
                     target.hurt(damageSource, this.calculateDamageLimit(specialityLevel));
                 } else {
-                    target.hurt(damageSource, Float.MAX_VALUE);
+                    target.kill();
                     if (attacker.level() instanceof ServerLevel server) {
                         server.sendParticles(AFParticleTypes.EXECUTE.get(), target.getX(), target.getY(1.0), target.getZ(), 0, 0, 0, 0, 0);
                         server.playSound(null, target.blockPosition(), AFSoundEvents.EXECUTE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -70,6 +70,6 @@ public class ExecuteSpecialty extends AFSpecialty {
     }
 
     private float calculateLimitedHp(int level) {
-        return 90f + (level * 10f);
+        return 100f + ((level - 1) * 20f);
     }
 }

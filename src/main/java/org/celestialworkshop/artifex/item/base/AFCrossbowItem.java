@@ -85,10 +85,20 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     @Override
+    public int getComboTime() {
+        return AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST) ? 80 : 30;
+    }
+
+    @Override
     public float getItemUsingSlowdownMultiplier() {
         if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return 0.5F;
         }
         return 1.0F;
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack pToRepair, ItemStack pRepair) {
+        return this.getMaterial().getItemTier().getRepairIngredient().test(pRepair);
     }
 }

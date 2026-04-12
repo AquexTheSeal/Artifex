@@ -11,11 +11,13 @@
     "CrossbowItemMixin",
     "EnchantmentHelperMixin",
     "ItemStackMixin",
+    "LivingEntityMixin",
     "LivingSwapItemsEventMixin",
     "PlayerMixin",
     "ProjectileWeaponItemMixin"
   ],
   "client": [
+    "CreativeModeInventoryScreenMixin",
     "ItemInHandRendererMixin",
     "LocalPlayerMixin"
   ],
@@ -24,5 +26,8 @@
   },
   "overwrites": {
     "requireAnnotations": true
+  },
+  "mixinextras": {
+    "minVersion": "0.5.0-rc.2"
   }
 }

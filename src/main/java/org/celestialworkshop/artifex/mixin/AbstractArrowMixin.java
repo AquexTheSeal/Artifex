@@ -16,6 +16,8 @@ import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFEntityData;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.item.base.AFPropertyItem;
+import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -77,6 +79,10 @@ public abstract class AbstractArrowMixin extends Projectile {
         ) {
             for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
                 entry.getKey().onPostRanged(leOwner, leTarget, heldStack, arrow, this.isCritArrow(), entry.getValue());
+            }
+
+            if (ItemStackUtil.hasComboBasedWeapon(heldStack)) {
+                ComboBasedSpecialty.manageComboStack(leOwner, heldStack);
             }
         }
     }

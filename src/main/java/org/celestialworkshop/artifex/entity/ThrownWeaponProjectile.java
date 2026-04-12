@@ -22,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.item.base.AFPropertyItem;
+import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEntities;
@@ -84,6 +85,10 @@ public class ThrownWeaponProjectile extends AbstractArrow {
                 if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof AFPropertyItem materialItem) {
                     for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
                         entry.getKey().onPostRanged(leOwner, leTarget, this.getHeldStack(), this, this.isCritArrow(), entry.getValue());
+                    }
+
+                    if (ItemStackUtil.hasComboBasedWeapon(this.getHeldStack())) {
+                        ComboBasedSpecialty.manageComboStack(leOwner, this.getHeldStack());
                     }
                 }
 

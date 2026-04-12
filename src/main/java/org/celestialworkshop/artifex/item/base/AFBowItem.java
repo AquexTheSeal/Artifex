@@ -59,4 +59,14 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
             original.setDeltaMovement(original.getDeltaMovement().scale(1.8F));
         }
     }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack pToRepair, ItemStack pRepair) {
+        return this.getMaterial().getItemTier().getRepairIngredient().test(pRepair);
+    }
+
+    @Override
+    public int getComboTime() {
+        return AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW) ? 60 : 30;
+    }
 }

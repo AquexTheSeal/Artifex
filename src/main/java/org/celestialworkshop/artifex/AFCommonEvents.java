@@ -64,7 +64,7 @@ public class AFCommonEvents {
             });
         }
     }
- 
+
     @SubscribeEvent
     public static void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event) {
         AFEntityDataCapability.Provider provider = new AFEntityDataCapability.Provider();

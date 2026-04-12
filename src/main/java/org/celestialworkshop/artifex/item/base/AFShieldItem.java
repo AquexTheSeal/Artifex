@@ -2,7 +2,10 @@ package org.celestialworkshop.artifex.item.base;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -24,8 +27,8 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
 
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public AFShieldItem(AFMaterial material, float speedMod, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
-        super(material.getItemPropertiesSupplier().get().durability(material.getItemTier().getUses()));
+    public AFShieldItem(AFMaterial material, float speedMod, float durabilityMult, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
+        super(material.getItemPropertiesSupplier().get().durability((int) (material.getItemTier().getUses() * durabilityMult)));
         this.material = material;
         this.specialtyMapSupplier = specialtyMapSupplier;
 
@@ -51,12 +54,30 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
         return this.specialtyMapSupplier.get();
     }
 
+    public boolean allowUseSprinting(Player player) {
+        return AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER);
+    }
+
+    public void onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource damageSource, float incomingDamage) {
+        this.getSpecialties().forEach((specialty, level) -> {
+            specialty.onPostShieldBlock(entity, stack, damageSource, incomingDamage, level);
+        });
+
+        if (AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER)) {
+            if (entity instanceof Player player) {
+                int timer = (int) (20 + incomingDamage * 4);
+                player.getCooldowns().addCooldown(stack.getItem(), Mth.clamp(timer, 40, 150));
+                player.stopUsingItem();
+            }
+        }
+    }
+
     public float getShieldDisableMultiplier(Player player) {
         if (AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER)) {
             return 1.5F;
         }
         if (AFMaterial.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
-            return 0.15F;
+            return 0.0F;
         }
         return 1.0F;
     }
@@ -66,6 +87,14 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
         if (AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER)) {
             return 5.0F;
         }
+        if (AFMaterial.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
+            return 0.25F;
+        }
         return 1.0F;
+    }
+
+    @Override
+    public boolean isValidRepairItem(ItemStack pToRepair, ItemStack pRepair) {
+        return this.getMaterial().getItemTier().getRepairIngredient().test(pRepair);
     }
 }

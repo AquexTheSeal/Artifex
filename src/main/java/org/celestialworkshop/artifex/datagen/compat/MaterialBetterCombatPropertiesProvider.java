@@ -4,19 +4,23 @@ import net.bettercombat.api.AttributesContainer;
 import net.bettercombat.api.WeaponAttributes;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
-import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.registry.AFItems;
 
-public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProvider {
+import java.util.List;
 
-    public AFBetterCombatPropertiesProvider(PackOutput output) {
-        super(output, Artifex.MODID);
+public class MaterialBetterCombatPropertiesProvider extends BetterCombatPropertiesProvider {
+
+    public final List<AFMaterial> materials;
+
+    public MaterialBetterCombatPropertiesProvider(PackOutput output, String modid, List<AFMaterial> materials) {
+        super(output, modid);
+        this.materials = materials;
     }
 
     @Override
     protected void registerAttributes() {
-        AFItems.MATERIALS.forEach(material -> {
+        materials.forEach(material -> {
             for (AFWeaponType weaponType : material.getAvailableWeaponTypes()) {
                 Item weapon = material.getWeapon(weaponType);
                 switch (weaponType) {
@@ -121,7 +125,7 @@ public class AFBetterCombatPropertiesProvider extends BetterCombatPropertiesProv
                     }
                     case KATANA -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:katana", new WeaponAttributes(
-                                2.75, "bettercombat:pose_two_handed_katana", null, false, "af_katana", new WeaponAttributes.Attack[]{}
+                                2.5, "bettercombat:pose_two_handed_katana", null, false, "af_katana", new WeaponAttributes.Attack[]{}
                         )));
                     }
                     case ODACHI -> {

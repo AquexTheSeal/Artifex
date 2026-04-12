@@ -2,6 +2,7 @@ package org.celestialworkshop.artifex.item.base;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -25,14 +26,17 @@ import java.util.function.Supplier;
 public class AFTieredItem extends TieredItem implements AFPropertyItem {
 
     private final AFMaterial material;
+    private final float attackSpeed;
+    private final boolean canSweep;
+
     private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
 
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
-    private final boolean canSweep;
 
     public AFTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
         super(material.getItemTier(), material.getItemPropertiesSupplier().get());
         this.material = material;
+        this.attackSpeed = attackSpeed;
         this.canSweep = canSweep;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
@@ -95,10 +99,7 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem {
 
     @Override
     public int getComboTime() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.KNUCKLES)) {
-            return 12;
-        }
-        return AFPropertyItem.super.getComboTime();
+        return Mth.clamp(Math.round(20.0F / this.attackSpeed) + 5, 8, 80);
     }
 
     @Override

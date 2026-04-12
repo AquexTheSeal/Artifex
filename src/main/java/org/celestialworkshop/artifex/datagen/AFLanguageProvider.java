@@ -48,7 +48,31 @@ public class AFLanguageProvider extends LanguageProvider {
         }
 
         this.addEnchantmentDescription(AFEnchantments.PUNCTURE, "Increases damage for thrown projectiles.");
-        this.addEnchantmentDescription(AFEnchantments.STOCKPILE, "Increases the weapon's ammo capacity.");
+        this.addEnchantmentDescription(AFEnchantments.STOCKPILE, "Increases the throwable weapon's ammo capacity.");
+
+        this.addAdvancement("artifex_startup", "Artifex", "Explore the wide range of armaments!");
+
+        this.addAdvancement("obtain_weapon_type_knuckles", "Iron Fist", "Obtain a Knuckle.");
+        this.addAdvancement("obtain_weapon_type_shortsword", "Short but Sweet", "Obtain a Shortsword.");
+        this.addAdvancement("obtain_weapon_type_dagger", "Hidden Blade", "Obtain a Dagger.");
+        this.addAdvancement("obtain_weapon_type_sickle", "Harvest Season", "Obtain a Sickle.");
+        this.addAdvancement("obtain_weapon_type_battleaxe", "Axe to Grind", "Obtain a Battleaxe.");
+        this.addAdvancement("obtain_weapon_type_flanged_mace", "Blunt Force", "Obtain a Flanged Mace.");
+        this.addAdvancement("obtain_weapon_type_greatsword", "Big Sword Energy", "Obtain a Greatsword.");
+        this.addAdvancement("obtain_weapon_type_katana", "Way of the Blade", "Obtain a Katana.");
+        this.addAdvancement("obtain_weapon_type_odachi", "Great Wave", "Obtain an Odachi.");
+        this.addAdvancement("obtain_weapon_type_glaive", "Slithery", "Obtain a Glaive.");
+        this.addAdvancement("obtain_weapon_type_halberd", "Pole Position", "Obtain a Halberd.");
+        this.addAdvancement("obtain_weapon_type_scythe", "Grim Reaper", "Obtain a Scythe.");
+        this.addAdvancement("obtain_weapon_type_bow", "Classic Archer", "Obtain a Bow.");
+        this.addAdvancement("obtain_weapon_type_longbow", "Long Shot", "Obtain a Longbow.");
+        this.addAdvancement("obtain_weapon_type_crossbow", "Cocked and Ready", "Obtain a Crossbow.");
+        this.addAdvancement("obtain_weapon_type_arbalest", "Heavy Artillery", "Obtain an Arbalest.");
+        this.addAdvancement("obtain_weapon_type_javelin", "Olympian", "Obtain a Javelin.");
+        this.addAdvancement("obtain_weapon_type_spear", "Pointy Stick", "Obtain a Spear.");
+        this.addAdvancement("obtain_weapon_type_buckler", "Light Cover", "Obtain a Buckler.");
+        this.addAdvancement("obtain_weapon_type_shield", "Stellar Defense", "Obtain a Shield.");
+        this.addAdvancement("obtain_weapon_type_war_door", "Heavy-Duty Fortress", "Obtain a War Door.");
     }
 
     public void addSpecialty(AFSpecialty specialty, String title, String desc) {
@@ -57,8 +81,8 @@ public class AFLanguageProvider extends LanguageProvider {
     }
 
     private void addAdvancement(String name, String title, String desc) {
-        this.add("advancement.behemoths." + name + ".title", title);
-        this.add("advancement.behemoths." + name + ".description", desc);
+        this.add("advancement.artifex." + name + ".title", title);
+        this.add("advancement.artifex." + name + ".description", desc);
     }
 
     public void addEnchantmentDescription(RegistryObject<Enchantment> enchantment, String desc) {

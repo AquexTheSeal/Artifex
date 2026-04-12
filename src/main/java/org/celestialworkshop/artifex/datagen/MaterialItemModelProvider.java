@@ -7,20 +7,23 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.registry.AFItems;
 
-public class AFItemModelProvider extends ItemModelProvider {
+import java.util.List;
 
-    public AFItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, Artifex.MODID, existingFileHelper);
+public class MaterialItemModelProvider extends ItemModelProvider {
+
+    public final List<AFMaterial> materials;
+
+    public MaterialItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper, String modid, List<AFMaterial> materials) {
+        super(output, modid, existingFileHelper);
+        this.materials = materials;
     }
 
     @Override
     protected void registerModels() {
-        AFItems.MATERIALS.forEach(this::materialSet);
+        materials.forEach(this::materialSet);
     }
 
     public void materialSet(AFMaterial material) {

@@ -8,7 +8,8 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.celestialworkshop.artifex.Artifex;
-import org.celestialworkshop.artifex.datagen.compat.AFBetterCombatPropertiesProvider;
+import org.celestialworkshop.artifex.datagen.compat.MaterialBetterCombatPropertiesProvider;
+import org.celestialworkshop.artifex.registry.AFItems;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -24,7 +25,6 @@ public class AFDataGenerators {
 
         generator.addProvider(event.includeClient(), new AFSoundDefinitionsProvider(packOutput, efh));
         generator.addProvider(event.includeClient(), new AFLanguageProvider(packOutput, "en_us"));
-        generator.addProvider(event.includeClient(), new AFItemModelProvider(packOutput, efh));
         generator.addProvider(event.includeClient(), new AFBlockStateProvider(packOutput, efh));
 
         AFTagsProvider.BlocksProvider blockTagsProvider = new AFTagsProvider.BlocksProvider(packOutput, lookupProvider, efh);
@@ -34,6 +34,9 @@ public class AFDataGenerators {
         generator.addProvider(event.includeServer(), new AFAdvancementProvider(packOutput, lookupProvider, efh));
         generator.addProvider(event.includeServer(), new AFGlobalLootModifierProvider(packOutput));
 
-        generator.addProvider(event.includeServer(), new AFBetterCombatPropertiesProvider(packOutput));
+        // Material
+        generator.addProvider(event.includeClient(), new MaterialItemModelProvider(packOutput, efh, Artifex.MODID, AFItems.MATERIALS));
+
+        generator.addProvider(event.includeServer(), new MaterialBetterCombatPropertiesProvider(packOutput, Artifex.MODID, AFItems.MATERIALS));
     }
 }

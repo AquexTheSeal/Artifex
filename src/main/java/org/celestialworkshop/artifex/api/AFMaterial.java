@@ -1,8 +1,8 @@
 package org.celestialworkshop.artifex.api;
 
-import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
@@ -14,6 +14,8 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class AFMaterial {
@@ -26,32 +28,37 @@ public class AFMaterial {
     public final Tier itemTier;
     public final Supplier<Item.Properties> itemProperties;
 
-    public AFMaterial(Builder builder, Tier itemTier, Supplier<Item.Properties> itemProperties) {
+    public AFMaterial(Supplier<Builder> builder, Tier itemTier, Supplier<Item.Properties> itemProperties) {
         this.itemTier = itemTier;
         this.itemProperties = itemProperties;
         this.registerWeapons(builder);
     }
 
-    public void registerWeapons(Builder builder) {
+    private void registerWeapons(Supplier<Builder> builder) {
         for (AFWeaponType weaponType : AFWeaponType.values()) {
+            Builder builderGet = builder.get();
+            String itemId = builderGet.materialId + "_" + weaponType.getName();
 
-            String itemId = builder.materialId + "_" + weaponType.getName();
-
-            if (builder.weaponTypeBlacklist.contains(weaponType)) {
-                Artifex.LOGGER.debug("Skipping registration of excluded general weapon: {}", itemId);
+            if (builderGet.weaponTypeBlacklist.contains(weaponType)) {
+                Artifex.LOGGER.debug("Skipping excluded weapon type: {}", itemId);
                 continue;
             }
 
-            RegistryObject<Item> result = builder.itemRegister.register(itemId, () -> {
-                Item item = weaponType.getMaker().create(this);
+            MaterialSpecialties matSpec = new MaterialSpecialties();
+            builderGet.specialtiesConfig.accept(matSpec);
+            Supplier<Map<AFSpecialty, Integer>> mergedSpecialties = weaponType.mergeSpecialties(matSpec);
+
+            RegistryObject<Item> registered = builderGet.itemRegister.register(itemId, () -> {
+                Item item = weaponType.getMaker().create(this, mergedSpecialties);
                 ITEM_TO_WEAPON_TYPE.put(item, weaponType);
                 return item;
             });
-            registeredWeaponsMap.put(weaponType, result);
 
+            registeredWeaponsMap.put(weaponType, registered);
         }
         ALL_MATERIALS.add(this);
     }
+
 
     public @Nullable Item getWeapon(AFWeaponType weaponType) {
         RegistryObject<Item> item = registeredWeaponsMap.get(weaponType);
@@ -70,13 +77,10 @@ public class AFMaterial {
         return item != null ? ITEM_TO_WEAPON_TYPE.get(item) : null;
     }
 
-    public Tier getItemTier() {
-        return itemTier;
-    }
+    public Tier getItemTier() { return itemTier; }
 
-    public Supplier<Item.Properties> getItemPropertiesSupplier() {
-        return itemProperties;
-    }
+    public Supplier<Item.Properties> getItemPropertiesSupplier() { return itemProperties; }
+
 
     public static Builder builder(DeferredRegister<Item> itemRegister, String materialId) {
         return new Builder(itemRegister, materialId);
@@ -89,6 +93,7 @@ public class AFMaterial {
         private Tier itemTier = Tiers.WOOD;
         private Supplier<Item.Properties> itemProperties = Item.Properties::new;
         private final List<AFWeaponType> weaponTypeBlacklist = new ObjectArrayList<>();
+        private Consumer<MaterialSpecialties> specialtiesConfig = s -> {};
 
         public Builder(DeferredRegister<Item> itemRegister, String materialId) {
             this.itemRegister = itemRegister;
@@ -114,8 +119,14 @@ public class AFMaterial {
             this.weaponTypeBlacklist.addAll(Arrays.asList(types));
             return this;
         }
+
+        public Builder specialties(Consumer<MaterialSpecialties> config) {
+            this.specialtiesConfig = config;
+            return this;
+        }
+
         public AFMaterial build() {
-            return new AFMaterial(this, itemTier, itemProperties);
+            return new AFMaterial(() -> this, itemTier, itemProperties);
         }
     }
 }

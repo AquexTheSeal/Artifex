@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -40,6 +41,9 @@ public class AFSpecialty {
     }
 
     public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
+    }
+
+    public void onPostShieldBlock(LivingEntity target, ItemStack itemStack, DamageSource source, float shieldedDamage, int specialityLevel) {
     }
 
     public static boolean hasSpecialty(Item item, AFSpecialty specialty) {

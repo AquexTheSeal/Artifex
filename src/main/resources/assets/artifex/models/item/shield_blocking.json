@@ -2,10 +2,14 @@
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"parent": "item/generated",
+	"textures": {
+		"0": "diamond/diamond_shield",
+		"particle": "diamond/diamond_shield"
+	},
 	"gui_light": "front",
 	"display": {
 		"thirdperson_righthand": {
-			"rotation": [-135, 45, -180],
+			"rotation": [-135, -135, -180],
 			"translation": [2.25, -1.75, -0.5]
 		},
 		"thirdperson_lefthand": {
@@ -13,7 +17,7 @@
 			"translation": [2.25, -1, 0.25]
 		},
 		"firstperson_righthand": {
-			"rotation": [5.63, -180, -5.63],
+			"rotation": [5.63, 0, 5.63],
 			"translation": [-8, 2.5, 0],
 			"scale": [0.68, 0.68, 0.68]
 		},
@@ -27,15 +31,15 @@
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
-			"rotation": [22.5, 155, 0],
+			"rotation": [22.5, -25, 0],
 			"scale": [0.8, 0.8, 0.8]
 		},
 		"head": {
 			"rotation": [0, -180, 0],
 			"translation": [0, 13, 7]
 		},
-		"on_shelf": {
-			"rotation": [0, -180, 0]
+		"fixed": {
+			"rotation": [0, 180, 0]
 		}
 	}
 }
