@@ -1,6 +1,6 @@
 {
   "parent": "artifex:item/handheld_long_middle",
   "textures": {
-    "layer0": "artifex:item/pole"
+    "layer0": "artifex:item/standard_pole"
   }
 }

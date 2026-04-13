@@ -9,7 +9,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.datagen.compat.MaterialBetterCombatPropertiesProvider;
-import org.celestialworkshop.artifex.datagen.material.MaterialRecipeProvider;
 import org.celestialworkshop.artifex.registry.AFItems;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,9 +34,10 @@ public class AFDataGenerators {
         generator.addProvider(event.includeServer(), new AFLootTableProvider(packOutput));
         generator.addProvider(event.includeServer(), new AFAdvancementProvider(packOutput, lookupProvider, efh));
         generator.addProvider(event.includeServer(), new AFGlobalLootModifierProvider(packOutput));
+        generator.addProvider(event.includeServer(), new AFRecipeProvider(packOutput));
 
         // Material
         generator.addProvider(event.includeServer(), new MaterialBetterCombatPropertiesProvider(packOutput, Artifex.MODID, AFItems.MATERIALS));
-        generator.addProvider(event.includeServer(), new MaterialRecipeProvider(packOutput, Artifex.MODID, AFItems.MATERIALS));
+
     }
 }

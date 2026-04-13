@@ -3,16 +3,16 @@
   "category": "equipment",
   "key": {
     "P": {
-      "item": "artifex:pole"
+      "item": "artifex:standard_pole"
     },
     "X": {
       "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
-    "  X",
-    " P ",
-    "P  "
+    "X",
+    "P",
+    "X"
   ],
   "result": {
     "item": "artifex:golden_javelin"

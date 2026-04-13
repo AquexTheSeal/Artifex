@@ -5,8 +5,8 @@
     "C": {
       "item": "minecraft:crossbow"
     },
-    "S": {
-      "item": "artifex:basic_hilt"
+    "R": {
+      "item": "artifex:standard_hilt"
     },
     "T": {
       "tag": "forge:string"
@@ -18,7 +18,7 @@
   "pattern": [
     "XCX",
     "XTX",
-    " S "
+    " R "
   ],
   "result": {
     "item": "artifex:iron_arbalest"

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "artifex:item/reinforced_hilt"
+    "layer0": "artifex:item/charred_stick"
   }
 }

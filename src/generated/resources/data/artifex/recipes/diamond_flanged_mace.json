@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "artifex:basic_hilt"
+    "R": {
+      "item": "artifex:standard_hilt"
     },
     "X": {
       "item": "minecraft:diamond"
     }
   },
   "pattern": [
-    " XX",
-    " SX",
-    " S "
+    "XXX",
+    " R ",
+    " R "
   ],
   "result": {
     "item": "artifex:diamond_flanged_mace"

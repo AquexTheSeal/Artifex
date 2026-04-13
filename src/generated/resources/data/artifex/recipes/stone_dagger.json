@@ -6,7 +6,7 @@
       "item": "artifex:basic_hilt"
     },
     "X": {
-      "item": "minecraft:barrier"
+      "tag": "minecraft:stone_tool_materials"
     }
   },
   "pattern": [

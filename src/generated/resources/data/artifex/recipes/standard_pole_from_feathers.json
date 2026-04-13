@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "artifex:charred_stick"
+    },
+    {
+      "item": "artifex:charred_stick"
+    },
+    {
+      "tag": "forge:feathers"
+    },
+    {
+      "tag": "forge:feathers"
+    }
+  ],
+  "result": {
+    "item": "artifex:standard_pole"
+  }
+}

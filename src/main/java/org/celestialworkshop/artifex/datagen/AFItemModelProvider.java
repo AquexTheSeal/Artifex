@@ -14,8 +14,9 @@ public class AFItemModelProvider extends MaterialItemModelProvider {
     @Override
     protected void registerModels() {
         super.registerModels();
+        this.handheldItem(AFItems.CHARRED_STICK.get());
         this.handheldItem(AFItems.BASIC_HILT.get());
-        this.handheldItem(AFItems.REINFORCED_HILT.get());
-        this.basicParentedItem(AFItems.POLE.get(), "artifex:item/handheld_long_middle");
+        this.handheldItem(AFItems.STANDARD_HILT.get());
+        this.basicParentedItem(AFItems.STANDARD_POLE.get(), "artifex:item/handheld_long_middle");
     }
 }

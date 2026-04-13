@@ -3,16 +3,15 @@
   "category": "equipment",
   "key": {
     "P": {
-      "item": "artifex:pole"
+      "item": "artifex:standard_pole"
     },
     "X": {
       "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
-    "XXX",
-    " P ",
-    "P  "
+    "XX",
+    "XP"
   ],
   "result": {
     "item": "artifex:golden_halberd"

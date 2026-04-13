@@ -5,6 +5,9 @@
     "C": {
       "item": "minecraft:crossbow"
     },
+    "S": {
+      "item": "artifex:basic_hilt"
+    },
     "X": {
       "item": "minecraft:iron_ingot"
     }
@@ -12,7 +15,7 @@
   "pattern": [
     " X ",
     "XCX",
-    " X "
+    " S "
   ],
   "result": {
     "item": "artifex:iron_crossbow"

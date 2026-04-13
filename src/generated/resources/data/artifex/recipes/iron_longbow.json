@@ -2,17 +2,20 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "artifex:basic_hilt"
+    "B": {
+      "item": "minecraft:bow"
+    },
+    "T": {
+      "tag": "forge:string"
     },
     "X": {
       "item": "minecraft:iron_ingot"
     }
   },
   "pattern": [
-    " XS",
-    "X S",
-    " XS"
+    "XXT",
+    "XB ",
+    "T  "
   ],
   "result": {
     "item": "artifex:iron_longbow"

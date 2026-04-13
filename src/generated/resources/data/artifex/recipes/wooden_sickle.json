@@ -2,17 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "artifex:basic_hilt"
+    "R": {
+      "item": "artifex:standard_hilt"
     },
     "X": {
-      "item": "minecraft:barrier"
+      "tag": "minecraft:planks"
     }
   },
   "pattern": [
     "XX",
-    " S",
-    " S"
+    " R"
   ],
   "result": {
     "item": "artifex:wooden_sickle"

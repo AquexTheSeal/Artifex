@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "artifex:basic_hilt"
+    "R": {
+      "item": "artifex:standard_hilt"
     },
     "X": {
-      "item": "minecraft:barrier"
+      "tag": "minecraft:stone_tool_materials"
     }
   },
   "pattern": [
     "XXX",
-    "XSX",
-    " S "
+    "XRX",
+    " R "
   ],
   "result": {
     "item": "artifex:stone_battleaxe"

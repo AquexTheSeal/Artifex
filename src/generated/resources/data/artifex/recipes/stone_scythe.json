@@ -3,16 +3,15 @@
   "category": "equipment",
   "key": {
     "P": {
-      "item": "artifex:pole"
+      "item": "artifex:standard_pole"
     },
     "X": {
-      "item": "minecraft:barrier"
+      "tag": "minecraft:stone_tool_materials"
     }
   },
   "pattern": [
-    "XX ",
-    " P ",
-    "P  "
+    "XX",
+    " P"
   ],
   "result": {
     "item": "artifex:stone_scythe"

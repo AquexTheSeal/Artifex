@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "X": {
-      "item": "minecraft:barrier"
+      "tag": "minecraft:stone_tool_materials"
     }
   },
   "pattern": [

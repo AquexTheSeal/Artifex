@@ -2,17 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "artifex:basic_hilt"
+    "B": {
+      "item": "minecraft:bow"
+    },
+    "R": {
+      "item": "artifex:standard_hilt"
     },
     "X": {
       "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
-    " XS",
-    "X S",
-    " XS"
+    "RX",
+    "XB"
   ],
   "result": {
     "item": "artifex:golden_bow"

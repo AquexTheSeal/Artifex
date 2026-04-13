@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -20,9 +21,10 @@ public class AFItems {
     // Datagen iteration purposes.
     public static final List<AFMaterial> MATERIALS = new ObjectArrayList<>();
 
+    public static final RegistryObject<Item> CHARRED_STICK = ITEMS.register("charred_stick", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> BASIC_HILT = ITEMS.register("basic_hilt", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> REINFORCED_HILT = ITEMS.register("reinforced_hilt", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> POLE = ITEMS.register("pole", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STANDARD_HILT = ITEMS.register("standard_hilt", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> STANDARD_POLE = ITEMS.register("standard_pole", () -> new Item(new Item.Properties()));
 
     public static final AFMaterial WOODEN_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "wooden").tier(Tiers.WOOD)
             .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)
@@ -51,7 +53,7 @@ public class AFItems {
 
     public static final AFMaterial NETHERITE_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "netherite").tier(Tiers.NETHERITE)
             .properties(() -> new Item.Properties().fireResistant())
-            .smithingConfig(() -> Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, () -> Items.NETHERITE_INGOT, DIAMOND_MATERIAL)
+            .smithingConfig(() -> Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE, () -> Ingredient.of(Items.NETHERITE_INGOT), DIAMOND_MATERIAL)
             .blacklist()
             .build()
     );

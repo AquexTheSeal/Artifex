@@ -2,17 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "S": {
-      "item": "artifex:basic_hilt"
+    "R": {
+      "item": "artifex:standard_hilt"
     },
     "X": {
       "item": "minecraft:gold_ingot"
     }
   },
   "pattern": [
-    "  X",
-    " X ",
-    " S "
+    "XX",
+    "X ",
+    "R "
   ],
   "result": {
     "item": "artifex:golden_odachi"

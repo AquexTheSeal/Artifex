@@ -5,8 +5,17 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:diamond"
+            "type": "artifex:ingredient",
+            "ingredients": [
+              {
+                "item": "artifex:basic_hilt"
+              },
+              {
+                "item": "artifex:standard_hilt"
+              },
+              {
+                "item": "artifex:standard_pole"
+              }
             ]
           }
         ]
