@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": {
+      "item": "artifex:pole"
+    },
+    "X": {
+      "item": "minecraft:barrier"
+    }
+  },
+  "pattern": [
+    "XXX",
+    " P ",
+    "P  "
+  ],
+  "result": {
+    "item": "artifex:stone_halberd"
+  },
+  "show_notification": true
+}

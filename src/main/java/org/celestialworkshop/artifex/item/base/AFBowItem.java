@@ -37,14 +37,14 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     }
 
     public @Nullable SoundEvent getShootSoundOverride() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW)) {
             return AFSoundEvents.LONGBOW_SHOOT.get();
         }
         return null;
     }
 
     public float getDrawSpeedMultiplier() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW)) {
             return 0.7F;
         }
         return 1.0F;
@@ -55,7 +55,7 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
             cap.setBoundItemStack(bowStack.copy());
         });
 
-        if (AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW)) {
             original.setDeltaMovement(original.getDeltaMovement().scale(1.8F));
         }
     }
@@ -67,6 +67,6 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
 
     @Override
     public int getComboTime() {
-        return AFMaterial.isWeaponType(this, AFWeaponType.LONGBOW) ? 60 : 30;
+        return AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW) ? 60 : 30;
     }
 }

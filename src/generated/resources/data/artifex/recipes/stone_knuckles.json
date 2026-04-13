@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "item": "minecraft:barrier"
+    }
+  },
+  "pattern": [
+    " X ",
+    "X X"
+  ],
+  "result": {
+    "item": "artifex:stone_knuckles"
+  },
+  "show_notification": true
+}

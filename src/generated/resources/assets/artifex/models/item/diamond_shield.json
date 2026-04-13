@@ -1,0 +1,14 @@
+{
+  "parent": "artifex:item/shield",
+  "overrides": [
+    {
+      "model": "artifex:item/diamond_shield_blocking",
+      "predicate": {
+        "minecraft:blocking": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "artifex:item/diamond_shield"
+  }
+}

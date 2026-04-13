@@ -3,7 +3,9 @@ package org.celestialworkshop.artifex;
 import com.mojang.datafixers.util.Either;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.TickEvent;
@@ -22,12 +24,13 @@ public class AFClientEvents {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         Minecraft mc = Minecraft.getInstance();
-        if (event.phase == TickEvent.Phase.END && mc.player != null) {
+        if (event.phase == TickEvent.Phase.END && mc.player != null && mc.level != null) {
 
             AFCreativeTabOverride.tick();
 
             if (mc.player.tickCount % 20 == 0) {
-                List<ItemStack> list = new ObjectArrayList<>(AFItems.ITEMS.getEntries().stream().map(obj -> new ItemStack(obj.get())).toList());
+                List<ItemStack> list = new ObjectArrayList<>(AFItems.ITEMS.getEntries().stream().map(obj -> new ItemStack(obj.get())).filter(stack -> !(stack.getItem() instanceof SmithingTemplateItem) && !(stack.getItem() instanceof BlockItem)).toList());
+                if (list.isEmpty()) return;
                 ItemStack next = list.get(mc.level.random.nextInt(list.size()));
 
                 if (AFCreativeTabOverride.currentStack.isEmpty()) {

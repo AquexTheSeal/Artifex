@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "artifex:basic_hilt"
+    },
+    "X": {
+      "item": "minecraft:barrier"
+    }
+  },
+  "pattern": [
+    "  X",
+    " X ",
+    " S "
+  ],
+  "result": {
+    "item": "artifex:stone_katana"
+  },
+  "show_notification": true
+}

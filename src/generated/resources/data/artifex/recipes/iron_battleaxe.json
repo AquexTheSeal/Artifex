@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "artifex:basic_hilt"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XSX",
+    " S "
+  ],
+  "result": {
+    "item": "artifex:iron_battleaxe"
+  },
+  "show_notification": true
+}

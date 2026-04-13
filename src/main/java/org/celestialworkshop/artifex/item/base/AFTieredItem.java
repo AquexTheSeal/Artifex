@@ -104,7 +104,7 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem {
 
     @Override
     public boolean canDisableShield(ItemStack stack, ItemStack shield, LivingEntity entity, LivingEntity attacker) {
-        AFWeaponType type = AFMaterial.getWeaponType(this);
+        AFWeaponType type = AFWeaponType.getWeaponType(this);
         if (type != null) {
             return switch (type) {
                 case BATTLEAXE, FLANGED_MACE, GREATSWORD -> true;

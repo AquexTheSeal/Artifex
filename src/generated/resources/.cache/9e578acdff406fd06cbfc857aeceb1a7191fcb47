@@ -1,4 +1,5 @@
-// 1.20.1	2026-04-12T16:23:05.080489	Item Models: artifex
+// 1.20.1	2026-04-13T10:14:01.2824976	Item Models: artifex
+e5d828d96a682e5f28d0c1edd9df0de1c0cf1382 assets/artifex/models/item/basic_hilt.json
 26326658b982a300ccd1ece410def360e0837c1a assets/artifex/models/item/diamond_arbalest.json
 a26d86f48926284022ed8555c18f5a8bbac28582 assets/artifex/models/item/diamond_arbalest_arrow.json
 4026f2b095aa48074ab5cdcaf3907bc0216148bb assets/artifex/models/item/diamond_arbalest_firework.json
@@ -159,6 +160,8 @@ a37f962afd470345e74af67257f9d4ce1bcdedd9 assets/artifex/models/item/netherite_sc
 3f7ce1db0d4866fab1d054e9e09adca4bd38a519 assets/artifex/models/item/netherite_spear.json
 795f07df28a9db5f66476d25e5c86051e05ed31f assets/artifex/models/item/netherite_war_door.json
 c832bca63edfc59d8f0c2e715e1a47e10b36c951 assets/artifex/models/item/netherite_war_door_blocking.json
+18379b34b9c85a3cd038130e688457cb25cbbdf7 assets/artifex/models/item/pole.json
+dc3fee211ce7b60cfd5d4c608462df319adc8a61 assets/artifex/models/item/reinforced_hilt.json
 e636b38aae2395340d440a183ad5647b1e505ac1 assets/artifex/models/item/stone_battleaxe.json
 905dd4e5d0f535339643789d847dc9ff4be4d207 assets/artifex/models/item/stone_buckler.json
 c74f882ad01daeddbf91d6e691d48fc75abc23d1 assets/artifex/models/item/stone_buckler_blocking.json

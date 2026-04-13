@@ -113,6 +113,8 @@ dependencies {
         jarJar.ranged(it, "[${mixinextras_version},)")
     }
 
+//    minecraftLibrary "org.mariuszgromada.math:MathParser.org-mXparser:6.1.0"
+
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
@@ -124,11 +126,11 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:playeranimator-658587:${player_animator_version}")
     implementation fg.deobf("curse.maven:better-combat-particle-1372768:${better_combat_particle_version}")
 
+    runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}")
     runtimeOnly fg.deobf("curse.maven:selene-499980:${moonlight_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-
 }
 
 tasks.named('processResources', ProcessResources).configure {

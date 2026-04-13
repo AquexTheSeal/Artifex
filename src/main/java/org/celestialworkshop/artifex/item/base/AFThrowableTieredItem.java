@@ -117,7 +117,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
     }
 
     public float getRenderScale() {
-        AFWeaponType type = AFMaterial.getWeaponType(this);
+        AFWeaponType type = AFWeaponType.getWeaponType(this);
         if (type != null) {
             switch (type) {
                 case SPEAR, JAVELIN: {
@@ -129,7 +129,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
     }
 
     public float getRenderTranslationOffset() {
-        AFWeaponType type = AFMaterial.getWeaponType(this);
+        AFWeaponType type = AFWeaponType.getWeaponType(this);
         if (type != null) {
             switch (type) {
                 case SPEAR, JAVELIN: {

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": {
+      "item": "artifex:pole"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "XX ",
+    " P ",
+    "P  "
+  ],
+  "result": {
+    "item": "artifex:iron_scythe"
+  },
+  "show_notification": true
+}

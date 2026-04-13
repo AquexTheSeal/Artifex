@@ -12,7 +12,7 @@ public class BetterCombatCompat {
         return ModList.get().isLoaded(BETTER_COMBAT_ID);
     }
 
-    public static AFSpecialty getKatanaOrOdachiMainSpecialty() {
+    public static AFSpecialty getSweepingOrSubstitute() {
         return isBTCPresent() ? AFSpecialties.FINESSE.get() : AFSpecialties.SWEEPING.get();
     }
 }

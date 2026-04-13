@@ -1,4 +1,4 @@
-package org.celestialworkshop.artifex.datagen;
+package org.celestialworkshop.artifex.datagen.material;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

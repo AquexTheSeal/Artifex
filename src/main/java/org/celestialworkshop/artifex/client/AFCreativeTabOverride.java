@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import org.celestialworkshop.artifex.config.AFClientConfig;
 
 public class AFCreativeTabOverride {
 
@@ -20,6 +21,11 @@ public class AFCreativeTabOverride {
     private static boolean swapped = false;
 
     public static boolean renderAnimatedIcon(GuiGraphics pGuiGraphics, CreativeModeTab pCreativeModeTab, Font font, int x, int y) {
+
+        if (!AFClientConfig.CUSTOM_CREATIVE_TAB_RENDER.get()) {
+            return false;
+        }
+
         Minecraft mc = Minecraft.getInstance();
         if (currentStack.isEmpty() || mc.player == null) return false;
 

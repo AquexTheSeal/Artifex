@@ -9,6 +9,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.registry.AFItems;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -21,9 +22,14 @@ import java.util.function.Supplier;
 public class AFMaterial {
 
     private static final ObjectArrayList<AFMaterial> ALL_MATERIALS = new ObjectArrayList<>();
-    private static final Reference2ObjectOpenHashMap<Item, AFWeaponType> ITEM_TO_WEAPON_TYPE = new Reference2ObjectOpenHashMap<>();
+    public static final Reference2ObjectOpenHashMap<Item, AFWeaponType> ITEM_TO_WEAPON_TYPE = new Reference2ObjectOpenHashMap<>();
 
     private final Object2ObjectOpenHashMap<AFWeaponType, RegistryObject<Item>> registeredWeaponsMap = new Object2ObjectOpenHashMap<>();
+    private final Supplier<Item> craftingHiltItem;
+    private final Supplier<Item> craftingReinforcedHiltItem;
+    private final Supplier<Item> craftingPoleItem;
+    private final Supplier<Item> craftingMaterialItem;
+    private final SmithingConfig smithingConfig;
 
     public final Tier itemTier;
     public final Supplier<Item.Properties> itemProperties;
@@ -32,6 +38,11 @@ public class AFMaterial {
         this.itemTier = itemTier;
         this.itemProperties = itemProperties;
         this.registerWeapons(builder);
+        this.craftingHiltItem = builder.get().craftingHiltItem;
+        this.craftingReinforcedHiltItem = builder.get().craftingReinforcedHiltItem;
+        this.craftingPoleItem = builder.get().craftingPoleItem;
+        this.craftingMaterialItem = builder.get().craftingMaterialItem;
+        this.smithingConfig = builder.get().smithingConfig;
     }
 
     private void registerWeapons(Supplier<Builder> builder) {
@@ -60,21 +71,33 @@ public class AFMaterial {
     }
 
 
-    public @Nullable Item getWeapon(AFWeaponType weaponType) {
+    public Item getWeapon(AFWeaponType weaponType) {
         RegistryObject<Item> item = registeredWeaponsMap.get(weaponType);
         return item != null ? item.get() : null;
     }
 
+    public Item getCraftingHiltItem() {
+        return craftingHiltItem.get();
+    }
+
+    public Item getCraftingReinforcedHiltItem() {
+        return craftingHiltItem.get();
+    }
+
+    public Item getCraftingPoleItem() {
+        return craftingPoleItem.get();
+    }
+
+    public Item getCraftingMaterialItem() {
+        return craftingMaterialItem.get();
+    }
+
+    public @Nullable SmithingConfig getSmithingConfig() {
+        return smithingConfig;
+    }
+
     public Collection<AFWeaponType> getAvailableWeaponTypes() {
         return registeredWeaponsMap.keySet();
-    }
-
-    public static boolean isWeaponType(Item item, AFWeaponType weaponType) {
-        return getWeaponType(item) == weaponType;
-    }
-
-    public static @Nullable AFWeaponType getWeaponType(Item item) {
-        return item != null ? ITEM_TO_WEAPON_TYPE.get(item) : null;
     }
 
     public Tier getItemTier() { return itemTier; }
@@ -95,9 +118,40 @@ public class AFMaterial {
         private final List<AFWeaponType> weaponTypeBlacklist = new ObjectArrayList<>();
         private Consumer<MaterialSpecialties> specialtiesConfig = s -> {};
 
+        protected Supplier<Item> craftingHiltItem = AFItems.BASIC_HILT;
+        protected Supplier<Item> craftingReinforcedHiltItem = AFItems.REINFORCED_HILT;
+        protected Supplier<Item> craftingPoleItem = AFItems.POLE;
+        protected Supplier<Item> craftingMaterialItem = () -> itemTier.getRepairIngredient().getItems()[0].getItem();
+        protected SmithingConfig smithingConfig;
+
         public Builder(DeferredRegister<Item> itemRegister, String materialId) {
             this.itemRegister = itemRegister;
             this.materialId = materialId;
+        }
+
+        public Builder craftingHiltItem(Supplier<Item> value) {
+            this.craftingHiltItem = value;
+            return this;
+        }
+
+        public Builder craftingReinforcedHiltItem(Supplier<Item> value) {
+            this.craftingReinforcedHiltItem = value;
+            return this;
+        }
+
+        public Builder craftingPoleItem(Supplier<Item> value) {
+            this.craftingPoleItem = value;
+            return this;
+        }
+
+        public Builder craftingMaterialItem(Supplier<Item> value) {
+            this.craftingMaterialItem = value;
+            return this;
+        }
+
+        public Builder smithingConfig(Supplier<Item> template, Supplier<Item> ingot, AFMaterial baseMaterial) {
+            this.smithingConfig = new SmithingConfig(template, ingot, baseMaterial);
+            return this;
         }
 
         public Builder tier(Tier tier) {
@@ -129,4 +183,6 @@ public class AFMaterial {
             return new AFMaterial(() -> this, itemTier, itemProperties);
         }
     }
+
+    public record SmithingConfig(Supplier<Item> template, Supplier<Item> ingot, AFMaterial baseMaterial) {}
 }

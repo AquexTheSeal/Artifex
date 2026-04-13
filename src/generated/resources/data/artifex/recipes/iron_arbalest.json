@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:crossbow"
+    },
+    "S": {
+      "item": "artifex:basic_hilt"
+    },
+    "T": {
+      "tag": "forge:string"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "XCX",
+    "XTX",
+    " S "
+  ],
+  "result": {
+    "item": "artifex:iron_arbalest"
+  },
+  "show_notification": true
+}

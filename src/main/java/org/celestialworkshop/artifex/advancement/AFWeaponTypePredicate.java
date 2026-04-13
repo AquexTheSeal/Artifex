@@ -7,7 +7,6 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.Artifex;
-import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +22,7 @@ public class AFWeaponTypePredicate extends ItemPredicate {
 
     @Override
     public boolean matches(ItemStack stack) {
-        return AFMaterial.isWeaponType(stack.getItem(), weaponType);
+        return AFWeaponType.isWeaponType(stack.getItem(), weaponType);
     }
 
     public static AFWeaponTypePredicate fromJson(JsonObject json) {

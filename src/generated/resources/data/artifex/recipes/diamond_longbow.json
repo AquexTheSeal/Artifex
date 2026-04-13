@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "artifex:basic_hilt"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    " XS",
+    "X S",
+    " XS"
+  ],
+  "result": {
+    "item": "artifex:diamond_longbow"
+  },
+  "show_notification": true
+}

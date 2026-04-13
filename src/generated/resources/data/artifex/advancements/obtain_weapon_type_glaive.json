@@ -1,0 +1,38 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_glaive": {
+      "conditions": {
+        "items": [
+          {
+            "type": "artifex:weapon_type",
+            "weapon_type": "glaive"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_glaive.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "artifex:iron_glaive",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_glaive.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_glaive"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -24,17 +24,17 @@ public class ImpactComboSpecialty extends ComboBasedSpecialty {
     public float manageDamage(LivingEntity attacker, LivingEntity target, float originalDamage, int specialityLevel) {
         target.invulnerableTime = 0;
         AFEntityData entityData = AFEntityDataCapability.get(attacker).resolve().get();
-        return originalDamage + entityData.comboCount * originalDamage * calculateDamageIncrement(specialityLevel);
+        return originalDamage + (entityData.comboCount * originalDamage * getDamageIncrement(specialityLevel));
+    }
+
+    private float getDamageIncrement(int specialityLevel) {
+        return specialityLevel * 0.1F;
     }
 
     @Override
     public Object[] getDisplayDescriptionArgs(int level) {
         return new Object[]{
-                asPercentFormat(calculateDamageIncrement(level))
+                asPercentFormat(getDamageIncrement(level))
         };
-    }
-
-    private float calculateDamageIncrement(int level) {
-        return level * 0.1f;
     }
 }

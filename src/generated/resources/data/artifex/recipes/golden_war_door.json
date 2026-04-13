@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "H": {
+      "item": "minecraft:iron_trapdoor"
+    },
+    "X": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "XXX",
+    "XHX",
+    "XXX"
+  ],
+  "result": {
+    "item": "artifex:golden_war_door"
+  },
+  "show_notification": true
+}

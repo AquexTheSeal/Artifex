@@ -55,7 +55,7 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
     }
 
     public boolean allowUseSprinting(Player player) {
-        return AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER);
+        return AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER);
     }
 
     public void onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource damageSource, float incomingDamage) {
@@ -63,7 +63,7 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
             specialty.onPostShieldBlock(entity, stack, damageSource, incomingDamage, level);
         });
 
-        if (AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER)) {
             if (entity instanceof Player player) {
                 int timer = (int) (20 + incomingDamage * 4);
                 player.getCooldowns().addCooldown(stack.getItem(), Mth.clamp(timer, 40, 150));
@@ -73,10 +73,10 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
     }
 
     public float getShieldDisableMultiplier(Player player) {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER)) {
             return 1.5F;
         }
-        if (AFMaterial.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
             return 0.0F;
         }
         return 1.0F;
@@ -84,10 +84,10 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
 
     @Override
     public float getItemUsingSlowdownMultiplier() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.BUCKLER)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER)) {
             return 5.0F;
         }
-        if (AFMaterial.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
             return 0.25F;
         }
         return 1.0F;

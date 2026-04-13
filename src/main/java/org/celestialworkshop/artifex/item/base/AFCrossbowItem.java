@@ -37,14 +37,14 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     public @Nullable SoundEvent getLoadingStartSoundOverride(int enchantmentLevel) {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return AFSoundEvents.ARBALEST_START.get();
         }
         return null;
     }
 
     public @Nullable SoundEvent getLoadingEndSoundOverride() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return AFSoundEvents.ARBALEST_LOADED.get();
         }
         return null;
@@ -55,21 +55,21 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     public @Nullable SoundEvent getShootSoundOverride() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return AFSoundEvents.ARBALEST_SHOOT.get();
         }
         return null;
     }
 
     public float getChargingSpeedReductionScale(ItemStack crossbowStack) {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return 3.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
         }
         return 1.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.05F);
     }
 
     public boolean playChargeSoundEarlier() {
-        return AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST);
+        return AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST);
     }
 
     public void modifyArrowProperties(ItemStack crossbowStack, AbstractArrow arrow) {
@@ -78,7 +78,7 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
             cap.setBoundItemStack(crossbowStack.copy());
         });
 
-        if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(2.0F));
             arrow.hasImpulse = true;
         }
@@ -86,12 +86,12 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
 
     @Override
     public int getComboTime() {
-        return AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST) ? 80 : 30;
+        return AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST) ? 80 : 30;
     }
 
     @Override
     public float getItemUsingSlowdownMultiplier() {
-        if (AFMaterial.isWeaponType(this, AFWeaponType.ARBALEST)) {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return 0.5F;
         }
         return 1.0F;

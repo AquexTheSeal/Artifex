@@ -5,11 +5,17 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import org.celestialworkshop.artifex.config.AFClientConfig;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
 
 public class ComboOverlay {
 
     public static void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
+
+        if (!AFClientConfig.COMBO_OVERLAY_RENDER.get()) {
+            return;
+        }
+
         Minecraft instance = Minecraft.getInstance();
 
         if (instance.player != null && ItemStackUtil.hasComboBasedWeapon(instance.player.getMainHandItem())) {

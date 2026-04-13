@@ -1,0 +1,14 @@
+{
+  "parent": "artifex:item/shield_long",
+  "overrides": [
+    {
+      "model": "artifex:item/diamond_war_door_blocking",
+      "predicate": {
+        "minecraft:blocking": 1.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "artifex:item/diamond_war_door"
+  }
+}

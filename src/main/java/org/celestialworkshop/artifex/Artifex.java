@@ -4,8 +4,12 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.celestialworkshop.artifex.config.AFClientConfig;
+import org.celestialworkshop.artifex.config.AFCommonConfig;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.registry.*;
 import org.slf4j.Logger;
@@ -29,6 +33,9 @@ public class Artifex {
         AFEnchantments.ENCHANTMENTS.register(modEventBus);
 
         AFNetwork.register();
+        
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AFCommonConfig.SPEC, "artifex/artifex-common.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AFClientConfig.SPEC, "artifex/artifex-client.toml");
     }
 
     public static ResourceLocation prefix(String path) {

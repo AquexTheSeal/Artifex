@@ -1,0 +1,6 @@
+{
+  "parent": "artifex:item/shield_long_blocking",
+  "textures": {
+    "layer0": "artifex:item/diamond_war_door"
+  }
+}
