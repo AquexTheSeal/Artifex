@@ -143,6 +143,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_description").withStyle(ChatFormatting.DARK_GRAY));
         AFAmmoDataCapability.get(pStack).ifPresent(cap -> {
             pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_ammo_stack", cap.getAmmo(), cap.getMaxAmmo(pStack)).withStyle(ChatFormatting.GRAY));
         });

@@ -33,8 +33,8 @@ public enum AFWeaponType {
             "  X", " X ", " R "),
 
     BATTLEAXE("battleaxe", Category.MELEE,
-            () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.EXECUTE.get(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 5.0F, 0.8F, -0.1F, 0.0F, false, spec),
+            () -> Map.of(AFSpecialties.EXECUTE.get(), 2),
+            (mat, spec) -> new AFTieredItem(mat, 7.0F, 0.8F, -0.1F, 0.0F, false, spec),
             "XXX", "XRX", " R "),
 
     FLANGED_MACE("flanged_mace", Category.MELEE,

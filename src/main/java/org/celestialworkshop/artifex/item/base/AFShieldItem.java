@@ -2,6 +2,8 @@ package org.celestialworkshop.artifex.item.base;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,11 +14,15 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -96,5 +102,16 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
     @Override
     public boolean isValidRepairItem(ItemStack pToRepair, ItemStack pRepair) {
         return this.getMaterial().getItemTier().getRepairIngredient().test(pRepair);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        AFWeaponType type = AFWeaponType.getWeaponType(this);
+        if (type == AFWeaponType.BUCKLER) {
+            pTooltip.add(Component.translatable("tooltip.artifex.buckler_description").withStyle(ChatFormatting.DARK_GRAY));
+        } else if (type == AFWeaponType.WAR_DOOR) {
+            pTooltip.add(Component.translatable("tooltip.artifex.war_door_description").withStyle(ChatFormatting.DARK_GRAY));
+        }
     }
 }

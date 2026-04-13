@@ -62,10 +62,13 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     public float getChargingSpeedReductionScale(ItemStack crossbowStack) {
+        float multiplier;
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
-            return 3.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
+            multiplier = 3.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.2F);
+        } else {
+            multiplier = 1.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.05F);
         }
-        return 1.0F - (this.getMaterial().getItemTier().getAttackDamageBonus() * 0.05F);
+        return multiplier;
     }
 
     public boolean playChargeSoundEarlier() {

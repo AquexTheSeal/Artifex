@@ -44,10 +44,11 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     }
 
     public float getDrawSpeedMultiplier() {
+        float multiplier = 1.0F;
         if (AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW)) {
-            return 0.7F;
+            multiplier *= 0.7F;
         }
-        return 1.0F;
+        return multiplier;
     }
 
     public void modifyArrowProperties(ItemStack bowStack, AbstractArrow original) {

@@ -1,5 +1,7 @@
 package org.celestialworkshop.artifex.registry;
 
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.registries.DeferredRegister;

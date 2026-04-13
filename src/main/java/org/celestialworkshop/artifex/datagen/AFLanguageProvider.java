@@ -25,6 +25,10 @@ public class AFLanguageProvider extends LanguageProvider {
 
         this.add("item_group.artifex.artifex", "Artifex");
 
+        this.add("tooltip.artifex.throwable_description", "This weapon can be thrown as a projectile.");
+        this.add("tooltip.artifex.buckler_description", "Using this shield won't slow the player down. Disables for a certain amount of time when taking damage (scales with damage received).");
+        this.add("tooltip.artifex.war_door_description", "Using this shield can heavily slow the player down. Disabling cooldown is significantly reduced compared to other shields.");
+
         this.add("tooltip.artifex.throwable_ammo_stack", "< Ammo: %s/%s >");
         this.add("tooltip.artifex.specialty", "Weapon Class Specialties");
 

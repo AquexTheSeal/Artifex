@@ -180,6 +180,9 @@
   "material_specialty.artifex.sweeping_description": "Sweeping attacks deal extra damage equal to %s of the focused damage.",
   "material_specialty.artifex.two_handed": "Two-Handed",
   "material_specialty.artifex.two_handed_description": "Hides your off-hand when held; cannot be equipped in the off-hand slot.",
+  "tooltip.artifex.buckler_description": "Using this shield won't slow the player down. Disables for a certain amount of time when taking damage (scales with damage received).",
   "tooltip.artifex.specialty": "Weapon Class Specialties",
-  "tooltip.artifex.throwable_ammo_stack": "< Ammo: %s/%s >"
+  "tooltip.artifex.throwable_ammo_stack": "< Ammo: %s/%s >",
+  "tooltip.artifex.throwable_description": "This weapon can be thrown as a projectile.",
+  "tooltip.artifex.war_door_description": "Using this shield can heavily slow the player down. Disabling cooldown is significantly reduced compared to other shields."
 }
