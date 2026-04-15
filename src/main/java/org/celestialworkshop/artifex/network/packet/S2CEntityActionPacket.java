@@ -1,10 +1,11 @@
-package org.celestialworkshop.artifex.network;
+package org.celestialworkshop.artifex.network.packet;
 
 import it.unimi.dsi.fastutil.objects.Object2FloatArrayMap;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
+import org.celestialworkshop.artifex.network.ClientPacketHandler;
 
 import java.util.Map;
 import java.util.function.BiConsumer;

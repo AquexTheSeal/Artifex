@@ -6,13 +6,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import org.celestialworkshop.artifex.network.packet.S2CEntityActionPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
 
 import java.util.Map;
 
-/**
- * Client-side packet handler to avoid loading client classes on the server.
- * All methods in this class are only called on the client side via DistExecutor.
- */
 public class ClientPacketHandler {
 
     public static void handleEntityAction(S2CEntityActionPacket packet) {
@@ -24,11 +23,7 @@ public class ClientPacketHandler {
             case FORCE_SYNC_DELTA -> {
                 Entity entity = level.getEntity(packet.id());
                 if (entity != null) {
-                    entity.setDeltaMovement(
-                            parameters.get("DeltaX"),
-                            parameters.get("DeltaY"),
-                            parameters.get("DeltaZ")
-                    );
+                    entity.setDeltaMovement(parameters.get("DeltaX"), parameters.get("DeltaY"), parameters.get("DeltaZ"));
                 }
             }
             default -> throw new IllegalStateException("Unexpected value: " + packet.action());

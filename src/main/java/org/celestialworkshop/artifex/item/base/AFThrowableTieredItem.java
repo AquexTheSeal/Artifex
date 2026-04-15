@@ -22,7 +22,7 @@ import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.network.AFNetwork;
-import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEnchantments;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.jetbrains.annotations.Nullable;

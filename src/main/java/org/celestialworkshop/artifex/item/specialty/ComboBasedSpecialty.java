@@ -7,7 +7,7 @@ import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFEntityData;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.network.AFNetwork;
-import org.celestialworkshop.artifex.network.S2CSyncComboStatePacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
 
 import java.util.UUID;
 

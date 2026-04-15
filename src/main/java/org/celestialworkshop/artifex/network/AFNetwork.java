@@ -6,6 +6,9 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.network.packet.S2CEntityActionPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
 
 public class AFNetwork {
     private static final String PROTOCOL_VERSION = "1.0";

@@ -23,7 +23,7 @@ import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
-import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEntities;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.ItemStackUtil;

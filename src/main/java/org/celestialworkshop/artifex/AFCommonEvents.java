@@ -19,7 +19,7 @@ import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
-import org.celestialworkshop.artifex.network.S2CSyncComboStatePacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
 import org.celestialworkshop.artifex.registry.AFAttributes;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
