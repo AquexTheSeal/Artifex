@@ -1,10 +1,10 @@
 package org.celestialworkshop.artifex.network;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 
 import java.util.function.Supplier;
 
@@ -22,14 +22,7 @@ public record S2CSyncComboStatePacket(ItemStack stack, int count, int timer) {
 
     public static void handle(S2CSyncComboStatePacket packet, Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.player != null) {
-                AFEntityDataCapability.get(minecraft.player).ifPresent(cap -> {
-                    cap.comboItemStack = packet.stack;
-                    cap.comboCount = packet.count;
-                    cap.comboTimer = packet.timer;
-                });
-            }
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleSyncComboState(packet));
         });
         context.get().setPacketHandled(true);
     }

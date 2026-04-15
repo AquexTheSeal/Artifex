@@ -1,10 +1,9 @@
 package org.celestialworkshop.artifex.network;
 
 import it.unimi.dsi.fastutil.objects.Object2FloatArrayMap;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.Map;
@@ -29,21 +28,7 @@ public record S2CEntityActionPacket(int id, Action action, Map<String, Float> pa
 
     public static void handle(S2CEntityActionPacket packet, Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
-            ClientLevel level = Minecraft.getInstance().level;
-            Map<String, Float> parameters = packet.parameters();
-            switch (packet.action()) {
-                case FORCE_SYNC_DELTA -> {
-                    Entity entity = level.getEntity(packet.id());
-                    if (entity != null) {
-                        entity.setDeltaMovement(
-                                parameters.get("DeltaX"),
-                                parameters.get("DeltaY"),
-                                parameters.get("DeltaZ")
-                        );
-                    }
-                }
-                default -> throw new IllegalStateException("Unexpected value: " + packet.action());
-            }
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleEntityAction(packet));
         });
         context.get().setPacketHandled(true);
     }
