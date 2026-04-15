@@ -51,7 +51,7 @@ public class AFSpecialty {
     }
 
     public ResourceLocation getIcon() {
-        return ResourceLocation.fromNamespaceAndPath(getId().getNamespace(), "textures/icons/specialties/" + getId().getPath() + ".png");
+        return ResourceLocation.fromNamespaceAndPath(getId().getNamespace(), "textures/icons/specialty/" + getId().getPath() + ".png");
     }
 
     public MutableComponent getDisplayName(int level) {

@@ -12,7 +12,6 @@ import org.celestialworkshop.artifex.config.AFClientConfig;
 public class AFCreativeTabOverride {
 
     private static final float ANIM_DURATION = 20f;
-    private static final float ANIM_ANGLE = 180f;
 
     public static ItemStack currentStack = ItemStack.EMPTY;
     public static ItemStack nextStack = ItemStack.EMPTY;
@@ -41,18 +40,10 @@ public class AFCreativeTabOverride {
             swapped = true;
         }
 
-        float angle;
-        if (delta < 0.5f) {
-            float e = easeInExpo(delta * 2f);
-            angle = e * ANIM_ANGLE;
-        } else {
-            float e = easeOutExpo((delta - 0.5f) * 2f);
-            angle = ANIM_ANGLE + (e * ANIM_ANGLE);
-        }
+        float angle = easeInOutExpo(delta, 180);
 
         pose.mulPose(Axis.ZP.rotationDegrees(angle));
         pGuiGraphics.renderItem(currentStack, -8, -8);
-        pGuiGraphics.renderItemDecorations(font, currentStack, -8, -8);
 
         pose.popPose();
 
@@ -70,6 +61,18 @@ public class AFCreativeTabOverride {
         nextStack = next;
         animTick = 0f;
         swapped = false;
+    }
+
+    private static float easeInOutExpo(float delta, float animAngle) {
+        float angle;
+        if (delta < 0.5f) {
+            float e = easeInExpo(delta * 2f);
+            angle = e * animAngle;
+        } else {
+            float e = easeOutExpo((delta - 0.5f) * 2f);
+            angle = animAngle + (e * animAngle);
+        }
+        return angle;
     }
 
     private static float easeInExpo(float t) {

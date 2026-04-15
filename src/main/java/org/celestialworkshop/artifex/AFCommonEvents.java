@@ -2,9 +2,13 @@ package org.celestialworkshop.artifex;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +20,8 @@ import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncComboStatePacket;
+import org.celestialworkshop.artifex.registry.AFAttributes;
+import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
 
 import java.util.Map;
@@ -79,5 +85,29 @@ public class AFCommonEvents {
             event.addCapability(Artifex.prefix("ammo"), provider);
             event.addListener(provider::invalidate);
         }
+    }
+
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+        AttributeInstance damageReduction = event.getEntity().getAttribute(AFAttributes.DAMAGE_REDUCTION.get());
+        if (damageReduction != null && damageReduction.getValue() > 0) {
+            float amount = event.getAmount();
+            float reduction = (float) damageReduction.getValue();
+            event.setAmount(amount * (1.0F - reduction));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLootingLevelEvent(LootingLevelEvent event) {
+        int result = event.getLootingLevel();
+        if (event.getDamageSource().getEntity() instanceof LivingEntity entity) {
+            ItemStack weaponStack = entity.getMainHandItem();
+            if (weaponStack.getItem() instanceof AFPropertyItem af) {
+                if (af.getSpecialties().containsKey(AFSpecialties.BOUNTIFUL_HARVEST.get())) {
+                    result += af.getSpecialties().get(AFSpecialties.BOUNTIFUL_HARVEST.get());
+                }
+            }
+        }
+        event.setLootingLevel(result);
     }
 }

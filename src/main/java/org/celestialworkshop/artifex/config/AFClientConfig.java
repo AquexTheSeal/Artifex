@@ -12,8 +12,8 @@ public class AFClientConfig {
     static {
         BUILDER.push("Artifex Client Settings");
 
-         CUSTOM_CREATIVE_TAB_RENDER = BUILDER.comment("Render custom creative tab icon?")
-                 .define("customCreativeIcon", true);
+        CUSTOM_CREATIVE_TAB_RENDER = BUILDER.comment("Render custom creative tab icon?")
+                .define("customCreativeIcon", true);
 
         COMBO_OVERLAY_RENDER = BUILDER.comment("Render weapon combo overlay?")
                 .define("comboOverlay", true);

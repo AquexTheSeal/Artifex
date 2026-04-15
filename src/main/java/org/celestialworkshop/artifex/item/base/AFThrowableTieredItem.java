@@ -3,7 +3,6 @@ package org.celestialworkshop.artifex.item.base;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -25,6 +24,7 @@ import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEnchantments;
+import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -84,7 +84,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
             }
 
             pLevel.addFreshEntity(projectile);
-            pLevel.playSound(null, projectile, SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 1.0F, 0.75F);
+            pLevel.playSound(null, projectile, AFSoundEvents.THROWABLE_THROWN.get(), SoundSource.PLAYERS, 1.0F, 1.25F);
  
             if (!player.getAbilities().instabuild) {
                 AFAmmoDataCapability.get(pStack).ifPresent(cap -> {

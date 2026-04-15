@@ -1,7 +1,5 @@
 package org.celestialworkshop.artifex.registry;
 
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,7 +23,10 @@ public class AFSpecialties {
     public static final RegistryObject<AFSpecialty> FINESSE = SPECIALTIES.register("finesse", () -> new FinesseSpecialty(AFSpecialty.Category.BENEFICIAL));
     public static final RegistryObject<AFSpecialty> ARMOR_PIERCER = SPECIALTIES.register("armor_piercer", () -> new ArmorPiercerSpecialty(AFSpecialty.Category.BENEFICIAL));
     public static final RegistryObject<AFSpecialty> SHOCKWAVE = SPECIALTIES.register("shockwave", () -> new ShockwaveSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> CRIPPLING = SPECIALTIES.register("crippling", () -> new CripplingSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> UNSTOPPABLE = SPECIALTIES.register("unstoppable", () -> new UnstoppableSpecialty(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> BOUNTIFUL_HARVEST = SPECIALTIES.register("bountiful_harvest", () -> new LevelArgOnly(AFSpecialty.Category.BENEFICIAL));
 
     public static final RegistryObject<AFSpecialty> TWO_HANDED = SPECIALTIES.register("two_handed", () -> new AFSpecialty(AFSpecialty.Category.HARMFUL));
-
+    public static final RegistryObject<AFSpecialty> HINDERING = SPECIALTIES.register("hindering", () -> new HinderingSpecialty(AFSpecialty.Category.HARMFUL));
 }

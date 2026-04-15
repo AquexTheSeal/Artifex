@@ -1,14 +1,17 @@
 package org.celestialworkshop.artifex.api;
 
+import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import net.minecraft.world.item.Item;
 import org.celestialworkshop.artifex.compat.BetterCombatCompat;
 import org.celestialworkshop.artifex.item.base.*;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
 import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public enum AFWeaponType {
 
@@ -23,8 +26,8 @@ public enum AFWeaponType {
             "X", "S"),
 
     SICKLE("sickle", Category.MELEE,
-            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 2.0F, 1.8F, 0.1F, 0.0F, true, spec),
+            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 1, AFSpecialties.BOUNTIFUL_HARVEST.get(), 2),
+            (mat, spec) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.1F, 0.0F, true, spec),
             "XX", " R"),
 
     KATANA("katana", Category.MELEE,
@@ -48,13 +51,13 @@ public enum AFWeaponType {
             "X", "S"),
 
     JAVELIN("javelin", Category.RANGED_MELEE,
-            () -> Map.of(),
+            () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1),
             (mat, spec) -> new AFThrowableTieredItem(mat, 3.0F, 1.2F, 0.0F, 1.25F, false, 4.5F, 3.0F, spec),
             "X", "P", "X"),
 
     SPEAR("spear", Category.RANGED_MELEE,
-            () -> Map.of(),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 3.0F, 1.1F, 0.0F, 1.25F, false, 5.0F, 2.5F, spec),
+            () -> Map.of(AFSpecialties.CRIPPLING.get(), 1),
+            (mat, spec) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 0.0F, 1.5F, false, 5.0F, 2.5F, spec),
             "X", "P"),
 
     BOW("bow", Category.RANGED,
@@ -78,8 +81,8 @@ public enum AFWeaponType {
             "XCX", "XTX", " R "),
 
     GLAIVE("glaive", Category.MELEE,
-            () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 3.5F, 1.6F, 0.0F, 1.0F, true, spec),
+            () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.FINESSE.get(), 3),
+            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.0F, 0.0F, 0.5F, true, spec),
             " X ", "XP "),
 
     HALBERD("halberd", Category.MELEE,
@@ -88,18 +91,18 @@ public enum AFWeaponType {
             "XX", "XP"),
 
     SCYTHE("scythe", Category.MELEE,
-            () -> Map.of(AFSpecialties.SWEEPING.get(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.4F, 0.0F, 0.5F, true, spec),
+            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 2, AFSpecialties.BOUNTIFUL_HARVEST.get(), 1),
+            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.4F, 0.0F, 1.0F, true, spec),
             "XX", " P"),
 
     GREATSWORD("greatsword", Category.MELEE,
-            () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 5.0F, 0.85F, -0.1F, 1.0F, true, spec),
+            () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.UNSTOPPABLE.get(), 1, AFSpecialties.HINDERING.get(), 1),
+            (mat, spec) -> new AFTieredItem(mat, 6.0F, 1.0F, -0.1F, 1.0F, true, spec),
             " X ", " X ", " R "),
 
     ODACHI("odachi", Category.MELEE,
             () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 1, AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.2F, 0.0F, 1.0F, true, spec),
+            (mat, spec) -> new AFTieredItem(mat, 4.5F, 1.2F, 0.0F, 1.25F, true, spec),
             "XX", "X ", "R "),
 
     BUCKLER("buckler", Category.SHIELD,
@@ -171,7 +174,14 @@ public enum AFWeaponType {
                 }
             }
 
-            return merged;
+            return merged.entrySet().stream()
+                    .sorted(Map.Entry.comparingByKey(Comparator.comparing(AFSpecialty::getCategory)))
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (e1, e2) -> e1,
+                            Object2IntArrayMap::new
+                    ));
         };
     }
 

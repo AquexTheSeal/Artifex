@@ -25,12 +25,14 @@ public class Artifex {
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         AFSpecialties.SPECIALTIES.register(modEventBus);
+        AFAttributes.ATTRIBUTES.register(modEventBus);
         AFCreativeTabs.CREATIVE_TABS.register(modEventBus);
         AFItems.ITEMS.register(modEventBus);
         AFEntities.ENTITIES.register(modEventBus);
         AFSoundEvents.SOUND_EVENTS.register(modEventBus);
         AFParticleTypes.PARTICLE_TYPES.register(modEventBus);
         AFEnchantments.ENCHANTMENTS.register(modEventBus);
+        AFLootModifiers.LOOT_MODIFIERS.register(modEventBus);
 
         AFNetwork.register();
         

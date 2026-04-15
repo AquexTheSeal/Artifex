@@ -24,6 +24,9 @@ public class AFSoundEvents {
     public static final RegistryObject<SoundEvent> ARBALEST_LOADED = registerSoundEvent("arbalest_loaded");
     public static final RegistryObject<SoundEvent> ARBALEST_SHOOT = registerSoundEvent("arbalest_shoot");
 
+    public static final RegistryObject<SoundEvent> THROWABLE_IMPACT = registerSoundEvent("throwable_impact");
+    public static final RegistryObject<SoundEvent> THROWABLE_THROWN = registerSoundEvent("throwable_thrown");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         return registerSoundEvent(name, 1);
     }

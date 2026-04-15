@@ -9,7 +9,12 @@ import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncComboStatePacket;
 
+import java.util.UUID;
+
 public class ComboBasedSpecialty extends AFSpecialty {
+
+    public static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("66f7556c-b7be-40da-bae2-3df032e6b1a2");
+    public static final UUID ATTACK_SPEED_MODIFIER_UUID = UUID.fromString("ee78e25b-5c1a-4cd5-8df3-4ee0dec4d723");
 
     public ComboBasedSpecialty(Category category) {
         super(category);

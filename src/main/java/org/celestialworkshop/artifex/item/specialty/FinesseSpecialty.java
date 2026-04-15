@@ -10,12 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.capability.AFEntityData;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 
-import java.util.UUID;
-
 public class FinesseSpecialty extends ComboBasedSpecialty {
-
-    public static final UUID MOVEMENT_SPEED_MODIFIER_UUID = UUID.fromString("66f7556c-b7be-40da-bae2-3df032e6b1a2");
-    public static final UUID ATTACK_SPEED_MODIFIER_UUID = UUID.fromString("ee78e25b-5c1a-4cd5-8df3-4ee0dec4d723");
 
     public FinesseSpecialty(Category category) {
         super(category);
@@ -59,16 +54,11 @@ public class FinesseSpecialty extends ComboBasedSpecialty {
     @Override
     public Object[] getDisplayDescriptionArgs(int level) {
         return new Object[]{
-                asPercentFormat(calculateSpeedIncrement(level)),
-                asPercentFormat(calculateMaxCombo(level) * calculateSpeedIncrement(level))
+                asPercentFormat(calculateSpeedIncrement(level))
         };
     }
 
     private float calculateSpeedIncrement(int level) {
         return level * 0.1f;
-    }
-
-    private int calculateMaxCombo(int level) {
-        return 5 + level;
     }
 }

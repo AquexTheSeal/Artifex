@@ -19,6 +19,7 @@ import net.minecraftforge.common.ToolActions;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
+import org.celestialworkshop.artifex.registry.AFSpecialties;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -99,7 +100,12 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem {
 
     @Override
     public int getComboTime() {
-        return Mth.clamp(Math.round(20.0F / this.attackSpeed) + 5, 8, 80);
+        int result = Mth.clamp(Math.round(20.0F / this.attackSpeed) + 5, 8, 80);
+        if (this.getSpecialties().containsKey(AFSpecialties.HINDERING.get())) {
+            float hinderingLevel = this.getSpecialties().get(AFSpecialties.HINDERING.get());
+            result = (int) (result * ((hinderingLevel * 0.5) + 1));
+        }
+        return result;
     }
 
     @Override

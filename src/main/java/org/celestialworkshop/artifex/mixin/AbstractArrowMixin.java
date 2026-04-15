@@ -77,12 +77,13 @@ public abstract class AbstractArrowMixin extends Projectile {
                 target instanceof LivingEntity leTarget &&
                 heldStack.getItem() instanceof AFPropertyItem materialItem
         ) {
-            for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
-                entry.getKey().onPostRanged(leOwner, leTarget, heldStack, arrow, this.isCritArrow(), entry.getValue());
-            }
 
             if (ItemStackUtil.hasComboBasedWeapon(heldStack)) {
                 ComboBasedSpecialty.manageComboStack(leOwner, heldStack);
+            }
+
+            for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+                entry.getKey().onPostRanged(leOwner, leTarget, heldStack, arrow, this.isCritArrow(), entry.getValue());
             }
         }
     }

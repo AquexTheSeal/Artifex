@@ -34,5 +34,17 @@
       "artifex:shockwave"
     ],
     "subtitle": "artifex.subtitle.shockwave"
+  },
+  "throwable_impact": {
+    "sounds": [
+      "artifex:throwable_impact"
+    ],
+    "subtitle": "artifex.subtitle.throwable_impact"
+  },
+  "throwable_thrown": {
+    "sounds": [
+      "artifex:throwable_thrown"
+    ],
+    "subtitle": "artifex.subtitle.throwable_thrown"
   }
 }

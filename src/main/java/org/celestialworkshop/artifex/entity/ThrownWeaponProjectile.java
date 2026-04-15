@@ -6,7 +6,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,6 +25,7 @@ import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.registry.AFEntities;
+import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,7 +37,6 @@ import java.util.Map;
 public class ThrownWeaponProjectile extends AbstractArrow {
 
     public static final EntityDataAccessor<ItemStack> HELD_STACK = SynchedEntityData.defineId(ThrownWeaponProjectile.class, EntityDataSerializers.ITEM_STACK);
-    public @Nullable SoundEvent hitSound;
 
     public ThrownWeaponProjectile(EntityType<? extends ThrownWeaponProjectile> entityType, Level level) {
         super(entityType, level);
@@ -83,16 +82,16 @@ public class ThrownWeaponProjectile extends AbstractArrow {
                 this.doPostHurtEffects(le);
 
                 if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof AFPropertyItem materialItem) {
-                    for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
-                        entry.getKey().onPostRanged(leOwner, leTarget, this.getHeldStack(), this, this.isCritArrow(), entry.getValue());
-                    }
-
                     if (ItemStackUtil.hasComboBasedWeapon(this.getHeldStack())) {
                         ComboBasedSpecialty.manageComboStack(leOwner, this.getHeldStack());
                     }
+
+                    for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+                        entry.getKey().onPostRanged(leOwner, leTarget, this.getHeldStack(), this, this.isCritArrow(), entry.getValue());
+                    }
                 }
 
-                this.playSound(this.getHitSound(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
+                this.playSound(this.getHitSound(), 1.0F, 1.5F / (this.random.nextFloat() * 0.2F + 0.9F));
             }
         } else {
             if (!this.level().isClientSide && this.getDeltaMovement().lengthSqr() < 1.0E-7D) {
@@ -121,14 +120,7 @@ public class ThrownWeaponProjectile extends AbstractArrow {
     }
 
     public SoundEvent getHitSound() {
-        if (this.hitSound != null) {
-            return this.hitSound;
-        }
-        return SoundEvents.ARROW_HIT;
-    }
-
-    public void setHitSound(@Nullable SoundEvent hitSound) {
-        this.hitSound = hitSound;
+        return AFSoundEvents.THROWABLE_IMPACT.get();
     }
 
     @Override
@@ -140,6 +132,7 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         Inventory inventory = pPlayer.getInventory();
 
         List<Integer> slots = new ArrayList<>();
+        // Prioritize offhand/mainhand.
         slots.add(Inventory.SLOT_OFFHAND);
         slots.add(inventory.selected);
         for (int i = 0; i < inventory.getContainerSize(); i++) {

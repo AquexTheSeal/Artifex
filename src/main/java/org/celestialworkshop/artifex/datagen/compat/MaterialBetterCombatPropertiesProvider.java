@@ -46,7 +46,7 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case BATTLEAXE -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:double_axe", new WeaponAttributes(
-                                2.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                2.5, null, null, false, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case FLANGED_MACE -> {
@@ -110,7 +110,7 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case GLAIVE -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:glaive", new WeaponAttributes(
-                                3.25, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                3.0, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case HALBERD -> {

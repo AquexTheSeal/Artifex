@@ -123,8 +123,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:better-combat-by-daedelus-639842:${better_combat_version}")
     runtimeOnly fg.deobf("curse.maven:cloth-config-348521:${cloth_config_version}")
-    runtimeOnly fg.deobf("curse.maven:playeranimator-658587:${player_animator_version}")
-    implementation fg.deobf("curse.maven:better-combat-particle-1372768:${better_combat_particle_version}")
+    implementation fg.deobf("curse.maven:playeranimator-658587:${player_animator_version}")
 
     runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}")

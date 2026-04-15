@@ -120,13 +120,15 @@ public abstract class PlayerMixin extends LivingEntity {
     private void triggerPostAttack(Entity pTarget, CallbackInfo ci) {
         if (pTarget instanceof LivingEntity livingTarget) {
             Item item = this.artifex$getAttackingItemStack().getItem();
+
+            if (ItemStackUtil.hasComboBasedWeapon(this.artifex$getAttackingItemStack())) {
+                ComboBasedSpecialty.manageComboStack(this, this.artifex$getAttackingItemStack());
+            }
+
             if (item instanceof AFPropertyItem materialItem) {
                 for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
                     entry.getKey().onPostMelee(this, livingTarget, this.artifex$getAttackingItemStack(), this.af$CriticalProcess, entry.getValue());
                 }
-            }
-            if (ItemStackUtil.hasComboBasedWeapon(this.artifex$getAttackingItemStack())) {
-                ComboBasedSpecialty.manageComboStack(this, this.artifex$getAttackingItemStack());
             }
             this.af$CriticalProcess = false;
         }
