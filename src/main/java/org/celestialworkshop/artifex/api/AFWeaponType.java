@@ -86,7 +86,7 @@ public enum AFWeaponType {
             " X ", "XP "),
 
     HALBERD("halberd", Category.MELEE,
-            () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1),
+            () -> Map.of(AFSpecialties.CRIPPLING.get(), 2, AFSpecialties.TWO_HANDED.get(), 1),
             (mat, spec) -> new AFTieredItem(mat, 4.0F, 1.2F, 0.0F, 1.25F, true, spec),
             "XX", "XP"),
 
