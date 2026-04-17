@@ -111,6 +111,11 @@ public class ThrownWeaponProjectile extends AbstractArrow {
     }
 
     @Override
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return this.getHitSound();
+    }
+
+    @Override
     protected @Nullable EntityHitResult findHitEntity(Vec3 pStartVec, Vec3 pEndVec) {
         EntityHitResult result = super.findHitEntity(pStartVec, pEndVec);
         if (result != null) {

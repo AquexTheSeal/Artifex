@@ -33,11 +33,11 @@ public class CripplingSpecialty extends AFSpecialty {
     }
 
     private float getCripplingChance(int level) {
-        return Math.min(1.0f, 0.25f * level);
+        return Math.min(1.0f, 0.2F + 0.05f * level);
     }
 
     private static float getDamageMultiplier(int level) {
-        return 1.0f + (0.5f * level);
+        return 1.25f + (0.25f * level);
     }
 
     @Override

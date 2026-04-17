@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.capability.AFEntityData;
@@ -17,14 +18,22 @@ public class FinesseSpecialty extends ComboBasedSpecialty {
     }
 
     @Override
+    public float onDamageMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, float originalDamage, boolean wasCrit, int specialityLevel) {
+        if (attacker instanceof Player pl) {
+            if (pl.getAttackStrengthScale(0) > 0.9) {
+                target.invulnerableTime = 0;
+            }
+        }
+        return super.onDamageMelee(attacker, target, itemStack, originalDamage, wasCrit, specialityLevel);
+    }
+
+    @Override
     public void onPostMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, boolean wasCritical, int specialityLevel) {
-        super.onPostMelee(attacker, target, itemStack, wasCritical, specialityLevel);
         manageSpeed(attacker, specialityLevel);
     }
 
     @Override
     public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
-        super.onPostRanged(attacker, target, itemStack, ammo, wasCrit, specialityLevel);
         manageSpeed(attacker, specialityLevel);
     }
 

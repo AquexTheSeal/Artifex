@@ -13,6 +13,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'me.modmuss50.mod-publish-plugin' version '0.8.4'
 }
 
 apply plugin: 'org.spongepowered.mixin'
@@ -123,13 +124,20 @@ dependencies {
 
     implementation fg.deobf("curse.maven:better-combat-by-daedelus-639842:${better_combat_version}")
     runtimeOnly fg.deobf("curse.maven:cloth-config-348521:${cloth_config_version}")
-    implementation fg.deobf("curse.maven:playeranimator-658587:${player_animator_version}")
+    runtimeOnly fg.deobf("curse.maven:playeranimator-658587:${player_animator_version}")
 
     runtimeOnly fg.deobf("curse.maven:configured-457570:5180900")
     runtimeOnly fg.deobf("curse.maven:mmmmmmmmmmmm-225738:${target_dummy_version}")
     runtimeOnly fg.deobf("curse.maven:selene-499980:${moonlight_version}")
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+jarJar.enable()
+
+tasks.named('jarJar').configure {
+    archiveClassifier = ''
+    finalizedBy 'reobfJarJar'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -147,6 +155,8 @@ tasks.named('processResources', ProcessResources).configure {
 }
 
 tasks.named('jar', Jar).configure {
+    archiveClassifier = 'dev'
+
     manifest {
         attributes(["Specification-Title"     : mod_id,
                     "Specification-Vendor"    : mod_authors,
@@ -157,7 +167,26 @@ tasks.named('jar', Jar).configure {
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")])
     }
 
-    finalizedBy 'reobfJar'
+//    finalizedBy 'reobfJar'
+}
+
+publishMods {
+    file = tasks.jarJar.archiveFile
+    changelog = file("changelog/${mod_version}.md").text
+    type = STABLE
+    modLoaders.add("forge")
+
+    curseforge {
+        projectId = curseforge_project_id
+        accessToken = project.findProperty("CURSEFORGE_TOKEN") ?: providers.environmentVariable("CURSEFORGE_TOKEN").getOrElse("")
+        minecraftVersions.add(minecraft_version)
+    }
+
+    modrinth {
+        projectId = modrinth_project_id
+        accessToken = project.findProperty("MODRINTH_TOKEN") ?: providers.environmentVariable("MODRINTH_TOKEN").getOrElse("")
+        minecraftVersions.add(minecraft_version)
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {

@@ -18,7 +18,7 @@ public class ItemStackMixin {
     )
     public void enchant(Enchantment pEnchantment, int pLevel, CallbackInfo ci) {
         ItemStack stack = (ItemStack) (Object) this;
-        if (pEnchantment == AFEnchantments.STOCKPILE.get()) {
+        if (AFEnchantments.STOCKPILE.isPresent() && pEnchantment == AFEnchantments.STOCKPILE.get()) {
             ItemStackUtil.fillThrowableAmmoCapacity(stack);
         }
     }

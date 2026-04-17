@@ -18,13 +18,11 @@ public class HinderingSpecialty extends ComboBasedSpecialty {
 
     @Override
     public void onPostMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, boolean wasCritical, int specialityLevel) {
-        super.onPostMelee(attacker, target, itemStack, wasCritical, specialityLevel);
         manageSpeed(attacker, specialityLevel);
     }
 
     @Override
     public void onPostRanged(LivingEntity attacker, LivingEntity target, ItemStack itemStack, Projectile ammo, boolean wasCrit, int specialityLevel) {
-        super.onPostRanged(attacker, target, itemStack, ammo, wasCrit, specialityLevel);
         manageSpeed(attacker, specialityLevel);
     }
 

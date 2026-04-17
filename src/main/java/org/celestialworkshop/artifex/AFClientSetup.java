@@ -15,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
 import org.celestialworkshop.artifex.client.overlay.ComboOverlay;
+import org.celestialworkshop.artifex.client.overlay.ThrowableIndicatorOverlay;
 import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.particle.ExecuteParticle;
 import org.celestialworkshop.artifex.particle.ShockwaveParticle;
@@ -68,6 +69,7 @@ public class AFClientSetup {
     @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent ev) {
         ev.registerAbove(VanillaGuiOverlay.EXPERIENCE_BAR.id(), "combo_bar_overlay", ComboOverlay::render);
+        ev.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "throwable_indicator_overlay", ThrowableIndicatorOverlay::render);
     }
 
     @SubscribeEvent

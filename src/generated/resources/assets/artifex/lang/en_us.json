@@ -193,7 +193,8 @@
   "tooltip.artifex.buckler_description": "Using this shield won't slow the player down. Disables for a certain amount of time when taking damage (scales with damage received).",
   "tooltip.artifex.longbow_description": "Has a longer charge time than a regular bow, but arrows shoot faster and deal more damage.",
   "tooltip.artifex.specialty": "Weapon Class Specialties",
-  "tooltip.artifex.throwable_ammo_stack": "< Ammo: %s/%s >",
+  "tooltip.artifex.throwable_ammo_stack": "Throwable Ammo: %s/%s",
   "tooltip.artifex.throwable_description": "This weapon can be thrown as a projectile.",
+  "tooltip.artifex.throwable_max_throw_time": "Maximum Throwing Time: %ss",
   "tooltip.artifex.war_door_description": "Using this shield can heavily slow the player down. Disabling cooldown is significantly reduced compared to other shields."
 }

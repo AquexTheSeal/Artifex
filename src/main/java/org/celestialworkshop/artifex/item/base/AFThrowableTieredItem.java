@@ -33,11 +33,13 @@ import java.util.function.Supplier;
 
 public class AFThrowableTieredItem extends AFTieredItem {
 
+    public final int throwMaxTicks;
     public final float thrownBaseDamage;
     public final float baseVelocity;
 
-    public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, float thrownBaseDamage, float baseVelocity, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
+    public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, int throwMaxTicks, float thrownBaseDamage, float baseVelocity, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
         super(material, attackDamage, attackSpeed, movementSpeedPercent, reach, canSweep, specialtyMapSupplier);
+        this.throwMaxTicks = throwMaxTicks;
         this.thrownBaseDamage = thrownBaseDamage;
         this.baseVelocity = baseVelocity;
     }
@@ -71,13 +73,19 @@ public class AFThrowableTieredItem extends AFTieredItem {
             pStack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(player.getUsedItemHand()));
 
             ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(pLevel, player);
-            float maxVelocity = this.getBaseVelocity();
-            float calculatedVelocity = Math.min((timeElapsed / 20F) * maxVelocity, maxVelocity);
-            projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, calculatedVelocity, 1.0F);
+
             projectile.setHeldStack(pStack.copy());
 
-            float punctureAdd = pStack.getEnchantmentLevel(AFEnchantments.PUNCTURE.get()) * 0.75F;
-            projectile.setBaseDamage(this.getThrownBaseDamage() + punctureAdd + (this.getMaterial().getItemTier().getAttackDamageBonus() * 1.2F));
+            float delta = (float) timeElapsed / this.getThrowMaxTicks();
+
+            float maxVelocity = this.getBaseVelocity();
+            float calculatedVelocity = Math.min(delta * maxVelocity, maxVelocity);
+            projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, calculatedVelocity, 1.0F);
+
+            float maxDamage = this.getThrownBaseDamage() + this.getMaterial().getItemTier().getAttackDamageBonus() * 1.12F;
+            float punctureBonus = pStack.getEnchantmentLevel(AFEnchantments.PUNCTURE.get()) * 0.75F;
+            float calculatedDamage = Math.min(delta * maxDamage, maxDamage);
+            projectile.setBaseDamage(calculatedDamage + punctureBonus);
 
             if (player.getAbilities().instabuild) {
                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
@@ -98,6 +106,10 @@ public class AFThrowableTieredItem extends AFTieredItem {
  
             player.awardStat(Stats.ITEM_USED.get(this));
         }
+    }
+
+    public int getThrowMaxTicks() {
+        return throwMaxTicks;
     }
 
     public int getMaximumAmmo(ItemStack stack) {
@@ -144,6 +156,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_description").withStyle(ChatFormatting.DARK_GRAY));
+        pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_max_throw_time", this.getThrowMaxTicks() / 20.0).withStyle(ChatFormatting.GRAY));
         AFAmmoDataCapability.get(pStack).ifPresent(cap -> {
             pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_ammo_stack", cap.getAmmo(), cap.getMaxAmmo(pStack)).withStyle(ChatFormatting.GRAY));
         });

@@ -83,7 +83,7 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
             return 1.5F;
         }
         if (AFWeaponType.isWeaponType(this, AFWeaponType.WAR_DOOR)) {
-            return 0.0F;
+            return 0.3F;
         }
         return 1.0F;
     }
@@ -109,9 +109,9 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         AFWeaponType type = AFWeaponType.getWeaponType(this);
         if (type == AFWeaponType.BUCKLER) {
-            pTooltip.add(Component.translatable("tooltip.artifex.buckler_description").withStyle(ChatFormatting.DARK_GRAY));
+            pTooltip.add(Component.translatable("tooltip.artifex.buckler_description").withStyle(ChatFormatting.GRAY));
         } else if (type == AFWeaponType.WAR_DOOR) {
-            pTooltip.add(Component.translatable("tooltip.artifex.war_door_description").withStyle(ChatFormatting.DARK_GRAY));
+            pTooltip.add(Component.translatable("tooltip.artifex.war_door_description").withStyle(ChatFormatting.GRAY));
         }
     }
 }

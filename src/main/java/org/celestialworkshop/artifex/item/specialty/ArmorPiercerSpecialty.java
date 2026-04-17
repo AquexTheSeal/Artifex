@@ -34,6 +34,6 @@ public class ArmorPiercerSpecialty extends AFSpecialty {
     }
 
     private float calculateArmorToPowerRatio(int level) {
-        return 0.2F + (level * 0.15f);
+        return 0.15F + (level * 0.15f);
     }
 }

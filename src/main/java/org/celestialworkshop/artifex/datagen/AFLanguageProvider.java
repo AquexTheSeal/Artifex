@@ -27,7 +27,6 @@ public class AFLanguageProvider extends LanguageProvider {
         this.add("item_group.artifex.artifex", "Artifex");
 
         // TOOLTIPS
-        this.add("tooltip.artifex.throwable_description", "This weapon can be thrown as a projectile.");
 
         this.add("tooltip.artifex.longbow_description", "Has a longer charge time than a regular bow, but arrows shoot faster and deal more damage.");
         this.add("tooltip.artifex.arbalest_description", "Has a longer charge time than a regular crossbow, but arrows shoot faster and deal more damage.");
@@ -35,7 +34,10 @@ public class AFLanguageProvider extends LanguageProvider {
         this.add("tooltip.artifex.buckler_description", "Using this shield won't slow the player down. Disables for a certain amount of time when taking damage (scales with damage received).");
         this.add("tooltip.artifex.war_door_description", "Using this shield can heavily slow the player down. Disabling cooldown is significantly reduced compared to other shields.");
 
-        this.add("tooltip.artifex.throwable_ammo_stack", "< Ammo: %s/%s >");
+        this.add("tooltip.artifex.throwable_description", "This weapon can be thrown as a projectile.");
+        this.add("tooltip.artifex.throwable_max_throw_time", "Maximum Throwing Time: %ss");
+        this.add("tooltip.artifex.throwable_ammo_stack", "Throwable Ammo: %s/%s");
+
         this.add("tooltip.artifex.specialty", "Weapon Class Specialties");
 
         // ATTRIBUTES
