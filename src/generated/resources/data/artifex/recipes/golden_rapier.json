@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "  X",
+    " X ",
+    "R  "
+  ],
+  "result": {
+    "item": "artifex:golden_rapier"
+  },
+  "show_notification": true
+}

@@ -2,13 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
     "X": {
       "item": "minecraft:iron_ingot"
     }
   },
   "pattern": [
     " X ",
-    "XXX",
+    "XRX",
     " X "
   ],
   "result": {

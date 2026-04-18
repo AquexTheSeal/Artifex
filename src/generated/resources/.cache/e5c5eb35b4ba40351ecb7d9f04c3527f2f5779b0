@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-12T17:16:23.9464514	Advancements
+// 1.20.1	2026-04-18T17:51:35.3805349	Advancements
 f8a590cd5846af29709f582856bf558dedb81ad5 data/artifex/advancements/artifex_startup.json
 296910d0c724214fff75fcc538e772ec775f948d data/artifex/advancements/obtain_weapon_type_arbalest.json
 24ce077fd1595dd9f717cd64f298b05e9a8fc5d3 data/artifex/advancements/obtain_weapon_type_battleaxe.json
@@ -15,6 +15,8 @@ f7d1029a020822e7e9ce4a81e243abcaa4fae50e data/artifex/advancements/obtain_weapon
 20de0ae4ee1fdec0fb6318eb28c7473617bd39f4 data/artifex/advancements/obtain_weapon_type_knuckles.json
 b9046bdfb82b3c76ddb24dafe1246f688de80b10 data/artifex/advancements/obtain_weapon_type_longbow.json
 7e8da970b3646320c2dafbe881d2f9cbf1553539 data/artifex/advancements/obtain_weapon_type_odachi.json
+de62ff9831bccc3ee529dd1bed93be181ff96a65 data/artifex/advancements/obtain_weapon_type_rapier.json
+b464204362b8da5e833d1bd5815d75e27f6ce9f9 data/artifex/advancements/obtain_weapon_type_scimitar.json
 a630e3119c9e4928a9fc583349f99e8924493b5c data/artifex/advancements/obtain_weapon_type_scythe.json
 2fb2c30e691bf46e22cfbbebdfeeccb641919310 data/artifex/advancements/obtain_weapon_type_shield.json
 1e697e1ff1796943c0ef783213c48d0995dcfa02 data/artifex/advancements/obtain_weapon_type_shortsword.json

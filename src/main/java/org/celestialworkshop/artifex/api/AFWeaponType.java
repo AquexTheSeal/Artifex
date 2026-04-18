@@ -45,6 +45,16 @@ public enum AFWeaponType {
             (mat, spec) -> new AFTieredItem(mat, 5.0F, 1.0F, -0.05F, 0.0F, false, spec),
             "XXX", " R ", " R "),
 
+    SCIMITAR("scimitar", Category.MELEE,
+            () -> Map.of(),
+            (mat, spec) -> new AFTieredItem(mat, 7.0F, 1.2F, -0.05F, 0.5F, true, spec),
+            " XX", " X ", "R  "),
+
+    RAPIER("rapier", Category.MELEE,
+            () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 3),
+            (mat, spec) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.05F, 0.25F, false, spec),
+            "  X", " X ", "R  "),
+
     DAGGER("dagger", Category.RANGED_MELEE,
             () -> Map.of(AFSpecialties.ROGUE.get(), 1),
             (mat, spec) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 5, 3, 4.0F, spec),
@@ -108,7 +118,7 @@ public enum AFWeaponType {
     BUCKLER("buckler", Category.SHIELD,
             () -> Map.of(),
             (mat, spec) -> new AFShieldItem(mat, 0.0F, 1.25F, spec),
-            " X ", "XXX", " X "),
+            " X ", "XRX", " X "),
 
     SHIELD("shield", Category.SHIELD,
             () -> Map.of(),

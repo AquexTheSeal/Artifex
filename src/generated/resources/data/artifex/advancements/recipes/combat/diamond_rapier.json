@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_material": {
+      "conditions": {
+        "items": [
+          {
+            "type": "artifex:ingredient",
+            "ingredients": [
+              {
+                "item": "artifex:basic_hilt"
+              },
+              {
+                "item": "artifex:standard_hilt"
+              },
+              {
+                "item": "artifex:standard_pole"
+              }
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "artifex:diamond_rapier"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_material",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "artifex:diamond_rapier"
+    ]
+  },
+  "sends_telemetry_event": false
+}

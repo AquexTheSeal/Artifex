@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    " XX",
+    " X ",
+    "R  "
+  ],
+  "result": {
+    "item": "artifex:wooden_scimitar"
+  },
+  "show_notification": true
+}

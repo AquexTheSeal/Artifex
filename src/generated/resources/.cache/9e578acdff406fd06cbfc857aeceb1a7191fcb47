@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-13T19:13:35.7624179	Item Models: artifex
+// 1.20.1	2026-04-18T17:51:35.372795	Item Models: artifex
 e5d828d96a682e5f28d0c1edd9df0de1c0cf1382 assets/artifex/models/item/basic_hilt.json
 9310775ee59f616d2a413d919bc375c536569156 assets/artifex/models/item/charred_stick.json
 26326658b982a300ccd1ece410def360e0837c1a assets/artifex/models/item/diamond_arbalest.json
@@ -33,6 +33,8 @@ fa0c687a9fa6b841f88f182e3bc0d46677b3d6f4 assets/artifex/models/item/diamond_long
 23866bbf70f446452a854e015e8474b8500d9320 assets/artifex/models/item/diamond_longbow_pulling_1.json
 3a25e89b2f116f7e66ac79b211ca52a9484ad9b4 assets/artifex/models/item/diamond_longbow_pulling_2.json
 26e913b7b1cb4ac85001d22b25ee38c2075f0440 assets/artifex/models/item/diamond_odachi.json
+223cffd59279c894e1592afc7233432d9b11f083 assets/artifex/models/item/diamond_rapier.json
+ff9a54b438982d1f69be591159910bfae1ab34e2 assets/artifex/models/item/diamond_scimitar.json
 72238029e7779cb31087300daf01dc71f364b2e9 assets/artifex/models/item/diamond_scythe.json
 990670de19e57e35686394ddf636ccd650920a23 assets/artifex/models/item/diamond_shield.json
 1d973ee99cef785e44b5f93ba0ca826fe74056ad assets/artifex/models/item/diamond_shield_blocking.json
@@ -73,6 +75,8 @@ b8a364030cd628db6084212aaf1d4441896f262a assets/artifex/models/item/golden_javel
 09fdc9f53dadb8fa760f07d26f82029cd43a8639 assets/artifex/models/item/golden_longbow_pulling_1.json
 fbc6ae070a3866d8bbe5c1ddaa26af9dfee7c32a assets/artifex/models/item/golden_longbow_pulling_2.json
 deabc8fa0451565035703bae58084b64d6865b9b assets/artifex/models/item/golden_odachi.json
+ed95d22cb1ba85992afa62b114cc260c67ffe1c5 assets/artifex/models/item/golden_rapier.json
+d6c851e3726d134d0e2c64a12ef404fea6172d21 assets/artifex/models/item/golden_scimitar.json
 c33d6d4913efbb0ea117ce577fa40a0b7488afcc assets/artifex/models/item/golden_scythe.json
 0d8cb7c12ca4dd19a47bfe8b4560985e3dda65d7 assets/artifex/models/item/golden_shield.json
 a86ac0740b7aa47483936dd77668747c7f4fd256 assets/artifex/models/item/golden_shield_blocking.json
@@ -113,6 +117,8 @@ e209a89af92f76d2cab77d3ef3c63431256d3917 assets/artifex/models/item/iron_knuckle
 f4135cd4878e10a8a9dc27b716eb5514244d4a94 assets/artifex/models/item/iron_longbow_pulling_1.json
 a3bb1d726f29bbc548a44d85bca4d01b2d38f005 assets/artifex/models/item/iron_longbow_pulling_2.json
 354e258add30c0aea3784b8356f914a218ae14d8 assets/artifex/models/item/iron_odachi.json
+91cd5bc335b34dffaef6dcecd430ed2b8964b779 assets/artifex/models/item/iron_rapier.json
+ff62ada2df4679a213ab97263f7f78996a8f0798 assets/artifex/models/item/iron_scimitar.json
 a60c65d508261623bcdb442cdea05299bf2ad3f4 assets/artifex/models/item/iron_scythe.json
 01ad48ee33449691abd62085bd54b11c33374c30 assets/artifex/models/item/iron_shield.json
 33e8234401007d488c5bff0957a70c7d4b6b00d6 assets/artifex/models/item/iron_shield_blocking.json
@@ -153,6 +159,8 @@ c75c4833f598b68cf5f93925fec504c32414906a assets/artifex/models/item/netherite_kn
 1fe804e0d21322cf62de2f92d3176916b311fc1a assets/artifex/models/item/netherite_longbow_pulling_1.json
 69b4c4dec161bfd0a8d19bee2d1e548ddc1ab064 assets/artifex/models/item/netherite_longbow_pulling_2.json
 bdde2d311379292cd4e3193df881765604b1e1f0 assets/artifex/models/item/netherite_odachi.json
+bb72983c35b11b8b4785c401a1e339496fd36419 assets/artifex/models/item/netherite_rapier.json
+b7fed12ccf31a06f1cdf3b10c23ad2886859a0d3 assets/artifex/models/item/netherite_scimitar.json
 a37f962afd470345e74af67257f9d4ce1bcdedd9 assets/artifex/models/item/netherite_scythe.json
 7b5413ae3ce2bf72faaa8f2b90bf47d8edfd3dff assets/artifex/models/item/netherite_shield.json
 78bda4fc9d173362d69f116e2be3b85e148d413b assets/artifex/models/item/netherite_shield_blocking.json
@@ -175,6 +183,8 @@ c8782e32392ab6b687ade9f644c2874ef3a1c5b5 assets/artifex/models/item/stone_javeli
 ec47841db8552976e813adc186e6cef79d4792bd assets/artifex/models/item/stone_katana.json
 cf86824717e4487e454307e7f6f51ee9dc596cf5 assets/artifex/models/item/stone_knuckles.json
 9d6248b16a16e40c5a30dd66b0a8887cdde5cff4 assets/artifex/models/item/stone_odachi.json
+2b35ac05265a567402f2e84e22d7011688f67802 assets/artifex/models/item/stone_rapier.json
+44915d40dacbf3224ad477e1239599e59b1d1cf8 assets/artifex/models/item/stone_scimitar.json
 1afe920a37d44b72c6b4ca5bee779d388949b77a assets/artifex/models/item/stone_scythe.json
 345f495f6eb19b0daa739cf7c807bda3fa4f0975 assets/artifex/models/item/stone_shortsword.json
 4726ce04654eeeeddb3f06fb0ad90ff1354ed1fa assets/artifex/models/item/stone_sickle.json
@@ -191,6 +201,8 @@ da35ccf4c2bed54de9fae0d54cbe048835aacde0 assets/artifex/models/item/wooden_javel
 2a537ec79bc380c8ca77723d3dffc8aaec7aa5b8 assets/artifex/models/item/wooden_katana.json
 4b1f226ef810cdb7295ad42ca19085a9df0e4ed4 assets/artifex/models/item/wooden_knuckles.json
 c9a99a3b32158064f68070dad0e51afb061c6bef assets/artifex/models/item/wooden_odachi.json
+31a5d81d21678bde9a1f135a46268b7aebce2b1c assets/artifex/models/item/wooden_rapier.json
+272378ce37ed12c5b33fb7bc124e73da8d2bc108 assets/artifex/models/item/wooden_scimitar.json
 84114b5019537b4dbb07286f8f5a8cd234abdd3f assets/artifex/models/item/wooden_scythe.json
 7bcdf841547d1c527a4bce653b7052dc499b3769 assets/artifex/models/item/wooden_shortsword.json
 46641dd0bf58ed29ebebd93ecc05207dc0825050 assets/artifex/models/item/wooden_sickle.json

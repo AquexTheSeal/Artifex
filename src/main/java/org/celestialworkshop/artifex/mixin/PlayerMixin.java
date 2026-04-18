@@ -69,10 +69,10 @@ public abstract class PlayerMixin extends LivingEntity {
     public void hideOffhand(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> cir) {
         if (slot == EquipmentSlot.OFFHAND) {
             ItemStack mainhand = this.getInventory().getSelected();
-            boolean twoHandedMainHand = !mainhand.isEmpty() && AFSpecialty.hasSpecialty(mainhand.getItem(), AFSpecialties.TWO_HANDED.get());
+            boolean twoHandedMainHand = !mainhand.isEmpty() && ItemStackUtil.hasSpecialty(mainhand, AFSpecialties.TWO_HANDED.get());
 
             ItemStack offhand = this.getInventory().offhand.get(0);
-            boolean twoHandedOffHand = !offhand.isEmpty() && AFSpecialty.hasSpecialty(offhand.getItem(), AFSpecialties.TWO_HANDED.get());
+            boolean twoHandedOffHand = !offhand.isEmpty() && ItemStackUtil.hasSpecialty(offhand, AFSpecialties.TWO_HANDED.get());
 
             if (twoHandedMainHand || twoHandedOffHand) {
                 cir.setReturnValue(ItemStack.EMPTY);

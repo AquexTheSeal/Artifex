@@ -31,7 +31,7 @@ public class MaterialItemModelProvider extends ItemModelProvider {
             Item weapon = material.getWeapon(weaponType);
             switch (weaponType) {
                 case KNUCKLES -> this.basicParentedItem(weapon, "artifex:item/knuckles", "0");
-                case SHORTSWORD, DAGGER, SICKLE, BATTLEAXE, FLANGED_MACE, KATANA -> this.handheldItem(weapon);
+                case SHORTSWORD, DAGGER, SICKLE, BATTLEAXE, FLANGED_MACE, KATANA, SCIMITAR, RAPIER -> this.handheldItem(weapon);
                 case JAVELIN, SPEAR, GLAIVE, HALBERD -> this.basicParentedItem(weapon, "artifex:item/handheld_long_middle");
                 case GREATSWORD, ODACHI, SCYTHE -> this.basicParentedItem(weapon, "artifex:item/handheld_long_base");
                 case CROSSBOW -> this.crossbowItem(weapon, "item/crossbow");

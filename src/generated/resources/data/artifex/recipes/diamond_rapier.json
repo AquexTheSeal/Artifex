@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "  X",
+    " X ",
+    "R  "
+  ],
+  "result": {
+    "item": "artifex:diamond_rapier"
+  },
+  "show_notification": true
+}

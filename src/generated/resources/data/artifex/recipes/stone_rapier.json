@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "pattern": [
+    "  X",
+    " X ",
+    "R  "
+  ],
+  "result": {
+    "item": "artifex:stone_rapier"
+  },
+  "show_notification": true
+}

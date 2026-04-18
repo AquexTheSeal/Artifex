@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    " XX",
+    " X ",
+    "R  "
+  ],
+  "result": {
+    "item": "artifex:iron_scimitar"
+  },
+  "show_notification": true
+}

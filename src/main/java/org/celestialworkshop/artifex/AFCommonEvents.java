@@ -1,6 +1,7 @@
 package org.celestialworkshop.artifex;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -100,7 +101,8 @@ public class AFCommonEvents {
     @SubscribeEvent
     public static void onLootingLevelEvent(LootingLevelEvent event) {
         int result = event.getLootingLevel();
-        if (event.getDamageSource().getEntity() instanceof LivingEntity entity) {
+        DamageSource damageSource = event.getDamageSource();
+        if (damageSource != null && damageSource.getEntity() instanceof LivingEntity entity) {
             ItemStack weaponStack = entity.getMainHandItem();
             if (weaponStack.getItem() instanceof AFPropertyItem af) {
                 if (af.getSpecialties().containsKey(AFSpecialties.BOUNTIFUL_HARVEST.get())) {

@@ -7,9 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
 import java.text.DecimalFormat;
@@ -44,10 +42,6 @@ public class AFSpecialty {
     }
 
     public void onPostShieldBlock(LivingEntity target, ItemStack itemStack, DamageSource source, float shieldedDamage, int specialityLevel) {
-    }
-
-    public static boolean hasSpecialty(Item item, AFSpecialty specialty) {
-        return item instanceof AFPropertyItem artifexItem && artifexItem.getSpecialties().containsKey(specialty);
     }
 
     public ResourceLocation getIcon() {

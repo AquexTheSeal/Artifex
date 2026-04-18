@@ -1,0 +1,38 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_scimitar": {
+      "conditions": {
+        "items": [
+          {
+            "type": "artifex:weapon_type",
+            "weapon_type": "scimitar"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_scimitar.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "artifex:iron_scimitar",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_scimitar.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_scimitar"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
