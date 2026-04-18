@@ -8,8 +8,8 @@ public class ExecuteParticle extends SimpleAnimatedParticle {
 
     protected ExecuteParticle(ClientLevel level, double x, double y, double z, SpriteSet sprites) {
         super(level, x, y, z, sprites, 0);
-        this.lifetime = 8 + level.random.nextInt(4);
-        this.quadSize = 2.5F + this.random.nextFloat() * 0.5F;
+        this.lifetime = 12 + level.random.nextInt(2);
+        this.quadSize = 1.0F + this.random.nextFloat() * 0.5F;
         this.hasPhysics = false;
         this.setSpriteFromAge(sprites);
         this.setAlpha(1.0F);

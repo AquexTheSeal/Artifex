@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.config.AFClientConfig;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 
 public class ThrowableIndicatorOverlay {
@@ -20,17 +21,20 @@ public class ThrowableIndicatorOverlay {
 
     public static void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
 
+        if (!AFClientConfig.THROWABLE_OVERLAY_RENDER.get()) return;
+
         Minecraft instance = Minecraft.getInstance();
         Options options = instance.options;
         Player player = instance.player;
-
-        int cx = screenWidth / 2;
-        int cy = screenHeight / 2;
 
         if (player != null && options.getCameraType().isFirstPerson()) {
             ItemStack usedItem = player.getUseItem();
 
             if (usedItem.getItem() instanceof AFThrowableTieredItem throwable) {
+
+                int cx = (screenWidth / 2) + AFClientConfig.THROWABLE_OVERLAY_X_OFFSET.get();
+                int cy = (screenHeight / 2) + AFClientConfig.THROWABLE_OVERLAY_Y_OFFSET.get();
+
                 PoseStack poseStack = guiGraphics.pose();
                 poseStack.pushPose();
                 RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR, GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);

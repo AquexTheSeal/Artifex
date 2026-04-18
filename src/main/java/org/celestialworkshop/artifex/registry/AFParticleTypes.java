@@ -12,4 +12,5 @@ public class AFParticleTypes {
 
     public static final RegistryObject<SimpleParticleType> EXECUTE = PARTICLE_TYPES.register("execute", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> SHOCKWAVE = PARTICLE_TYPES.register("shockwave", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> IAIJUTSU = PARTICLE_TYPES.register("iaijutsu", () -> new SimpleParticleType(false));
 }

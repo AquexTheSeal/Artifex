@@ -3,8 +3,6 @@
   "attributes": {
     "attack_range": 2.5,
     "attacks": [],
-    "category": "katana",
-    "pose": "bettercombat:pose_two_handed_katana",
-    "two_handed": false
+    "category": "katana"
   }
 }

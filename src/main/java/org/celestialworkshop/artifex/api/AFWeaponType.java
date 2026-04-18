@@ -31,13 +31,13 @@ public enum AFWeaponType {
             "XX", " R"),
 
     KATANA("katana", Category.MELEE,
-            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 2.5F, 1.75F, 0.05F, 0.0F, true, spec),
+            () -> Map.of(AFSpecialties.IAIJUTSU.get(), 2, AFSpecialties.TWO_HANDED.get(), 1),
+            (mat, spec) -> new AFTieredItem(mat, 2.0F, 1.5F, 0.05F, 0.0F, true, spec),
             "  X", " X ", " R "),
 
     BATTLEAXE("battleaxe", Category.MELEE,
             () -> Map.of(AFSpecialties.EXECUTE.get(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 7.0F, 0.8F, -0.1F, 0.0F, false, spec),
+            (mat, spec) -> new AFTieredItem(mat, 7.0F, 0.75F, -0.1F, 0.0F, false, spec),
             "XXX", "XRX", " R "),
 
     FLANGED_MACE("flanged_mace", Category.MELEE,
@@ -46,18 +46,18 @@ public enum AFWeaponType {
             "XXX", " R ", " R "),
 
     SCIMITAR("scimitar", Category.MELEE,
-            () -> Map.of(),
-            (mat, spec) -> new AFTieredItem(mat, 7.0F, 1.2F, -0.05F, 0.5F, true, spec),
+            () -> Map.of(AFSpecialties.IMPACT_COMBO.get(), 1, AFSpecialties.FINESSE.get(), 1),
+            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.2F, 0.0F, 0.0F, true, spec),
             " XX", " X ", "R  "),
 
     RAPIER("rapier", Category.MELEE,
-            () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 3),
-            (mat, spec) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.05F, 0.25F, false, spec),
+            () -> Map.of(AFSpecialties.FINESSE.get(), 2, AFSpecialties.ARMOR_PIERCER.get(), 1),
+            (mat, spec) -> new AFTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, spec),
             "  X", " X ", "R  "),
 
     DAGGER("dagger", Category.RANGED_MELEE,
             () -> Map.of(AFSpecialties.ROGUE.get(), 1),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 5, 3, 4.0F, spec),
+            (mat, spec) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 10, 3, 4.0F, spec),
             " X", "S "),
 
     JAVELIN("javelin", Category.RANGED_MELEE,
@@ -67,7 +67,7 @@ public enum AFWeaponType {
 
     SPEAR("spear", Category.RANGED_MELEE,
             () -> Map.of(AFSpecialties.CRIPPLING.get(), 1),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 0.0F, 1.5F, false, 10, 4.5F, 2.5F, spec),
+            (mat, spec) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 0.0F, 1.5F, false, 15, 4.5F, 2.5F, spec),
             "X", "P"),
 
     BOW("bow", Category.RANGED,
@@ -111,8 +111,8 @@ public enum AFWeaponType {
             " X ", " X ", " R "),
 
     ODACHI("odachi", Category.MELEE,
-            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 1, AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 4.5F, 1.2F, 0.0F, 1.25F, true, spec),
+            () -> Map.of(AFSpecialties.IAIJUTSU.get(), 1, AFSpecialties.TWO_HANDED.get(), 1),
+            (mat, spec) -> new AFTieredItem(mat, 4.5F, 1.2F, 0.0F, 1.0F, true, spec),
             "XX", "X ", "R "),
 
     BUCKLER("buckler", Category.SHIELD,

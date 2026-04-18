@@ -54,6 +54,7 @@ public class AFLanguageProvider extends LanguageProvider {
         this.addSpecialty(AFSpecialties.UNSTOPPABLE.get(), "Unstoppable", "Successive attacks build momentum, increasing your damage reduction with each hit by %s up to 5 stacks.");
         this.addSpecialty(AFSpecialties.BOUNTIFUL_HARVEST.get(), "Bountiful Harvest", "Increases your mob looting level by %s.");
         this.addSpecialty(AFSpecialties.ROGUE.get(), "Rogue", "On impact; If your off-hand holds a matching throwable with the same enchantments, automatically fire another projectile that inherits %s damage.");
+        this.addSpecialty(AFSpecialties.IAIJUTSU.get(), "Iaijutsu", "Remaining out of combat and holding this item for 5s empowers your next strike for %s damage.");
 
         this.addSpecialty(AFSpecialties.TWO_HANDED.get(), "Two-Handed", "Hides your off-hand when held; cannot be equipped in the off-hand slot.");
         this.addSpecialty(AFSpecialties.HINDERING.get(), "Hindering", "Successive attacks weakens, reducing your attack speed with each hit by %s up to 5 stacks.");
@@ -94,6 +95,8 @@ public class AFLanguageProvider extends LanguageProvider {
         this.addAdvancement("obtain_weapon_type_arbalest", "Heavy Artillery", "Obtain an Arbalest.");
         this.addAdvancement("obtain_weapon_type_javelin", "Olympian", "Obtain a Javelin.");
         this.addAdvancement("obtain_weapon_type_spear", "Pointy Stick", "Obtain a Spear.");
+        this.addAdvancement("obtain_weapon_type_rapier", "En Guarde", "Obtain a Rapier.");
+        this.addAdvancement("obtain_weapon_type_scimitar", "Deserted", "Obtain a Scimitar.");
         this.addAdvancement("obtain_weapon_type_buckler", "Light Cover", "Obtain a Buckler.");
         this.addAdvancement("obtain_weapon_type_shield", "Stellar Defense", "Obtain a Shield.");
         this.addAdvancement("obtain_weapon_type_war_door", "Heavy-Duty Fortress", "Obtain a War Door.");

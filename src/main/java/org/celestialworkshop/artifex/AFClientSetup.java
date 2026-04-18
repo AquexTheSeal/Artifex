@@ -14,10 +14,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
-import org.celestialworkshop.artifex.client.overlay.ComboOverlay;
+import org.celestialworkshop.artifex.client.overlay.ComboIndicatorOverlay;
+import org.celestialworkshop.artifex.client.overlay.IaijutsuIndicatorOverlay;
 import org.celestialworkshop.artifex.client.overlay.ThrowableIndicatorOverlay;
 import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.particle.ExecuteParticle;
+import org.celestialworkshop.artifex.particle.IaijutsuParticle;
 import org.celestialworkshop.artifex.particle.ShockwaveParticle;
 import org.celestialworkshop.artifex.client.renderer.ThrownWeaponProjectileRenderer;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
@@ -68,8 +70,9 @@ public class AFClientSetup {
 
     @SubscribeEvent
     public static void registerGuiOverlays(RegisterGuiOverlaysEvent ev) {
-        ev.registerAbove(VanillaGuiOverlay.EXPERIENCE_BAR.id(), "combo_bar_overlay", ComboOverlay::render);
+        ev.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "combo_indicator_overlay", ComboIndicatorOverlay::render);
         ev.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "throwable_indicator_overlay", ThrowableIndicatorOverlay::render);
+        ev.registerAbove(VanillaGuiOverlay.CROSSHAIR.id(), "iaijutsu_indicator_overlay", IaijutsuIndicatorOverlay::render);
     }
 
     @SubscribeEvent
@@ -86,6 +89,7 @@ public class AFClientSetup {
     public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(AFParticleTypes.EXECUTE.get(), ExecuteParticle.Provider::new);
         event.registerSpriteSet(AFParticleTypes.SHOCKWAVE.get(), ShockwaveParticle.Provider::new);
+        event.registerSpriteSet(AFParticleTypes.IAIJUTSU.get(), IaijutsuParticle.Provider::new);
     }
 
     @SubscribeEvent

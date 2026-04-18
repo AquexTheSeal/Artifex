@@ -125,12 +125,12 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case KATANA -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:katana", new WeaponAttributes(
-                                2.5, "bettercombat:pose_two_handed_katana", null, false, "katana", new WeaponAttributes.Attack[]{}
+                                2.5, null, null, null, "katana", new WeaponAttributes.Attack[]{}
                         )));
                     }
                     case ODACHI -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:katana", new WeaponAttributes(
-                                3.25, "bettercombat:pose_two_handed_katana", null, true, "odachi", new WeaponAttributes.Attack[]{
+                                3.0, "bettercombat:pose_two_handed_katana", null, true, "odachi", new WeaponAttributes.Attack[]{
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.HORIZONTAL_PLANE,

@@ -6,9 +6,9 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.celestialworkshop.artifex.Artifex;
-import org.celestialworkshop.artifex.network.packet.S2CEntityActionPacket;
 import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
 import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncIaijutsuPacket;
 
 public class AFNetwork {
     private static final String PROTOCOL_VERSION = "1.0";
@@ -23,9 +23,9 @@ public class AFNetwork {
         int id = 0;
 
         // S2C
-        INSTANCE.registerMessage(id++, S2CEntityActionPacket.class, S2CEntityActionPacket::encode, S2CEntityActionPacket::decode, S2CEntityActionPacket::handle);
         INSTANCE.registerMessage(id++, S2CSyncAmmoPacket.class, S2CSyncAmmoPacket::encode, S2CSyncAmmoPacket::decode, S2CSyncAmmoPacket::handle);
         INSTANCE.registerMessage(id++, S2CSyncComboStatePacket.class, S2CSyncComboStatePacket::encode, S2CSyncComboStatePacket::decode, S2CSyncComboStatePacket::handle);
+        INSTANCE.registerMessage(id++, S2CSyncIaijutsuPacket.class, S2CSyncIaijutsuPacket::encode, S2CSyncIaijutsuPacket::decode, S2CSyncIaijutsuPacket::handle);
     }
 
     public static void sendToAll(Object packet) {

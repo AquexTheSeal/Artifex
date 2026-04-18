@@ -23,6 +23,12 @@
     ],
     "subtitle": "artifex.subtitle.execute"
   },
+  "iaijutsu": {
+    "sounds": [
+      "artifex:iaijutsu"
+    ],
+    "subtitle": "artifex.subtitle.iaijutsu"
+  },
   "longbow_shoot": {
     "sounds": [
       "artifex:longbow_shoot"

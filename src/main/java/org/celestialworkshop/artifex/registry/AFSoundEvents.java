@@ -15,8 +15,8 @@ public class AFSoundEvents {
     public static final List<AutoGenSound> AUTO_GEN_SOUNDS = new ObjectArrayList<>();
 
     public static final RegistryObject<SoundEvent> EXECUTE = registerSoundEvent("execute");
-
     public static final RegistryObject<SoundEvent> SHOCKWAVE = registerSoundEvent("shockwave");
+    public static final RegistryObject<SoundEvent> IAIJUTSU = registerSoundEvent("iaijutsu");
 
     public static final RegistryObject<SoundEvent> LONGBOW_SHOOT = registerSoundEvent("longbow_shoot");
 

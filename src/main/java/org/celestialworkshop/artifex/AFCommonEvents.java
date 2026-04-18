@@ -21,6 +21,7 @@ import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncIaijutsuPacket;
 import org.celestialworkshop.artifex.registry.AFAttributes;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
@@ -34,19 +35,33 @@ public class AFCommonEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             AFEntityDataCapability.get(event.player).ifPresent(cap -> {
-
                 ItemStack handItem = event.player.getMainHandItem();
-                boolean endCombo = false;
 
+                // IAIJUTSU MANAGEMENT
+                boolean hasSpecialty = ItemStackUtil.hasSpecialty(handItem, AFSpecialties.IAIJUTSU.get());
+                if (hasSpecialty) {
+                    cap.iaijutsuTimer = Math.max(cap.iaijutsuTimer - 1, 0);
+                }
+                if (event.side == LogicalSide.SERVER) {
+                    if (cap.iaijutsuItemStack != handItem) {
+                        boolean oldHadSpecialty = ItemStackUtil.hasSpecialty(cap.iaijutsuItemStack, AFSpecialties.IAIJUTSU.get());
+                        cap.iaijutsuItemStack = handItem;
+                        if (hasSpecialty || oldHadSpecialty) {
+                            cap.iaijutsuTimer = cap.getMaxIaijutsuTime();
+                            AFNetwork.sendToPlayer((ServerPlayer) event.player, new S2CSyncIaijutsuPacket(cap.iaijutsuTimer));
+                        }
+                    }
+                }
+
+                // COMBO MANAGEMENT
+                boolean endCombo = false;
                 if (cap.comboCount > 0) {
                     cap.comboTimer = Math.max(cap.comboTimer - 1, 0);
-
                     if (cap.comboTimer == 0) {
                         if (event.side == LogicalSide.SERVER) {
                             endCombo = true;
                         }
                     }
-
                     if (event.side == LogicalSide.SERVER) {
                         if (!ItemStackUtil.sameItemMatchesEnchantments(cap.comboItemStack, handItem)) {
                             endCombo = true;
@@ -55,7 +70,6 @@ public class AFCommonEvents {
                 } else {
                     cap.comboTimer = 0;
                 }
-
                 if (endCombo) {
                     if (cap.comboItemStack.getItem() instanceof AFPropertyItem af) {
                         for (Map.Entry<AFSpecialty, Integer> specialty : af.getSpecialties().entrySet()) {
