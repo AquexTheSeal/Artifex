@@ -10,8 +10,8 @@
     }
   },
   "pattern": [
-    "X",
-    "S"
+    " X",
+    "S "
   ],
   "result": {
     "item": "artifex:diamond_dagger"

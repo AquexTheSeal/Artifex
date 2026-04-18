@@ -153,6 +153,19 @@ public class AFThrowableTieredItem extends AFTieredItem {
     }
 
     @Override
+    public boolean allowUseSprinting(Player player) {
+        return AFWeaponType.isWeaponType(this, AFWeaponType.DAGGER);
+    }
+
+    @Override
+    public float getItemUsingSlowdownMultiplier() {
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.DAGGER)) {
+            return 5.0F;
+        }
+        return 3.5F;
+    }
+
+    @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_description").withStyle(ChatFormatting.DARK_GRAY));

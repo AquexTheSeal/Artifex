@@ -46,9 +46,9 @@ public enum AFWeaponType {
             "XXX", " R ", " R "),
 
     DAGGER("dagger", Category.RANGED_MELEE,
-            () -> Map.of(),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.15F, 0.0F, false, 5, 3, 4.0F, spec),
-            "X", "S"),
+            () -> Map.of(AFSpecialties.ROGUE.get(), 1),
+            (mat, spec) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 5, 3, 4.0F, spec),
+            " X", "S "),
 
     JAVELIN("javelin", Category.RANGED_MELEE,
             () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1),

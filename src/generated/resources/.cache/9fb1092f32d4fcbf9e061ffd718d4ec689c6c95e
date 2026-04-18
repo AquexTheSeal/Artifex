@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-13T19:31:52.2604659	Recipes
+// 1.20.1	2026-04-18T02:59:49.746106	Recipes
 cf9c4559d27e2bb8bd9140b3b9efd7dd94b15e0f data/artifex/advancements/recipes/combat/diamond_arbalest.json
 b7a32140111d6fdb73509ee6788cf78f21929ff1 data/artifex/advancements/recipes/combat/diamond_battleaxe.json
 836f925b0910cbd8dd01b37283f76363c9554cb8 data/artifex/advancements/recipes/combat/diamond_bow.json
@@ -137,7 +137,7 @@ a5d07319c78246d412f998e11b49b9b5221fb102 data/artifex/recipes/diamond_battleaxe.
 a7deb7a07afc7d3574d4a6af95292f6865b59511 data/artifex/recipes/diamond_bow.json
 352d43ef539eae68c087ac58963d6851c0918ab8 data/artifex/recipes/diamond_buckler.json
 597114062b8f99daf6b25514ebb734d8717594d0 data/artifex/recipes/diamond_crossbow.json
-11a8fc43e851303fb3255f75066555643a26148e data/artifex/recipes/diamond_dagger.json
+40d6c263c20537efe8840613f3a21d6c5fe4f38c data/artifex/recipes/diamond_dagger.json
 2208cdbac180ddf793d9e1856bd907f3a4caf1f1 data/artifex/recipes/diamond_flanged_mace.json
 571143bcc54d06466f1f2fd64ad9fb5a4db8b309 data/artifex/recipes/diamond_glaive.json
 9ebd678f49def810973e6ab11c93cdf7368d9097 data/artifex/recipes/diamond_greatsword.json
@@ -158,7 +158,7 @@ d87891871d91054e923be866b2410d67af97ecae data/artifex/recipes/golden_arbalest.js
 7818910da0c3cb579fe041ccbeb55ea5ee8cc291 data/artifex/recipes/golden_bow.json
 9ec9ddc4aa007748e0c579d2652207c4314e6881 data/artifex/recipes/golden_buckler.json
 79ac2c8b7a6ac7c216f865cb32e3bf7e3a57ca29 data/artifex/recipes/golden_crossbow.json
-8da5755f294896c1bca825af33ece7899ef8a411 data/artifex/recipes/golden_dagger.json
+ed03872391d40eddc9cf91419a03cbee5704df03 data/artifex/recipes/golden_dagger.json
 fc70330e632c645072a5b0f939748b274fcc8af8 data/artifex/recipes/golden_flanged_mace.json
 491841394ab852bc1fb34f9ea4ca19b528d8e9b7 data/artifex/recipes/golden_glaive.json
 1d35030d040c78bd7125b1fe4759c679f5623bdf data/artifex/recipes/golden_greatsword.json
@@ -179,7 +179,7 @@ df4a773e861a249de775956affef8862b86060dd data/artifex/recipes/iron_arbalest.json
 a336b220e693921ec6b2605a7bffca728113e51a data/artifex/recipes/iron_bow.json
 2d85994bce087358583dedb26450ee32132a7f39 data/artifex/recipes/iron_buckler.json
 92fe90b9063326bac278bbcbc71e52f1e0ba736b data/artifex/recipes/iron_crossbow.json
-4559dd2ed129e67120f43729ff6d575916a9122e data/artifex/recipes/iron_dagger.json
+6502f441d89f52132805a7851e4785b6db100064 data/artifex/recipes/iron_dagger.json
 566fee8e23839c8d8dc96ceacd7c9f32faab1c44 data/artifex/recipes/iron_flanged_mace.json
 afa6d5d29b7c36d89bc77252eb6ca7c83f0e54cb data/artifex/recipes/iron_glaive.json
 fba26d1f9657c9f98bd09eed4690d660f3cbb562 data/artifex/recipes/iron_greatsword.json
@@ -225,7 +225,7 @@ af84f5256765aefca8d6d4a2d360e8e307edf236 data/artifex/recipes/standard_pole_from
 3a8f8989564afa9d217a39126414299ee70b53b0 data/artifex/recipes/standard_pole_from_string.json
 b92b4396ca139fadd1d897552571d79b0fcd7507 data/artifex/recipes/stone_battleaxe.json
 568a9b1075513f8eef77be7c78bd345093ffed88 data/artifex/recipes/stone_buckler.json
-a60277741509a350fedceb937cb72e5a5ab0766b data/artifex/recipes/stone_dagger.json
+5d714ab50e2c1fcb1986654967ec3854a955229f data/artifex/recipes/stone_dagger.json
 34e4b2dcc154c451168f434806f24c72388d4bce data/artifex/recipes/stone_flanged_mace.json
 ff75f18b8c18d9329e0ebdb01c1ac0d72b44bbfb data/artifex/recipes/stone_glaive.json
 032f83d4802aea46d10b49573ae3a86ca0322d74 data/artifex/recipes/stone_greatsword.json
@@ -240,7 +240,7 @@ e7f5202849e6076fc42de9deedd417c00f48b0c7 data/artifex/recipes/stone_odachi.json
 982f98aae9b74e78d23676508f5b859bbdb694c2 data/artifex/recipes/stone_spear.json
 794d291c25ab1d3371322073ab1623d973357acb data/artifex/recipes/wooden_battleaxe.json
 9337550a407be15e91a9dea815b0c278cb48119b data/artifex/recipes/wooden_buckler.json
-b25ff6b23b89368d5e44bcafd278d4ad446336d5 data/artifex/recipes/wooden_dagger.json
+3d51bd4978053a44c114384656d16df0c1876f89 data/artifex/recipes/wooden_dagger.json
 c5341b2d998e16167d6dbf98d6ceed9a24ef91b4 data/artifex/recipes/wooden_flanged_mace.json
 1b6140326ca5e2027dc7ea8afc3d9ee2d155e48e data/artifex/recipes/wooden_glaive.json
 7ece640355ffd69ea33ec225053c01804f3ae12e data/artifex/recipes/wooden_greatsword.json

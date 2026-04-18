@@ -20,11 +20,12 @@ import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
+import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class AFTieredItem extends TieredItem implements AFPropertyItem {
+public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtension {
 
     private final AFMaterial material;
     private final float attackSpeed;

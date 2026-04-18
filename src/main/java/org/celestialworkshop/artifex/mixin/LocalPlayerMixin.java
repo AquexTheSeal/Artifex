@@ -7,7 +7,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.Input;
 import net.minecraft.client.player.LocalPlayer;
-import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -51,7 +50,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
             )
     )
     private boolean cancelItemUseSprintBlock(boolean original) {
-        if (this.getUseItem().getItem() instanceof AFShieldItem shield) {
+        if (this.getUseItem().getItem() instanceof AFExtension shield) {
             if (shield.allowUseSprinting((LocalPlayer) (Object) this)) {
                 return false;
             }
@@ -67,7 +66,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
             )
     )
     private boolean allowSprintingInCanStart(boolean original) {
-        if (this.getUseItem().getItem() instanceof AFShieldItem shield) {
+        if (this.getUseItem().getItem() instanceof AFExtension shield) {
             if (shield.allowUseSprinting((LocalPlayer) (Object) this)) {
                 return false;
             }
@@ -85,7 +84,7 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
             )
     )
     private boolean shouldSetSprintTriggerTime(LocalPlayer instance, int value) {
-        if (this.getUseItem().getItem() instanceof AFShieldItem shield) {
+        if (this.getUseItem().getItem() instanceof AFExtension shield) {
             return !shield.allowUseSprinting((LocalPlayer) (Object) this);
         }
         return true;

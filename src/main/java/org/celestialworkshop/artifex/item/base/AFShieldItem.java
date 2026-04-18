@@ -60,6 +60,7 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
         return this.specialtyMapSupplier.get();
     }
 
+    @Override
     public boolean allowUseSprinting(Player player) {
         return AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER);
     }

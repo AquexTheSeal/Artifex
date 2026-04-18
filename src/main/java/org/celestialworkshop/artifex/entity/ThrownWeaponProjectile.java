@@ -37,6 +37,7 @@ import java.util.Map;
 public class ThrownWeaponProjectile extends AbstractArrow {
 
     public static final EntityDataAccessor<ItemStack> HELD_STACK = SynchedEntityData.defineId(ThrownWeaponProjectile.class, EntityDataSerializers.ITEM_STACK);
+    public boolean isRogueProjectile = false;
 
     public ThrownWeaponProjectile(EntityType<? extends ThrownWeaponProjectile> entityType, Level level) {
         super(entityType, level);
@@ -138,8 +139,8 @@ public class ThrownWeaponProjectile extends AbstractArrow {
 
         List<Integer> slots = new ArrayList<>();
         // Prioritize offhand/mainhand.
-        slots.add(Inventory.SLOT_OFFHAND);
         slots.add(inventory.selected);
+        slots.add(Inventory.SLOT_OFFHAND);
         for (int i = 0; i < inventory.getContainerSize(); i++) {
             if (i != Inventory.SLOT_OFFHAND && i != inventory.selected) {
                 slots.add(i);
@@ -148,10 +149,13 @@ public class ThrownWeaponProjectile extends AbstractArrow {
 
         for (int i : slots) {
             ItemStack stack = inventory.getItem(i);
+
             if (ItemStackUtil.sameItemMatchesEnchantments(pickupItem, stack)) {
-                return AFAmmoDataCapability.get(stack).map(cap -> {
+
+                boolean success = AFAmmoDataCapability.get(stack).map(cap -> {
                     if (!cap.isFull(stack)) {
                         cap.add(stack, 1);
+
                         if (pPlayer instanceof ServerPlayer serverPlayer) {
                             AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(i, cap.getAmmo()));
                         }
@@ -159,6 +163,8 @@ public class ThrownWeaponProjectile extends AbstractArrow {
                     }
                     return false;
                 }).orElse(false);
+
+                if (success) return true;
             }
         }
         return false;

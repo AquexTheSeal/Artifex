@@ -26,6 +26,7 @@ public class AFSpecialties {
     public static final RegistryObject<AFSpecialty> CRIPPLING = SPECIALTIES.register("crippling", () -> new CripplingSpecialty(AFSpecialty.Category.BENEFICIAL));
     public static final RegistryObject<AFSpecialty> UNSTOPPABLE = SPECIALTIES.register("unstoppable", () -> new UnstoppableSpecialty(AFSpecialty.Category.BENEFICIAL));
     public static final RegistryObject<AFSpecialty> BOUNTIFUL_HARVEST = SPECIALTIES.register("bountiful_harvest", () -> new LevelArgOnly(AFSpecialty.Category.BENEFICIAL));
+    public static final RegistryObject<AFSpecialty> ROGUE = SPECIALTIES.register("rogue", () -> new RogueSpecialty(AFSpecialty.Category.BENEFICIAL));
 
     public static final RegistryObject<AFSpecialty> TWO_HANDED = SPECIALTIES.register("two_handed", () -> new AFSpecialty(AFSpecialty.Category.HARMFUL));
     public static final RegistryObject<AFSpecialty> HINDERING = SPECIALTIES.register("hindering", () -> new HinderingSpecialty(AFSpecialty.Category.HARMFUL));

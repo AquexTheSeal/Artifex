@@ -181,6 +181,8 @@
   "material_specialty.artifex.hindering_description": "Successive attacks weakens, reducing your attack speed with each hit by %s up to 5 stacks.",
   "material_specialty.artifex.impact_combo": "Impact Combo",
   "material_specialty.artifex.impact_combo_description": "Successive attacks build momentum, increasing damage with each hit by %s up to a maximum of 5 stacks.",
+  "material_specialty.artifex.rogue": "Rogue",
+  "material_specialty.artifex.rogue_description": "On impact; If your off-hand holds a matching throwable with the same enchantments, automatically fire another projectile that inherits %s damage.",
   "material_specialty.artifex.shockwave": "Shockwave",
   "material_specialty.artifex.shockwave_description": "Critical hits create a shockwave that knocks nearby targets up that deals %s damage.",
   "material_specialty.artifex.sweeping": "Sweeping",
