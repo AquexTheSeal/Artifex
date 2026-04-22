@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.CreativeModeTab;
 import org.celestialworkshop.artifex.client.AFCreativeTabOverride;
-import org.celestialworkshop.artifex.registry.AFCreativeTabs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,10 +30,8 @@ public abstract class CreativeModeInventoryScreenMixin extends EffectRenderingIn
             cancellable = true
     )
     protected void overrideDisplayItem(GuiGraphics pGuiGraphics, CreativeModeTab pCreativeModeTab, CallbackInfo ci, @Local(ordinal = 3) int x, @Local(ordinal = 4) int y) {
-        if (pCreativeModeTab == AFCreativeTabs.ARTIFEX.get()) {
-            if (AFCreativeTabOverride.renderAnimatedIcon(pGuiGraphics, pCreativeModeTab, font, x, y)) {
-                ci.cancel();
-            }
+        if (AFCreativeTabOverride.renderAnimatedIcon(pGuiGraphics, pCreativeModeTab, font, x, y)) {
+            ci.cancel();
         }
     }
 }

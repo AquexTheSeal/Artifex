@@ -44,6 +44,15 @@ public class AFSpecialty {
     public void onPostShieldBlock(LivingEntity target, ItemStack itemStack, DamageSource source, float shieldedDamage, int specialityLevel) {
     }
 
+    public AFWeaponType.Category[] allowedCategories() {
+        return new AFWeaponType.Category[]{
+                AFWeaponType.Category.MELEE,
+                AFWeaponType.Category.RANGED_MELEE,
+                AFWeaponType.Category.RANGED,
+                AFWeaponType.Category.SHIELD
+        };
+    }
+
     public ResourceLocation getIcon() {
         return ResourceLocation.fromNamespaceAndPath(getId().getNamespace(), "textures/icons/specialty/" + getId().getPath() + ".png");
     }

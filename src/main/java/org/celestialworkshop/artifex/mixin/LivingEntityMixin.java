@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.ShieldBlockEvent;
 import org.celestialworkshop.artifex.item.base.AFShieldItem;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,8 +23,13 @@ public class LivingEntityMixin {
     private void shieldBlockEvent(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir, @Local ShieldBlockEvent event) {
         LivingEntity entity = (LivingEntity)(Object)this;
         ItemStack shield = entity.getUseItem();
-        if (shield.getItem() instanceof AFShieldItem afShieldItem) {
-            afShieldItem.onShieldBlock(entity, shield, event.getDamageSource(), event.getBlockedDamage());
+
+        ItemStackUtil.getSpecialties(shield.getItem()).forEach((specialty, level) -> {
+            specialty.onPostShieldBlock(entity, shield, source, amount, level);
+        });
+
+        if (shield.getItem() instanceof AFShieldItem shieldItem) {
+            shieldItem.onShieldBlock(entity, shield, source, amount);
         }
     }
 }

@@ -3,7 +3,7 @@ package org.celestialworkshop.artifex.mixin;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
+import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,8 +32,8 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
             return;
         }
 
-        AFAmmoDataCapability.get(left).ifPresent(leftCap -> {
-            AFAmmoDataCapability.get(right).ifPresent(rightCap -> {
+        AFItemStackDataCapability.get(left).ifPresent(leftCap -> {
+            AFItemStackDataCapability.get(right).ifPresent(rightCap -> {
 
                 if (leftCap.isFull(left) && rightCap.isFull(right)) return;
 
@@ -50,7 +50,7 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
                 int newAmmo = Math.min(maxAmmo, currentAmmo + additionalAmmo);
 
                 ItemStack finalResultStack = resultStack;
-                AFAmmoDataCapability.get(resultStack).ifPresent(resCap -> {
+                AFItemStackDataCapability.get(resultStack).ifPresent(resCap -> {
                     resCap.setAmmo(newAmmo);
 
                     if (this.cost.get() < 1) {

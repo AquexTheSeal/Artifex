@@ -17,9 +17,8 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
-import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
+import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
@@ -28,8 +27,6 @@ import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class AFThrowableTieredItem extends AFTieredItem {
 
@@ -37,8 +34,8 @@ public class AFThrowableTieredItem extends AFTieredItem {
     public final float thrownBaseDamage;
     public final float baseVelocity;
 
-    public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, int throwMaxTicks, float thrownBaseDamage, float baseVelocity, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
-        super(material, attackDamage, attackSpeed, movementSpeedPercent, reach, canSweep, specialtyMapSupplier);
+    public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, int throwMaxTicks, float thrownBaseDamage, float baseVelocity) {
+        super(material, attackDamage, attackSpeed, movementSpeedPercent, reach, canSweep);
         this.throwMaxTicks = throwMaxTicks;
         this.thrownBaseDamage = thrownBaseDamage;
         this.baseVelocity = baseVelocity;
@@ -47,8 +44,8 @@ public class AFThrowableTieredItem extends AFTieredItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack item = pPlayer.getItemInHand(pUsedHand);
-        if (AFAmmoDataCapability.get(item).isPresent()) {
-            if (!AFAmmoDataCapability.get(item).resolve().get().isEmpty()) {
+        if (AFItemStackDataCapability.get(item).isPresent()) {
+            if (!AFItemStackDataCapability.get(item).resolve().get().isEmpty()) {
                 pPlayer.startUsingItem(pUsedHand);
                 return InteractionResultHolder.consume(item);
             }
@@ -95,7 +92,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
             pLevel.playSound(null, projectile, AFSoundEvents.THROWABLE_THROWN.get(), SoundSource.PLAYERS, 1.0F, 1.25F);
  
             if (!player.getAbilities().instabuild) {
-                AFAmmoDataCapability.get(pStack).ifPresent(cap -> {
+                AFItemStackDataCapability.get(pStack).ifPresent(cap -> {
                     cap.consume(1);
                     if (player instanceof ServerPlayer serverPlayer) {
                         int usedIdx = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? player.getInventory().selected : Inventory.SLOT_OFFHAND;
@@ -170,7 +167,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_description").withStyle(ChatFormatting.DARK_GRAY));
         pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_max_throw_time", this.getThrowMaxTicks() / 20.0).withStyle(ChatFormatting.GRAY));
-        AFAmmoDataCapability.get(pStack).ifPresent(cap -> {
+        AFItemStackDataCapability.get(pStack).ifPresent(cap -> {
             pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_ammo_stack", cap.getAmmo(), cap.getMaxAmmo(pStack)).withStyle(ChatFormatting.GRAY));
         });
     }

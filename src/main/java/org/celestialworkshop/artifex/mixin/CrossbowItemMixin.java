@@ -13,6 +13,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
+import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,9 +50,16 @@ public abstract class CrossbowItemMixin extends ProjectileWeaponItem {
     )
     private static boolean modifyArrow(Level level, Entity projectile, Operation<Boolean> original, @Local(ordinal = 0, argsOnly = true) ItemStack crossbowStack) {
         boolean flag = original.call(level, projectile);
-        if (flag && crossbowStack.getItem() instanceof AFCrossbowItem ext) {
+        if (flag) {
             if (projectile instanceof AbstractArrow arrow) {
-                ext.modifyArrowProperties(crossbowStack, arrow);
+
+                AFEntityDataCapability.get(arrow).ifPresent(cap -> {
+                    cap.setBoundItemStack(crossbowStack.copy());
+                });
+
+                if (crossbowStack.getItem() instanceof AFCrossbowItem ext) {
+                    ext.modifyArrowProperties(crossbowStack, arrow);
+                }
             }
         }
         return flag;

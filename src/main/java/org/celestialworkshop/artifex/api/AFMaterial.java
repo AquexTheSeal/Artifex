@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class AFMaterial {
@@ -26,6 +25,8 @@ public class AFMaterial {
     public static final Reference2ObjectOpenHashMap<Item, AFWeaponType> ITEM_TO_WEAPON_TYPE = new Reference2ObjectOpenHashMap<>();
 
     private final Object2ObjectOpenHashMap<AFWeaponType, RegistryObject<Item>> registeredWeaponsMap = new Object2ObjectOpenHashMap<>();
+
+    private final Supplier<Map<AFSpecialty, Integer>> weaponTypeSpecialties;
     private final Supplier<Ingredient> craftingHiltItem;
     private final Supplier<Ingredient> craftingReinforcedHiltItem;
     private final Supplier<Ingredient> craftingPoleItem;
@@ -39,6 +40,8 @@ public class AFMaterial {
         this.itemTier = itemTier;
         this.itemProperties = itemProperties;
         this.registerWeapons(builder);
+
+        this.weaponTypeSpecialties = builder.get().weaponTypeSpecialties;
         this.craftingHiltItem = builder.get().craftingHiltItem;
         this.craftingReinforcedHiltItem = builder.get().craftingReinforcedHiltItem;
         this.craftingPoleItem = builder.get().craftingPoleItem;
@@ -56,12 +59,8 @@ public class AFMaterial {
                 continue;
             }
 
-            MaterialSpecialties matSpec = new MaterialSpecialties();
-            builderGet.specialtiesConfig.accept(matSpec);
-            Supplier<Map<AFSpecialty, Integer>> mergedSpecialties = weaponType.mergeSpecialties(matSpec);
-
             RegistryObject<Item> registered = builderGet.itemRegister.register(itemId, () -> {
-                Item item = weaponType.getMaker().create(this, mergedSpecialties);
+                Item item = weaponType.getMaker().create(this);
                 ITEM_TO_WEAPON_TYPE.put(item, weaponType);
                 return item;
             });
@@ -75,6 +74,10 @@ public class AFMaterial {
     public Item getWeapon(AFWeaponType weaponType) {
         RegistryObject<Item> item = registeredWeaponsMap.get(weaponType);
         return item != null ? item.get() : null;
+    }
+
+    public Supplier<Map<AFSpecialty, Integer>> getWeaponTypeSpecialties() {
+        return weaponTypeSpecialties;
     }
 
     public Ingredient getCraftingHiltItem() {
@@ -117,17 +120,38 @@ public class AFMaterial {
         private Tier itemTier = Tiers.WOOD;
         private Supplier<Item.Properties> itemProperties = Item.Properties::new;
         private final List<AFWeaponType> weaponTypeBlacklist = new ObjectArrayList<>();
-        private Consumer<MaterialSpecialties> specialtiesConfig = s -> {};
 
+        protected Supplier<Map<AFSpecialty, Integer>> weaponTypeSpecialties = Map::of;
         protected Supplier<Ingredient> craftingHiltItem = () -> Ingredient.of(AFItems.BASIC_HILT.get());
         protected Supplier<Ingredient> craftingReinforcedHiltItem = () -> Ingredient.of(AFItems.STANDARD_HILT.get());
         protected Supplier<Ingredient> craftingPoleItem = () -> Ingredient.of(AFItems.STANDARD_POLE.get());
         protected Supplier<Ingredient> craftingMaterialItem = () -> itemTier.getRepairIngredient();
+
         protected SmithingConfig smithingConfig;
 
         public Builder(DeferredRegister<Item> itemRegister, String materialId) {
             this.itemRegister = itemRegister;
             this.materialId = materialId;
+        }
+
+        public Builder tier(Tier tier) {
+            this.itemTier = tier;
+            return this;
+        }
+
+        public Builder properties(Supplier<Item.Properties> properties) {
+            this.itemProperties = properties;
+            return this;
+        }
+
+        public Builder blacklist(AFWeaponType type) {
+            this.weaponTypeBlacklist.add(type);
+            return this;
+        }
+
+        public Builder weaponTypeSpecialties(Supplier<Map<AFSpecialty, Integer>> value) {
+            this.weaponTypeSpecialties = value;
+            return this;
         }
 
         public Builder craftingHiltItem(Supplier<Ingredient> value) {
@@ -155,28 +179,8 @@ public class AFMaterial {
             return this;
         }
 
-        public Builder tier(Tier tier) {
-            this.itemTier = tier;
-            return this;
-        }
-
-        public Builder properties(Supplier<Item.Properties> properties) {
-            this.itemProperties = properties;
-            return this;
-        }
-
-        public Builder blacklist(AFWeaponType type) {
-            this.weaponTypeBlacklist.add(type);
-            return this;
-        }
-
         public Builder blacklist(AFWeaponType... types) {
             this.weaponTypeBlacklist.addAll(Arrays.asList(types));
-            return this;
-        }
-
-        public Builder specialties(Consumer<MaterialSpecialties> config) {
-            this.specialtiesConfig = config;
             return this;
         }
 

@@ -4,13 +4,13 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemDecorator;
-import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
+import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 
 public class AFAmmoDecoration implements IItemDecorator {
 
     @Override
     public boolean render(GuiGraphics guiGraphics, Font font, ItemStack stack, int xOffset, int yOffset) {
-        AFAmmoDataCapability.get(stack).ifPresent(cap -> {
+        AFItemStackDataCapability.get(stack).ifPresent(cap -> {
             if (!cap.isFull(stack)) {
                 int barWidth = (int) (13.0F * (float) cap.getAmmo() / (float) cap.getMaxAmmo(stack));
 

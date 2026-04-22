@@ -13,6 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.celestialworkshop.artifex.client.AFCreativeTabOverride;
 import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
 import org.celestialworkshop.artifex.client.overlay.ComboIndicatorOverlay;
 import org.celestialworkshop.artifex.client.overlay.IaijutsuIndicatorOverlay;
@@ -26,6 +27,7 @@ import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
 import org.celestialworkshop.artifex.item.base.AFBowItem;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
+import org.celestialworkshop.artifex.registry.AFCreativeTabs;
 import org.celestialworkshop.artifex.registry.AFEntities;
 import org.celestialworkshop.artifex.registry.AFParticleTypes;
 
@@ -36,6 +38,9 @@ public class AFClientSetup {
 
     @SubscribeEvent
     public static void onFMLClientSetupEvent(FMLClientSetupEvent event) {
+
+        AFCreativeTabOverride.registerTabOverride(AFCreativeTabs.ARTIFEX);
+
         for (Map.Entry<ResourceKey<Item>, Item> item : ForgeRegistries.ITEMS.getEntries()) {
             if (item.getValue() instanceof AFBowItem afBow) {
                 ItemProperties.register(item.getValue(), ResourceLocation.parse("pull"), (stack, level, entity, seed) -> {

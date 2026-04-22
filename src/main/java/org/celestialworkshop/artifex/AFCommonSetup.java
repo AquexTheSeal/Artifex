@@ -9,7 +9,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import org.celestialworkshop.artifex.advancement.AFWeaponTypePredicate;
 import org.celestialworkshop.artifex.advancement.IngredientPredicate;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
-import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
+import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.celestialworkshop.artifex.registry.AFAttributes;
 
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -24,7 +24,7 @@ public class AFCommonSetup {
     @SubscribeEvent
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         AFEntityDataCapability.register(event);
-        AFAmmoDataCapability.register(event);
+        AFItemStackDataCapability.register(event);
     }
 
     @SubscribeEvent

@@ -1,151 +1,148 @@
 package org.celestialworkshop.artifex.api;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import net.minecraft.world.item.Item;
 import org.celestialworkshop.artifex.compat.BetterCombatCompat;
 import org.celestialworkshop.artifex.item.base.*;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
 import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public enum AFWeaponType {
 
     KNUCKLES("knuckles", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 1.25F, 2.4F, 0.1F, 0.0F, false),
             () -> Map.of(AFSpecialties.IMPACT_COMBO.get(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 1.25F, 2.4F, 0.1F, 0.0F, false, spec),
             " X ", "X X"),
 
     SHORTSWORD("shortsword", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 2.0F, 2.0F, 0.0F, 0.0F, true),
             () -> Map.of(AFSpecialties.FINESSE.get(), 1, AFSpecialties.EXECUTE.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 2.0F, 2.0F, 0.0F, 0.0F, true, spec),
             "X", "S"),
 
     SICKLE("sickle", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.1F, 0.0F, true),
             () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 1, AFSpecialties.BOUNTIFUL_HARVEST.get(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.1F, 0.0F, true, spec),
             "XX", " R"),
 
     KATANA("katana", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 2.0F, 1.5F, 0.05F, 0.0F, true),
             () -> Map.of(AFSpecialties.IAIJUTSU.get(), 2, AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 2.0F, 1.5F, 0.05F, 0.0F, true, spec),
             "  X", " X ", " R "),
 
     BATTLEAXE("battleaxe", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 7.0F, 0.75F, -0.1F, 0.0F, false),
             () -> Map.of(AFSpecialties.EXECUTE.get(), 2),
-            (mat, spec) -> new AFTieredItem(mat, 7.0F, 0.75F, -0.1F, 0.0F, false, spec),
             "XXX", "XRX", " R "),
 
     FLANGED_MACE("flanged_mace", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 5.0F, 1.0F, -0.05F, 0.0F, false),
             () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1, AFSpecialties.SHOCKWAVE.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 5.0F, 1.0F, -0.05F, 0.0F, false, spec),
             "XXX", " R ", " R "),
 
     SCIMITAR("scimitar", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 3.0F, 1.2F, 0.0F, 0.0F, true),
             () -> Map.of(AFSpecialties.IMPACT_COMBO.get(), 1, AFSpecialties.FINESSE.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.2F, 0.0F, 0.0F, true, spec),
             " XX", " X ", "R  "),
 
     RAPIER("rapier", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false),
             () -> Map.of(AFSpecialties.FINESSE.get(), 2, AFSpecialties.ARMOR_PIERCER.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, spec),
             "  X", " X ", "R  "),
 
     DAGGER("dagger", Category.RANGED_MELEE,
+            (mat) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 10, 3, 4.0F),
             () -> Map.of(AFSpecialties.ROGUE.get(), 1),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 10, 3, 4.0F, spec),
             " X", "S "),
 
     JAVELIN("javelin", Category.RANGED_MELEE,
+            (mat) -> new AFThrowableTieredItem(mat, 3.0F, 1.2F, 0.0F, 1.25F, false, 20, 6.0F, 5.0F),
             () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 3.0F, 1.2F, 0.0F, 1.25F, false, 20, 6.0F, 5.0F, spec),
             "X", "P", "X"),
 
     SPEAR("spear", Category.RANGED_MELEE,
+            (mat) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 0.0F, 1.5F, false, 15, 4.5F, 2.5F),
             () -> Map.of(AFSpecialties.CRIPPLING.get(), 1),
-            (mat, spec) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 0.0F, 1.5F, false, 15, 4.5F, 2.5F, spec),
             "X", "P"),
 
     BOW("bow", Category.RANGED,
-            () -> Map.of(),
             AFBowItem::new,
+            () -> Map.of(),
             "RX", "XB"),
 
     LONGBOW("longbow", Category.RANGED,
-            () -> Map.of(),
             AFBowItem::new,
+            () -> Map.of(),
             "XXT", "XB ", "T  "),
 
     CROSSBOW("crossbow", Category.RANGED,
-            () -> Map.of(),
             AFCrossbowItem::new,
+            () -> Map.of(),
             " X ", "XCX", " S "),
 
     ARBALEST("arbalest", Category.RANGED,
-            () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 2, AFSpecialties.TWO_HANDED.get(), 1),
             AFCrossbowItem::new,
+            () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 2, AFSpecialties.TWO_HANDED.get(), 1),
             "XCX", "XTX", " R "),
 
     GLAIVE("glaive", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 3.0F, 0.9F, 0.0F, 0.5F, true),
             () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.FINESSE.get(), 3),
-            (mat, spec) -> new AFTieredItem(mat, 3.0F, 0.9F, 0.0F, 0.5F, true, spec),
             " X ", "XP "),
 
     HALBERD("halberd", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 4.0F, 1.0F, 0.0F, 1.25F, true),
             () -> Map.of(AFSpecialties.CRIPPLING.get(), 1, AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 4.0F, 1.0F, 0.0F, 1.25F, true, spec),
             "XX", "XP"),
 
     SCYTHE("scythe", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 3.0F, 1.4F, 0.0F, 1.0F, true),
             () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 2, AFSpecialties.BOUNTIFUL_HARVEST.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 3.0F, 1.4F, 0.0F, 1.0F, true, spec),
             "XX", " P"),
 
     GREATSWORD("greatsword", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 6.0F, 1.0F, -0.1F, 1.0F, true),
             () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.UNSTOPPABLE.get(), 1, AFSpecialties.HINDERING.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 6.0F, 1.0F, -0.1F, 1.0F, true, spec),
             " X ", " X ", " R "),
 
     ODACHI("odachi", Category.MELEE,
+            (mat) -> new AFTieredItem(mat, 4.5F, 1.2F, 0.0F, 1.0F, true),
             () -> Map.of(AFSpecialties.IAIJUTSU.get(), 1, AFSpecialties.TWO_HANDED.get(), 1),
-            (mat, spec) -> new AFTieredItem(mat, 4.5F, 1.2F, 0.0F, 1.0F, true, spec),
             "XX", "X ", "R "),
 
     BUCKLER("buckler", Category.SHIELD,
+            (mat) -> new AFShieldItem(mat, 0.0F, 1.25F),
             () -> Map.of(),
-            (mat, spec) -> new AFShieldItem(mat, 0.0F, 1.25F, spec),
             " X ", "XRX", " X "),
 
     SHIELD("shield", Category.SHIELD,
+            (mat) -> new AFShieldItem(mat, 0.0F, 1.75F),
             () -> Map.of(),
-            (mat, spec) -> new AFShieldItem(mat, 0.0F, 1.75F, spec),
             "XXX", "XIX", " X "),
 
     WAR_DOOR("war_door", Category.SHIELD,
+            (mat) -> new AFShieldItem(mat, -0.15F, 2.5F),
             () -> Map.of(),
-            (mat, spec) -> new AFShieldItem(mat, -0.15F, 2.5F, spec),
             "XXX", "XHX", "XXX");
 
 
     private final String name;
     private final Category category;
-    private final Supplier<Map<AFSpecialty, Integer>> baseSpecialties;
     private final WeaponMaker maker;
+    private final Supplier<Map<AFSpecialty, Integer>> weaponTypeSpecialties;
+
     private String[] recipePattern = new String[]{"X", "S", "S"};
 
-    AFWeaponType(String name, Category category, Supplier<Map<AFSpecialty, Integer>> baseSpecialties, WeaponMaker maker) {
+    AFWeaponType(String name, Category category, WeaponMaker maker, Supplier<Map<AFSpecialty, Integer>> weaponTypeSpecialties) {
         this.name = name;
         this.category = category;
-        this.baseSpecialties = baseSpecialties;
         this.maker = maker;
+        this.weaponTypeSpecialties = weaponTypeSpecialties;
     }
 
-    AFWeaponType(String name, Category category, Supplier<Map<AFSpecialty, Integer>> baseSpecialties, WeaponMaker maker, String... recipePattern) {
-        this(name, category, baseSpecialties, maker);
+    AFWeaponType(String name, Category category, WeaponMaker maker, Supplier<Map<AFSpecialty, Integer>> weaponTypeSpecialties, String... recipePattern) {
+        this(name, category, maker, weaponTypeSpecialties);
         this.recipePattern = recipePattern;
     }
 
@@ -161,6 +158,10 @@ public enum AFWeaponType {
         return item != null ? AFMaterial.ITEM_TO_WEAPON_TYPE.get(item) : null;
     }
 
+    public static @Nullable Category getWeaponCategory(Item item) {
+        return getWeaponType(item) != null ? getWeaponType(item).getCategory() : null;
+    }
+
     public String getName() {
         return name;
     }
@@ -173,26 +174,8 @@ public enum AFWeaponType {
         return maker;
     }
 
-    public Supplier<Map<AFSpecialty, Integer>> mergeSpecialties(MaterialSpecialties materialSpecialties) {
-        return () -> {
-            Map<AFSpecialty, Integer> merged = new HashMap<>(this.baseSpecialties.get());
-
-            for (MaterialSpecialties.Entry entry : materialSpecialties.getEntries()) {
-                boolean categoryMatches = entry.categories().isEmpty() || entry.categories().contains(this.category);
-                if (categoryMatches) {
-                    merged.merge(entry.specialty().get(), entry.level(), Integer::max);
-                }
-            }
-
-            return merged.entrySet().stream()
-                    .sorted(Map.Entry.comparingByKey(Comparator.comparing(AFSpecialty::getCategory)))
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            Map.Entry::getValue,
-                            (e1, e2) -> e1,
-                            Object2IntArrayMap::new
-                    ));
-        };
+    public Supplier<Map<AFSpecialty, Integer>> getWeaponTypeSpecialties() {
+        return weaponTypeSpecialties;
     }
 
     public static AFWeaponType byName(String name) {
@@ -206,7 +189,7 @@ public enum AFWeaponType {
 
     @FunctionalInterface
     public interface WeaponMaker {
-        Item create(AFMaterial material, Supplier<Map<AFSpecialty, Integer>> specialties);
+        Item create(AFMaterial material);
     }
 
     public enum Category {

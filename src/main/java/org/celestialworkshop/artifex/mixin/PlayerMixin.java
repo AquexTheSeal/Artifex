@@ -16,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.item.base.AFPropertyItem;
 import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
@@ -32,7 +31,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Map;
 
-// TODO: BetterCombat support with attack hand selection
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 
@@ -89,8 +87,10 @@ public abstract class PlayerMixin extends LivingEntity {
         float result = damage;
         if (target instanceof LivingEntity livingTarget) {
             Item item = this.artifex$getAttackingItemStack().getItem();
-            if (item instanceof AFPropertyItem materialItem && AFWeaponType.getWeaponType(item).getCategory() != AFWeaponType.Category.RANGED) {
-                for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+
+            if (AFWeaponType.getWeaponCategory(item) != AFWeaponType.Category.RANGED) {
+
+                for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(item).entrySet()) {
                     result = entry.getKey().onDamageMelee(this, livingTarget, this.artifex$getAttackingItemStack(), result, this.af$CriticalProcess, entry.getValue());
                 }
             }
@@ -106,11 +106,13 @@ public abstract class PlayerMixin extends LivingEntity {
         float result = sweepDamage;
         Item item = this.artifex$getAttackingItemStack().getItem();
 
-        if (item instanceof AFPropertyItem materialItem && AFWeaponType.getWeaponType(item).getCategory() != AFWeaponType.Category.RANGED) {
-            for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
-                result = entry.getKey().onDamageSweep(this, sweepTarget, this.artifex$getAttackingItemStack(), result, originalDamage, entry.getValue());
-            }
+        if (AFWeaponType.getWeaponCategory(item) != AFWeaponType.Category.RANGED) {
+
+        for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(item).entrySet()) {
+            result = entry.getKey().onDamageSweep(this, sweepTarget, this.artifex$getAttackingItemStack(), result, originalDamage, entry.getValue());
         }
+        }
+
         return original.call(sweepTarget, source, result);
     }
 
@@ -122,15 +124,17 @@ public abstract class PlayerMixin extends LivingEntity {
         if (pTarget instanceof LivingEntity livingTarget) {
             Item item = this.artifex$getAttackingItemStack().getItem();
 
-            if (ItemStackUtil.hasComboBasedWeapon(this.artifex$getAttackingItemStack())) {
-                ComboBasedSpecialty.manageComboStack(this, this.artifex$getAttackingItemStack());
-            }
+            if (AFWeaponType.getWeaponCategory(item) != AFWeaponType.Category.RANGED) {
 
-            if (item instanceof AFPropertyItem materialItem && AFWeaponType.getWeaponType(item).getCategory() != AFWeaponType.Category.RANGED) {
-                for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+                if (ItemStackUtil.hasComboBasedWeapon(this.artifex$getAttackingItemStack())) {
+                    ComboBasedSpecialty.manageComboStack(this, this.artifex$getAttackingItemStack());
+                }
+
+                for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(item).entrySet()) {
                     entry.getKey().onPostMelee(this, livingTarget, this.artifex$getAttackingItemStack(), this.af$CriticalProcess, entry.getValue());
                 }
             }
+
             this.af$CriticalProcess = false;
         }
     }

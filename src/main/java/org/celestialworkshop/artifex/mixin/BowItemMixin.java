@@ -13,6 +13,7 @@ import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
+import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.item.base.AFBowItem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -51,9 +52,16 @@ public abstract class BowItemMixin extends ProjectileWeaponItem {
     )
     private boolean modifyArrow(Level level, Entity projectile, Operation<Boolean> original, @Local(argsOnly = true) ItemStack bowStack) {
         boolean flag = original.call(level, projectile);
-        if (flag && bowStack.getItem() instanceof AFBowItem ext) {
+        if (flag) {
             if (projectile instanceof AbstractArrow arrow) {
-                ext.modifyArrowProperties(bowStack, arrow);
+
+                AFEntityDataCapability.get(arrow).ifPresent(cap -> {
+                    cap.setBoundItemStack(bowStack.copy());
+                });
+
+                if (bowStack.getItem() instanceof AFBowItem ext) {
+                    ext.modifyArrowProperties(bowStack, arrow);
+                }
             }
         }
         return flag;

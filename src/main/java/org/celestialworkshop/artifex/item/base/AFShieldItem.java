@@ -17,26 +17,21 @@ import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
-import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtension {
 
     private final AFMaterial material;
-    private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
 
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public AFShieldItem(AFMaterial material, float speedMod, float durabilityMult, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
+    public AFShieldItem(AFMaterial material, float speedMod, float durabilityMult) {
         super(material.getItemPropertiesSupplier().get().durability((int) (material.getItemTier().getUses() * durabilityMult)));
         this.material = material;
-        this.specialtyMapSupplier = specialtyMapSupplier;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
         if (speedMod != 0.0F) {
@@ -56,20 +51,11 @@ public class AFShieldItem extends ShieldItem implements AFPropertyItem, AFExtens
     }
 
     @Override
-    public Map<AFSpecialty, Integer> getSpecialties() {
-        return this.specialtyMapSupplier.get();
-    }
-
-    @Override
     public boolean allowUseSprinting(Player player) {
         return AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER);
     }
 
     public void onShieldBlock(LivingEntity entity, ItemStack stack, DamageSource damageSource, float incomingDamage) {
-        this.getSpecialties().forEach((specialty, level) -> {
-            specialty.onPostShieldBlock(entity, stack, damageSource, incomingDamage, level);
-        });
-
         if (AFWeaponType.isWeaponType(this, AFWeaponType.BUCKLER)) {
             if (entity instanceof Player player) {
                 int timer = (int) (20 + incomingDamage * 4);

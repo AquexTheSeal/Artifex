@@ -19,8 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
-import org.celestialworkshop.artifex.item.base.AFPropertyItem;
+import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
@@ -66,8 +65,8 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         }
 
         float damage = (float) this.getBaseDamage();
-        if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof AFPropertyItem materialItem) {
-            for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+        if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget) {
+            for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(this.getHeldStack().getItem()).entrySet()) {
                 damage = entry.getKey().onDamageRanged(leOwner, leTarget, this.getHeldStack(), this, damage, this.isCritArrow(), entry.getValue());
             }
         }
@@ -82,12 +81,12 @@ public class ThrownWeaponProjectile extends AbstractArrow {
 
                 this.doPostHurtEffects(le);
 
-                if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget && this.getHeldStack().getItem() instanceof AFPropertyItem materialItem) {
+                if (this.getOwner() instanceof LivingEntity leOwner && entity instanceof LivingEntity leTarget) {
                     if (ItemStackUtil.hasComboBasedWeapon(this.getHeldStack())) {
                         ComboBasedSpecialty.manageComboStack(leOwner, this.getHeldStack());
                     }
 
-                    for (Map.Entry<AFSpecialty, Integer> entry : materialItem.getSpecialties().entrySet()) {
+                    for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(this.getHeldStack().getItem()).entrySet()) {
                         entry.getKey().onPostRanged(leOwner, leTarget, this.getHeldStack(), this, this.isCritArrow(), entry.getValue());
                     }
                 }
@@ -152,7 +151,7 @@ public class ThrownWeaponProjectile extends AbstractArrow {
 
             if (ItemStackUtil.sameItemMatchesEnchantments(pickupItem, stack)) {
 
-                boolean success = AFAmmoDataCapability.get(stack).map(cap -> {
+                boolean success = AFItemStackDataCapability.get(stack).map(cap -> {
                     if (!cap.isFull(stack)) {
                         cap.add(stack, 1);
 

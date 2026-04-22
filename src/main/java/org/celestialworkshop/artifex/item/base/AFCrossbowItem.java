@@ -9,36 +9,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
-import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFExtension {
 
     private final AFMaterial material;
-    private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
 
-    public AFCrossbowItem(AFMaterial material, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
+    public AFCrossbowItem(AFMaterial material) {
         super(material.getItemPropertiesSupplier().get().durability(material.getItemTier().getUses()));
         this.material = material;
-        this.specialtyMapSupplier = specialtyMapSupplier;
     }
 
     @Override
     public AFMaterial getMaterial() {
         return material;
-    }
-
-    @Override
-    public Map<AFSpecialty, Integer> getSpecialties() {
-        return this.specialtyMapSupplier.get();
     }
 
     public @Nullable SoundEvent getLoadingStartSoundOverride(int enchantmentLevel) {
@@ -81,10 +70,6 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     public void modifyArrowProperties(ItemStack crossbowStack, AbstractArrow arrow) {
-
-        AFEntityDataCapability.get(arrow).ifPresent(cap -> {
-            cap.setBoundItemStack(crossbowStack.copy());
-        });
 
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(2.0F));

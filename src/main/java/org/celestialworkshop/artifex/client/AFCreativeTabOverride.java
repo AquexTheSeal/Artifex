@@ -9,70 +9,67 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.config.AFClientConfig;
 
+import java.util.*;
+import java.util.function.Supplier;
+
 public class AFCreativeTabOverride {
 
-    private static final float ANIM_DURATION = 20f;
+    private static final Map<CreativeModeTab, TabAnimState> TAB_OVERRIDES = new LinkedHashMap<>();
+    private static final float ANIM_DURATION = 20F;
 
-    public static ItemStack currentStack = ItemStack.EMPTY;
-    public static ItemStack nextStack = ItemStack.EMPTY;
+    public static void registerTabOverride(Supplier<CreativeModeTab> tabSupplier) {
+        TAB_OVERRIDES.put(tabSupplier.get(), new TabAnimState());
+    }
 
-    private static float animTick = 0f;
-    private static boolean swapped = false;
+    public static Set<Map.Entry<CreativeModeTab, TabAnimState>> allEntries() {
+        return Collections.unmodifiableSet(TAB_OVERRIDES.entrySet());
+    }
 
     public static boolean renderAnimatedIcon(GuiGraphics pGuiGraphics, CreativeModeTab pCreativeModeTab, Font font, int x, int y) {
 
-        if (!AFClientConfig.CUSTOM_CREATIVE_TAB_RENDER.get()) {
-            return false;
-        }
+        if (!AFClientConfig.CUSTOM_CREATIVE_TAB_RENDER.get()) return false;
+
+        TabAnimState state = TAB_OVERRIDES.get(pCreativeModeTab);
+        if (state == null) return false;
+        if (state.currentStack.isEmpty()) return false;
 
         Minecraft mc = Minecraft.getInstance();
-        if (currentStack.isEmpty() || mc.player == null) return false;
+        if (mc.player == null) return false;
 
         float partial = mc.getPartialTick();
-        float delta = Math.min((animTick + partial) / ANIM_DURATION, 1f);
+        float delta   = Math.min((state.animTick + partial) / ANIM_DURATION, 1f);
 
-        PoseStack pose = pGuiGraphics.pose();
-        pose.pushPose();
-        pose.translate(x + 8, y + 8, 0);
-
-        if (delta >= 0.5f && !swapped) {
-            currentStack = nextStack;
-            swapped = true;
+        if (delta >= 0.5f && !state.swapped) {
+            state.currentStack = state.nextStack;
+            state.swapped = true;
         }
 
         float angle = easeInOutExpo(delta, 180);
 
+        PoseStack pose = pGuiGraphics.pose();
+        pose.pushPose();
+        pose.translate(x + 8, y + 8, 0);
         pose.mulPose(Axis.ZP.rotationDegrees(angle));
-        pGuiGraphics.renderItem(currentStack, -8, -8);
-
+        pGuiGraphics.renderItem(state.currentStack, -8, -8);
         pose.popPose();
 
         return true;
     }
 
-    public static void tick() {
-        if (currentStack.isEmpty()) return;
-        if (animTick < ANIM_DURATION) {
-            animTick++;
+    public static void tickAll() {
+        for (TabAnimState state : TAB_OVERRIDES.values()) {
+            if (!state.currentStack.isEmpty() && state.animTick < ANIM_DURATION) {
+                state.animTick++;
+            }
         }
-    }
-
-    public static void startTransition(ItemStack next) {
-        nextStack = next;
-        animTick = 0f;
-        swapped = false;
     }
 
     private static float easeInOutExpo(float delta, float animAngle) {
-        float angle;
         if (delta < 0.5f) {
-            float e = easeInExpo(delta * 2f);
-            angle = e * animAngle;
+            return easeInExpo(delta * 2f) * animAngle;
         } else {
-            float e = easeOutExpo((delta - 0.5f) * 2f);
-            angle = animAngle + (e * animAngle);
+            return animAngle + easeOutExpo((delta - 0.5f) * 2f) * animAngle;
         }
-        return angle;
     }
 
     private static float easeInExpo(float t) {
@@ -81,5 +78,18 @@ public class AFCreativeTabOverride {
 
     private static float easeOutExpo(float t) {
         return t == 1f ? 1f : 1f - (float) Math.pow(2, -10 * t);
+    }
+
+    public static final class TabAnimState {
+        public ItemStack currentStack = ItemStack.EMPTY;
+        public ItemStack nextStack = ItemStack.EMPTY;
+        float animTick = 0f;
+        boolean swapped = false;
+
+        public void startTransition(ItemStack next) {
+            this.nextStack = next;
+            this.animTick = 0f;
+            this.swapped = false;
+        }
     }
 }

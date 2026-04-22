@@ -17,13 +17,10 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import org.celestialworkshop.artifex.api.AFMaterial;
-import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
-
-import java.util.Map;
-import java.util.function.Supplier;
 
 public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtension {
 
@@ -31,11 +28,9 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtens
     private final float attackSpeed;
     private final boolean canSweep;
 
-    private final Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier;
-
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public AFTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, Supplier<Map<AFSpecialty, Integer>> specialtyMapSupplier) {
+    public AFTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep) {
         super(material.getItemTier(), material.getItemPropertiesSupplier().get());
         this.material = material;
         this.attackSpeed = attackSpeed;
@@ -62,17 +57,11 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtens
         }
         
         this.attributeModifiers = attributeBuilder.build();
-        this.specialtyMapSupplier = specialtyMapSupplier;
     }
 
     @Override
     public AFMaterial getMaterial() {
         return material;
-    }
-
-    @Override
-    public Map<AFSpecialty, Integer> getSpecialties() {
-        return this.specialtyMapSupplier.get();
     }
 
     @Override
@@ -102,8 +91,8 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtens
     @Override
     public int getComboTime() {
         int result = Mth.clamp(Math.round(20.0F / this.attackSpeed) + 5, 8, 80);
-        if (this.getSpecialties().containsKey(AFSpecialties.HINDERING.get())) {
-            float hinderingLevel = this.getSpecialties().get(AFSpecialties.HINDERING.get());
+        if (ItemStackUtil.hasSpecialty(this, AFSpecialties.HINDERING.get())) {
+            float hinderingLevel = ItemStackUtil.getSpecialtyLevel(this, AFSpecialties.HINDERING.get());
             result = (int) (result * ((hinderingLevel * 0.5) + 1));
         }
         return result;

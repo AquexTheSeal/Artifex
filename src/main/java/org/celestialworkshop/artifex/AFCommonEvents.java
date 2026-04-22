@@ -6,27 +6,27 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.capability.AFAmmoDataCapability;
 import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
-import org.celestialworkshop.artifex.item.base.AFPropertyItem;
+import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
+import org.celestialworkshop.artifex.data.reloadlistener.AFSpecialtiesReloadListener;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
 import org.celestialworkshop.artifex.network.packet.S2CSyncIaijutsuPacket;
+import org.celestialworkshop.artifex.network.packet.S2CSyncSpecialtiesDataPacket;
 import org.celestialworkshop.artifex.registry.AFAttributes;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
-
-import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class AFCommonEvents {
@@ -71,13 +71,11 @@ public class AFCommonEvents {
                     cap.comboTimer = 0;
                 }
                 if (endCombo) {
-                    if (cap.comboItemStack.getItem() instanceof AFPropertyItem af) {
-                        for (Map.Entry<AFSpecialty, Integer> specialty : af.getSpecialties().entrySet()) {
-                            if (specialty.getKey() instanceof ComboBasedSpecialty comboBasedSpecialty) {
-                                comboBasedSpecialty.onComboEnd(event.player, cap.comboItemStack, specialty.getValue());
-                            }
+                    ItemStackUtil.getSpecialties(cap.comboItemStack.getItem()).forEach((key, value) -> {
+                        if (key instanceof ComboBasedSpecialty comboBasedSpecialty) {
+                            comboBasedSpecialty.onComboEnd(event.player, cap.comboItemStack, value);
                         }
-                    }
+                    });
                     cap.comboCount = 0;
                     cap.comboItemStack = ItemStack.EMPTY;
                     AFNetwork.sendToPlayer((ServerPlayer) event.player, new S2CSyncComboStatePacket(cap.comboItemStack, cap.comboCount, cap.comboTimer));
@@ -94,11 +92,29 @@ public class AFCommonEvents {
     }
 
     @SubscribeEvent
+    public static void onAddReloadListener(AddReloadListenerEvent event) {
+        event.addListener(new AFSpecialtiesReloadListener());
+    }
+
+    @SubscribeEvent
+    public static void onDatapackSync(OnDatapackSyncEvent event) {
+        ServerPlayer player = event.getPlayer();
+        if (player != null) {
+            AFNetwork.sendToPlayer(player, new S2CSyncSpecialtiesDataPacket(AFSpecialtiesReloadListener.SPECIALTY_DATA));
+        } else {
+            AFNetwork.sendToAll(new S2CSyncSpecialtiesDataPacket(AFSpecialtiesReloadListener.SPECIALTY_DATA));
+        }
+    }
+
+    @SubscribeEvent
     public static void onAttachCapabilitiesItemStack(AttachCapabilitiesEvent<ItemStack> event) {
-        if (event.getObject().getItem() instanceof AFThrowableTieredItem af) {
-            AFAmmoDataCapability.Provider provider = new AFAmmoDataCapability.Provider(event.getObject());
-            event.addCapability(Artifex.prefix("ammo"), provider);
-            event.addListener(provider::invalidate);
+        ItemStack stack = event.getObject();
+        if (!stack.isEmpty()) {
+            if (stack.getItem() instanceof AFThrowableTieredItem) {
+                AFItemStackDataCapability.Provider provider = new AFItemStackDataCapability.Provider(stack);
+                event.addCapability(Artifex.prefix("artifex_data"), provider);
+                event.addListener(provider::invalidate);
+            }
         }
     }
 
@@ -118,10 +134,8 @@ public class AFCommonEvents {
         DamageSource damageSource = event.getDamageSource();
         if (damageSource != null && damageSource.getEntity() instanceof LivingEntity entity) {
             ItemStack weaponStack = entity.getMainHandItem();
-            if (weaponStack.getItem() instanceof AFPropertyItem af) {
-                if (af.getSpecialties().containsKey(AFSpecialties.BOUNTIFUL_HARVEST.get())) {
-                    result += af.getSpecialties().get(AFSpecialties.BOUNTIFUL_HARVEST.get());
-                }
+            if (ItemStackUtil.hasSpecialty(weaponStack.getItem(), AFSpecialties.BOUNTIFUL_HARVEST.get())) {
+                result += ItemStackUtil.getSpecialtyLevel(weaponStack.getItem(), AFSpecialties.BOUNTIFUL_HARVEST.get());
             }
         }
         event.setLootingLevel(result);
