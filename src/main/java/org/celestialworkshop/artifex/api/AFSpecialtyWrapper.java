@@ -9,9 +9,7 @@ import java.util.Map;
 public record AFSpecialtyWrapper(Map<AFSpecialty, Integer> specialties) {
 
     public static final Codec<AFSpecialtyWrapper> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.unboundedMap(AFSpecialties.REGISTRY.get().getCodec(), Codec.INT)
-                    .fieldOf("specialties")
-                    .forGetter(AFSpecialtyWrapper::specialties)
+            Codec.unboundedMap(AFSpecialties.REGISTRY.get().getCodec(), Codec.INT).fieldOf("specialties").forGetter(AFSpecialtyWrapper::specialties)
     ).apply(instance, AFSpecialtyWrapper::new));
 
 }

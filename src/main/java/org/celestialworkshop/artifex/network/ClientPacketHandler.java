@@ -24,7 +24,8 @@ public class ClientPacketHandler {
             AFEntityDataCapability.get(minecraft.player).ifPresent(cap -> {
                 cap.comboItemStack = packet.stack();
                 cap.comboCount = packet.count();
-                cap.comboTimer = packet.timer();
+                cap.maxComboTimer = packet.timer();
+                cap.comboTimer = cap.maxComboTimer;
             });
         }
     }

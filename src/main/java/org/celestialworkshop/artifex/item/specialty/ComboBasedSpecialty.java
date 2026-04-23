@@ -2,6 +2,7 @@ package org.celestialworkshop.artifex.item.specialty;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.capability.AFEntityData;
@@ -21,9 +22,16 @@ public class ComboBasedSpecialty extends AFSpecialty {
     }
 
     public static void manageComboStack(LivingEntity attacker, ItemStack itemStack) {
-        if (attacker instanceof ServerPlayer serverPlayer && serverPlayer.getAttackStrengthScale(0) > 0.9F) {
+        if (attacker instanceof ServerPlayer serverPlayer && serverPlayer.getAttackStrengthScale(0) > 0.85F) {
             AFEntityData entityData = AFEntityDataCapability.get(attacker).resolve().get();
-            entityData.incrementComboCount(itemStack);
+            entityData.comboItemStack = itemStack;
+            entityData.comboCount = Math.min(entityData.getMaxComboCount(), entityData.comboCount + 1);
+
+            double windowMultiplier = 1.5;
+            double attackSpeed = attacker.getAttributeValue(Attributes.ATTACK_SPEED);
+            entityData.maxComboTimer = (int) ((20.0 / attackSpeed) * windowMultiplier);
+
+            entityData.comboTimer = entityData.maxComboTimer;
             AFNetwork.sendToPlayer(serverPlayer, new S2CSyncComboStatePacket(itemStack, entityData.comboCount, entityData.comboTimer));
         }
     }

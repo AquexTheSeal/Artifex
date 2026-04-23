@@ -2,7 +2,6 @@ package org.celestialworkshop.artifex.item.base;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -18,8 +17,6 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.registry.AFSpecialties;
-import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 
 public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtension {
@@ -86,16 +83,6 @@ public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtens
     public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
         if (enchantment == Enchantments.SWEEPING_EDGE && !this.canSweep) return false;
         return enchantment.category == EnchantmentCategory.WEAPON;
-    }
-
-    @Override
-    public int getComboTime() {
-        int result = Mth.clamp(Math.round(20.0F / this.attackSpeed) + 5, 8, 80);
-        if (ItemStackUtil.hasSpecialty(this, AFSpecialties.HINDERING.get())) {
-            float hinderingLevel = ItemStackUtil.getSpecialtyLevel(this, AFSpecialties.HINDERING.get());
-            result = (int) (result * ((hinderingLevel * 0.5) + 1));
-        }
-        return result;
     }
 
     @Override

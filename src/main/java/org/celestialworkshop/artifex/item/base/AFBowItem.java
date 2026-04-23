@@ -58,11 +58,6 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     }
 
     @Override
-    public int getComboTime() {
-        return AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW) ? 60 : 30;
-    }
-
-    @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         AFWeaponType type = AFWeaponType.getWeaponType(this);

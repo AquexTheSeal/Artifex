@@ -78,11 +78,6 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     @Override
-    public int getComboTime() {
-        return AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST) ? 80 : 30;
-    }
-
-    @Override
     public float getItemUsingSlowdownMultiplier() {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return 0.5F;

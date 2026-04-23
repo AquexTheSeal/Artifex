@@ -54,29 +54,32 @@ public class AFCommonEvents {
                 }
 
                 // COMBO MANAGEMENT
-                boolean endCombo = false;
+                boolean syncPacket = false;
+
                 if (cap.comboCount > 0) {
                     cap.comboTimer = Math.max(cap.comboTimer - 1, 0);
                     if (cap.comboTimer == 0) {
                         if (event.side == LogicalSide.SERVER) {
-                            endCombo = true;
+                            syncPacket = true;
                         }
                     }
                     if (event.side == LogicalSide.SERVER) {
                         if (!ItemStackUtil.sameItemMatchesEnchantments(cap.comboItemStack, handItem)) {
-                            endCombo = true;
+                            syncPacket = true;
                         }
                     }
                 } else {
                     cap.comboTimer = 0;
                 }
-                if (endCombo) {
+
+                if (syncPacket) {
                     ItemStackUtil.getSpecialties(cap.comboItemStack.getItem()).forEach((key, value) -> {
                         if (key instanceof ComboBasedSpecialty comboBasedSpecialty) {
                             comboBasedSpecialty.onComboEnd(event.player, cap.comboItemStack, value);
                         }
                     });
                     cap.comboCount = 0;
+                    cap.maxComboTimer = 0;
                     cap.comboItemStack = ItemStack.EMPTY;
                     AFNetwork.sendToPlayer((ServerPlayer) event.player, new S2CSyncComboStatePacket(cap.comboItemStack, cap.comboCount, cap.comboTimer));
                 }

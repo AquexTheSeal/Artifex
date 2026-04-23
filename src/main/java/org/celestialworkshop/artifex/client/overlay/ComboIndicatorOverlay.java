@@ -35,7 +35,7 @@ public class ComboIndicatorOverlay {
                 if (cap.comboCount > 0) {
 
                     int barLen = 48;
-                    int barScale = Math.max(0, Mth.floor(barLen * ((cap.comboTimer - partialTick) / cap.getMaxComboTime())));
+                    int barScale = Math.max(0, Mth.floor(barLen * ((cap.comboTimer - partialTick) / cap.maxComboTimer)));
 
                     PoseStack poseStack = guiGraphics.pose();
                     poseStack.pushPose();
