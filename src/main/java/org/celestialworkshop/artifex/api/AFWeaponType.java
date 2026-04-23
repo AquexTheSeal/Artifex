@@ -1,7 +1,6 @@
 package org.celestialworkshop.artifex.api;
 
 import net.minecraft.world.item.Item;
-import org.celestialworkshop.artifex.compat.BetterCombatCompat;
 import org.celestialworkshop.artifex.item.base.*;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 
@@ -23,7 +22,7 @@ public enum AFWeaponType {
 
     SICKLE("sickle", Category.MELEE,
             (mat) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.1F, 0.0F, true),
-            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 1, AFSpecialties.BOUNTIFUL_HARVEST.get(), 2),
+            () -> Map.of(AFSpecialties.FINESSE.get(), 1, AFSpecialties.BOUNTIFUL_HARVEST.get(), 2),
             "XX", " R"),
 
     KATANA("katana", Category.MELEE,
@@ -98,7 +97,7 @@ public enum AFWeaponType {
 
     SCYTHE("scythe", Category.MELEE,
             (mat) -> new AFTieredItem(mat, 3.0F, 1.4F, 0.0F, 1.0F, true),
-            () -> Map.of(BetterCombatCompat.getSweepingOrSubstitute(), 2, AFSpecialties.BOUNTIFUL_HARVEST.get(), 1),
+            () -> Map.of(AFSpecialties.FINESSE.get(), 2, AFSpecialties.BOUNTIFUL_HARVEST.get(), 1),
             "XX", " P"),
 
     GREATSWORD("greatsword", Category.MELEE,
