@@ -8,15 +8,20 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.celestialworkshop.artifex.AFTags;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 import org.celestialworkshop.artifex.util.itemextension.AFExtension;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFExtension {
+
+    public static final Predicate<ItemStack> BOLT_ONLY = ARROW_ONLY.or((stack) -> stack.is(AFTags.BOLTS));
 
     private final AFMaterial material;
 
@@ -70,11 +75,28 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     public void modifyArrowProperties(ItemStack crossbowStack, AbstractArrow arrow) {
-
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             arrow.setDeltaMovement(arrow.getDeltaMovement().scale(2.0F));
             arrow.hasImpulse = true;
         }
+    }
+
+    @Override
+    public @NotNull Predicate<ItemStack> getAllSupportedProjectiles() {
+        Predicate<ItemStack> result = super.getAllSupportedProjectiles();
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
+            return result.or(BOLT_ONLY);
+        }
+        return result;
+    }
+
+    @Override
+    public @NotNull Predicate<ItemStack> getSupportedHeldProjectiles() {
+        Predicate<ItemStack> result = super.getSupportedHeldProjectiles();
+        if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
+            return result.or(BOLT_ONLY);
+        }
+        return result;
     }
 
     @Override
@@ -94,7 +116,7 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         AFWeaponType type = AFWeaponType.getWeaponType(this);
-        if (type == AFWeaponType.LONGBOW) {
+        if (type == AFWeaponType.ARBALEST) {
             pTooltip.add(Component.translatable("tooltip.artifex.arbalest_description").withStyle(ChatFormatting.DARK_GRAY));
         }
     }

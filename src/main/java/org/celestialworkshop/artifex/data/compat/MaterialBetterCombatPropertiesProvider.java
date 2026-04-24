@@ -125,7 +125,32 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case KATANA -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:katana", new WeaponAttributes(
-                                2.5, null, null, null, "katana", new WeaponAttributes.Attack[]{}
+                                2.5, null, null, null, "katana", new WeaponAttributes.Attack[]{
+                                new WeaponAttributes.Attack(
+                                        new WeaponAttributes.Condition[]{},
+                                        WeaponAttributes.HitBoxShape.HORIZONTAL_PLANE,
+                                        0.95F, 120, 0.5, "bettercombat:two_handed_slash_horizontal_right",
+                                        new WeaponAttributes.Sound("bettercombat:katana_slash"),
+                                        null),
+                                new WeaponAttributes.Attack(
+                                        new WeaponAttributes.Condition[]{},
+                                        WeaponAttributes.HitBoxShape.VERTICAL_PLANE,
+                                        1.05F, 120, 0.5, "bettercombat:two_handed_slash_vertical_left",
+                                        new WeaponAttributes.Sound("bettercombat:katana_slash"),
+                                        null),
+                                new WeaponAttributes.Attack(
+                                        new WeaponAttributes.Condition[]{},
+                                        WeaponAttributes.HitBoxShape.VERTICAL_PLANE,
+                                        1.05F, 120, 0.5, "bettercombat:two_handed_slash_vertical_right",
+                                        new WeaponAttributes.Sound("bettercombat:katana_slash"),
+                                        null),
+                                new WeaponAttributes.Attack(
+                                        new WeaponAttributes.Condition[]{},
+                                        WeaponAttributes.HitBoxShape.HORIZONTAL_PLANE,
+                                        0.95F, 120, 0.5, "bettercombat:two_handed_slash_horizontal_left",
+                                        new WeaponAttributes.Sound("bettercombat:katana_slash"),
+                                        null)
+                        }
                         )));
                     }
                     case ODACHI -> {
@@ -134,25 +159,25 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.HORIZONTAL_PLANE,
-                                                0.8F, 120, 0.5, "bettercombat:two_handed_slash_horizontal_right",
+                                                0.95F, 120, 0.5, "bettercombat:two_handed_slash_horizontal_right",
                                                 new WeaponAttributes.Sound("bettercombat:claymore_swing"),
                                                 null),
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.VERTICAL_PLANE,
-                                                1.2F, 120, 0.5, "bettercombat:two_handed_slash_vertical_left",
+                                                1.05F, 120, 0.5, "bettercombat:two_handed_slash_vertical_left",
                                                 new WeaponAttributes.Sound("bettercombat:claymore_swing"),
                                                 null),
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.VERTICAL_PLANE,
-                                                1.2F, 120, 0.5, "bettercombat:two_handed_slash_vertical_right",
+                                                1.05F, 120, 0.5, "bettercombat:two_handed_slash_vertical_right",
                                                 new WeaponAttributes.Sound("bettercombat:claymore_swing"),
                                                 null),
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.HORIZONTAL_PLANE,
-                                                0.8F, 120, 0.5, "bettercombat:two_handed_slash_horizontal_left",
+                                                0.95F, 120, 0.5, "bettercombat:two_handed_slash_horizontal_left",
                                                 new WeaponAttributes.Sound("bettercombat:claymore_swing"),
                                                 null)
                                 })

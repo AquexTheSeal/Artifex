@@ -54,11 +54,6 @@ public class ComboIndicatorOverlay {
 
                     RenderSystem.defaultBlendFunc();
                     poseStack.popPose();
-
-//                    guiGraphics.renderItem(cap.comboItemStack, barX, barY - 16);
-//
-//                    String display = "" + cap.comboCount;
-//                    guiGraphics.drawString(gui.getFont(), display, barX + 16, barY - 8, 0xAAFFFFFF);
                 }
             });
         }
