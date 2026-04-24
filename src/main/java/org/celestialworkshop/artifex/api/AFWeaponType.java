@@ -11,57 +11,57 @@ import java.util.function.Supplier;
 public enum AFWeaponType {
 
     KNUCKLES("knuckles", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 1.25F, 2.4F, 0.1F, 0.0F, false),
+            (mat) -> new AFTieredItem(mat, 1.25F, 1.0F, 2.4F, 0.1F, 0.0F, false),
             () -> Map.of(AFSpecialties.IMPACT_COMBO.get(), 2),
             " X ", "X X"),
 
     SHORTSWORD("shortsword", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 2.0F, 2.0F, 0.0F, 0.0F, true),
+            (mat) -> new AFTieredItem(mat, 2.0F, 1.0F, 2.0F, 0.0F, 0.0F, true),
             () -> Map.of(AFSpecialties.FINESSE.get(), 1, AFSpecialties.EXECUTE.get(), 1),
             "X", "S"),
 
     SICKLE("sickle", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 2.0F, 2.2F, 0.1F, 0.0F, true),
+            (mat) -> new AFTieredItem(mat, 3.0F, 0.5F, 2.2F, 0.1F, 0.0F, true),
             () -> Map.of(AFSpecialties.FINESSE.get(), 1, AFSpecialties.BOUNTIFUL_HARVEST.get(), 2),
             "XX", " R"),
 
     KATANA("katana", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 2.0F, 1.5F, 0.05F, 0.0F, true),
+            (mat) -> new AFTieredItem(mat, 2.0F, 1.0F, 1.5F, 0.05F, 0.0F, true),
             () -> Map.of(AFSpecialties.IAIJUTSU.get(), 2, AFSpecialties.TWO_HANDED.get(), 1),
             "  X", " X ", " R "),
 
     BATTLEAXE("battleaxe", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 7.0F, 0.75F, -0.1F, 0.0F, false),
+            (mat) -> new AFTieredItem(mat, 7.0F, 0.8F, 0.75F, -0.1F, 0.0F, false),
             () -> Map.of(AFSpecialties.EXECUTE.get(), 2),
             "XXX", "XRX", " R "),
 
     FLANGED_MACE("flanged_mace", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 5.0F, 1.0F, -0.05F, 0.0F, false),
+            (mat) -> new AFTieredItem(mat, 5.0F, 1.0F, 1.0F, -0.05F, 0.0F, false),
             () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1, AFSpecialties.SHOCKWAVE.get(), 1),
             "XXX", " R ", " R "),
 
     SCIMITAR("scimitar", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 3.0F, 1.2F, 0.0F, 0.0F, true),
+            (mat) -> new AFTieredItem(mat, 3.0F, 1.0F, 1.2F, 0.0F, 0.0F, true),
             () -> Map.of(AFSpecialties.IMPACT_COMBO.get(), 1, AFSpecialties.FINESSE.get(), 1),
             " XX", " X ", "R  "),
 
     RAPIER("rapier", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false),
+            (mat) -> new AFTieredItem(mat, 1.0F, 1.0F, 2.2F, 0.05F, 0.0F, false),
             () -> Map.of(AFSpecialties.FINESSE.get(), 2, AFSpecialties.ARMOR_PIERCER.get(), 1),
             "  X", " X ", "R  "),
 
     DAGGER("dagger", Category.RANGED_MELEE,
-            (mat) -> new AFThrowableTieredItem(mat, 1.0F, 2.2F, 0.05F, 0.0F, false, 10, 3, 4.0F),
+            (mat) -> new AFThrowableTieredItem(mat, 1.0F, 1.0F, 2.2F, 0.05F, 0.0F, false, 10, 3, 4.0F),
             () -> Map.of(AFSpecialties.ROGUE.get(), 1),
             " X", "S "),
 
     JAVELIN("javelin", Category.RANGED_MELEE,
-            (mat) -> new AFThrowableTieredItem(mat, 3.0F, 1.2F, 0.0F, 1.25F, false, 20, 6.0F, 5.0F),
+            (mat) -> new AFThrowableTieredItem(mat, 3.0F, 1.0F, 1.2F, 0.0F, 1.25F, false, 20, 6.0F, 5.0F),
             () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1),
             "X", "P", "X"),
 
     SPEAR("spear", Category.RANGED_MELEE,
-            (mat) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 0.0F, 1.5F, false, 15, 4.5F, 2.5F),
+            (mat) -> new AFThrowableTieredItem(mat, 1.5F, 1.0F, 1.0F, 0.0F, 1.5F, false, 15, 4.5F, 2.5F),
             () -> Map.of(AFSpecialties.CRIPPLING.get(), 1),
             "X", "P"),
 
@@ -86,27 +86,27 @@ public enum AFWeaponType {
             "XCX", "XTX", " R "),
 
     GLAIVE("glaive", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 3.0F, 0.9F, 0.0F, 0.5F, true),
+            (mat) -> new AFTieredItem(mat, 3.0F, 1.0F, 0.9F, 0.0F, 0.5F, true),
             () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.FINESSE.get(), 3),
             " X ", "XP "),
 
     HALBERD("halberd", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 4.0F, 1.0F, 0.0F, 1.25F, true),
+            (mat) -> new AFTieredItem(mat, 4.0F, 1.0F, 1.0F, 0.0F, 1.25F, true),
             () -> Map.of(AFSpecialties.CRIPPLING.get(), 1, AFSpecialties.TWO_HANDED.get(), 1),
             "XX", "XP"),
 
     SCYTHE("scythe", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 3.0F, 1.4F, 0.0F, 1.0F, true),
+            (mat) -> new AFTieredItem(mat, 3.0F, 1.0F, 1.4F, 0.0F, 1.0F, true),
             () -> Map.of(AFSpecialties.FINESSE.get(), 2, AFSpecialties.BOUNTIFUL_HARVEST.get(), 1),
             "XX", " P"),
 
     GREATSWORD("greatsword", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 6.0F, 1.0F, -0.1F, 1.0F, true),
+            (mat) -> new AFTieredItem(mat, 6.0F, 1.0F, 1.0F, -0.1F, 1.0F, true),
             () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.UNSTOPPABLE.get(), 1, AFSpecialties.HINDERING.get(), 1),
             " X ", " X ", " R "),
 
     ODACHI("odachi", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 4.5F, 1.2F, 0.0F, 1.0F, true),
+            (mat) -> new AFTieredItem(mat, 4.5F, 1.0F, 1.2F, 0.0F, 1.0F, true),
             () -> Map.of(AFSpecialties.IAIJUTSU.get(), 1, AFSpecialties.TWO_HANDED.get(), 1),
             "XX", "X ", "R "),
 

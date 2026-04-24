@@ -22,20 +22,18 @@ import org.celestialworkshop.artifex.util.itemextension.AFExtension;
 public class AFTieredItem extends TieredItem implements AFPropertyItem, AFExtension {
 
     private final AFMaterial material;
-    private final float attackSpeed;
     private final boolean canSweep;
 
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public AFTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep) {
+    public AFTieredItem(AFMaterial material, float attackDamage, float attackDamageTierScale, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep) {
         super(material.getItemTier(), material.getItemPropertiesSupplier().get());
         this.material = material;
-        this.attackSpeed = attackSpeed;
         this.canSweep = canSweep;
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> attributeBuilder = ImmutableMultimap.builder();
 
-        float completeDamage = attackDamage + this.getTier().getAttackDamageBonus();
+        float completeDamage = attackDamage + (this.getTier().getAttackDamageBonus() * attackDamageTierScale);
         if (completeDamage != 0.0F) {
             attributeBuilder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Attack Damage modifier", completeDamage, AttributeModifier.Operation.ADDITION));
         }

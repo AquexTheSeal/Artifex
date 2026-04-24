@@ -83,7 +83,7 @@ public abstract class PlayerMixin extends LivingEntity {
             target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z",
             shift = At.Shift.BEFORE
     ), ordinal = 0)
-    private float modifyMeleeDamage(float damage, Entity target) {
+    private float modifyMeleeDamagePostCalculations(float damage, Entity target) {
         float result = damage;
         if (target instanceof LivingEntity livingTarget) {
             Item item = this.artifex$getAttackingItemStack().getItem();

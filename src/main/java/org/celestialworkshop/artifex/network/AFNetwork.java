@@ -6,10 +6,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.celestialworkshop.artifex.Artifex;
-import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
-import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
-import org.celestialworkshop.artifex.network.packet.S2CSyncIaijutsuPacket;
-import org.celestialworkshop.artifex.network.packet.S2CSyncSpecialtiesDataPacket;
+import org.celestialworkshop.artifex.network.packet.*;
 
 public class AFNetwork {
     private static final String PROTOCOL_VERSION = "1.0";
@@ -28,6 +25,9 @@ public class AFNetwork {
         INSTANCE.registerMessage(id++, S2CSyncComboStatePacket.class, S2CSyncComboStatePacket::encode, S2CSyncComboStatePacket::decode, S2CSyncComboStatePacket::handle);
         INSTANCE.registerMessage(id++, S2CSyncIaijutsuPacket.class, S2CSyncIaijutsuPacket::encode, S2CSyncIaijutsuPacket::decode, S2CSyncIaijutsuPacket::handle);
         INSTANCE.registerMessage(id++, S2CSyncSpecialtiesDataPacket.class, S2CSyncSpecialtiesDataPacket::encode, S2CSyncSpecialtiesDataPacket::decode, S2CSyncSpecialtiesDataPacket::handle);
+
+        // C2S
+        INSTANCE.registerMessage(id++, C2SSyncIaijutsuMovementStatePacket.class, C2SSyncIaijutsuMovementStatePacket::encode, C2SSyncIaijutsuMovementStatePacket::decode, C2SSyncIaijutsuMovementStatePacket::handle);
     }
 
     public static void sendToAll(Object packet) {

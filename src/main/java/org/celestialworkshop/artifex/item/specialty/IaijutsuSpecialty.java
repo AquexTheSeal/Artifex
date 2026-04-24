@@ -31,8 +31,7 @@ public class IaijutsuSpecialty extends AFSpecialty {
                     player.serverLevel().playSound(null, target.blockPosition(), AFSoundEvents.IAIJUTSU.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
                 cap.iaijutsuTimer = cap.getMaxIaijutsuTime();
-                AFNetwork.sendToPlayer(player, new S2CSyncIaijutsuPacket(cap.iaijutsuTimer));
-
+                AFNetwork.sendToPlayer(player, new S2CSyncIaijutsuPacket(cap.iaijutsuItemStack, cap.iaijutsuTimer, cap.iaijutsuSpeedUp));
             });
         }
         return result.get();
@@ -41,8 +40,13 @@ public class IaijutsuSpecialty extends AFSpecialty {
     @Override
     public Object[] getDisplayDescriptionArgs(int level) {
         return new Object[]{
+                calculateTime(level),
                 asPercentFormat(getDamageMultiplier(level))
         };
+    }
+
+    public int calculateTime(int level) {
+        return (300 + ((level - 1) * 100)) / 20;
     }
 
     public float getDamageMultiplier(int level) {

@@ -34,7 +34,9 @@ public class ClientPacketHandler {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.player != null) {
             AFEntityDataCapability.get(minecraft.player).ifPresent(cap -> {
-                cap.iaijutsuTimer = packet.value();
+                cap.iaijutsuItemStack = packet.stack();
+                cap.iaijutsuTimer = packet.timer();
+                cap.iaijutsuSpeedUp = packet.speedState();
             });
         }
     }

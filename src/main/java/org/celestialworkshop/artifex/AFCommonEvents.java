@@ -12,6 +12,8 @@ import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +23,7 @@ import org.celestialworkshop.artifex.data.reloadlistener.AFSpecialtiesReloadList
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
+import org.celestialworkshop.artifex.network.packet.C2SSyncIaijutsuMovementStatePacket;
 import org.celestialworkshop.artifex.network.packet.S2CSyncComboStatePacket;
 import org.celestialworkshop.artifex.network.packet.S2CSyncIaijutsuPacket;
 import org.celestialworkshop.artifex.network.packet.S2CSyncSpecialtiesDataPacket;
@@ -39,16 +42,28 @@ public class AFCommonEvents {
 
                 // IAIJUTSU MANAGEMENT
                 boolean hasSpecialty = ItemStackUtil.hasSpecialty(handItem, AFSpecialties.IAIJUTSU.get());
-                if (hasSpecialty) {
-                    cap.iaijutsuTimer = Math.max(cap.iaijutsuTimer - 1, 0);
+
+                if (event.side == LogicalSide.CLIENT) {
+                    boolean isMovingSlowly = event.player.getDeltaMovement().lengthSqr() < 0.01;
+                    if (isMovingSlowly != cap.iaijutsuSpeedUp) {
+                        cap.iaijutsuSpeedUp = isMovingSlowly;
+                        AFNetwork.sendToServer(new C2SSyncIaijutsuMovementStatePacket(isMovingSlowly));
+                    }
                 }
+
+                if (hasSpecialty) {
+                    int sub = cap.iaijutsuSpeedUp ? 3 : 1;
+                    cap.iaijutsuTimer = Math.max(cap.iaijutsuTimer - sub, 0);
+                }
+
                 if (event.side == LogicalSide.SERVER) {
                     if (cap.iaijutsuItemStack != handItem) {
                         boolean oldHadSpecialty = ItemStackUtil.hasSpecialty(cap.iaijutsuItemStack, AFSpecialties.IAIJUTSU.get());
                         cap.iaijutsuItemStack = handItem;
+
                         if (hasSpecialty || oldHadSpecialty) {
                             cap.iaijutsuTimer = cap.getMaxIaijutsuTime();
-                            AFNetwork.sendToPlayer((ServerPlayer) event.player, new S2CSyncIaijutsuPacket(cap.iaijutsuTimer));
+                            AFNetwork.sendToPlayer((ServerPlayer) event.player, new S2CSyncIaijutsuPacket(cap.iaijutsuItemStack, cap.iaijutsuTimer, cap.iaijutsuSpeedUp));
                         }
                     }
                 }
@@ -122,12 +137,31 @@ public class AFCommonEvents {
     }
 
     @SubscribeEvent
+    public static void onPlayerCrit(CriticalHitEvent event) {
+        ItemStack mainHandItem = event.getEntity().getMainHandItem();
+        if (ItemStackUtil.hasSpecialty(mainHandItem, AFSpecialties.IAIJUTSU.get())) {
+            AFEntityDataCapability.get(event.getEntity()).ifPresent(cap -> {
+                if (cap.iaijutsuTimer <= 0) {
+                    event.setResult(Event.Result.DENY);
+                }
+            });
+        }
+    }
+
+    @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
         AttributeInstance damageReduction = event.getEntity().getAttribute(AFAttributes.DAMAGE_REDUCTION.get());
         if (damageReduction != null && damageReduction.getValue() > 0) {
             float amount = event.getAmount();
             float reduction = (float) damageReduction.getValue();
             event.setAmount(amount * (1.0F - reduction));
+        }
+
+        if (event.getEntity() instanceof ServerPlayer player) {
+            AFEntityDataCapability.get(player).ifPresent(cap -> {
+                cap.iaijutsuTimer = cap.getMaxIaijutsuTime();
+                AFNetwork.sendToPlayer(player, new S2CSyncIaijutsuPacket(cap.iaijutsuItemStack, cap.iaijutsuTimer, cap.iaijutsuSpeedUp));
+            });
         }
     }
 

@@ -7,7 +7,7 @@
         "angle": 120.0,
         "animation": "bettercombat:two_handed_slash_horizontal_right",
         "conditions": [],
-        "damage_multiplier": 0.800000011920929,
+        "damage_multiplier": 0.949999988079071,
         "hitbox": "HORIZONTAL_PLANE",
         "swing_sound": {
           "id": "bettercombat:claymore_swing",
@@ -21,7 +21,7 @@
         "angle": 120.0,
         "animation": "bettercombat:two_handed_slash_vertical_left",
         "conditions": [],
-        "damage_multiplier": 1.2000000476837158,
+        "damage_multiplier": 1.0499999523162842,
         "hitbox": "VERTICAL_PLANE",
         "swing_sound": {
           "id": "bettercombat:claymore_swing",
@@ -35,7 +35,7 @@
         "angle": 120.0,
         "animation": "bettercombat:two_handed_slash_vertical_right",
         "conditions": [],
-        "damage_multiplier": 1.2000000476837158,
+        "damage_multiplier": 1.0499999523162842,
         "hitbox": "VERTICAL_PLANE",
         "swing_sound": {
           "id": "bettercombat:claymore_swing",
@@ -49,7 +49,7 @@
         "angle": 120.0,
         "animation": "bettercombat:two_handed_slash_horizontal_left",
         "conditions": [],
-        "damage_multiplier": 0.800000011920929,
+        "damage_multiplier": 0.949999988079071,
         "hitbox": "HORIZONTAL_PLANE",
         "swing_sound": {
           "id": "bettercombat:claymore_swing",

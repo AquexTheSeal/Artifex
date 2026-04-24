@@ -196,7 +196,7 @@
   "material_specialty.artifex.hindering": "Hindering",
   "material_specialty.artifex.hindering_description": "Successive attacks weakens, reducing your attack speed with each hit by %s up to 5 stacks.",
   "material_specialty.artifex.iaijutsu": "Iaijutsu",
-  "material_specialty.artifex.iaijutsu_description": "Remaining out of combat and holding this item for 5s empowers your next strike for %s damage.",
+  "material_specialty.artifex.iaijutsu_description": "Stay out of combat and hold this item for %s seconds to empower your next strike for %s damage. Standing still or moving slowly triples the timer speed. Cannot crit.",
   "material_specialty.artifex.impact_combo": "Impact Combo",
   "material_specialty.artifex.impact_combo_description": "Successive attacks build momentum, increasing damage with each hit by %s up to a maximum of 5 stacks.",
   "material_specialty.artifex.rogue": "Rogue",

@@ -34,8 +34,8 @@ public class AFThrowableTieredItem extends AFTieredItem {
     public final float thrownBaseDamage;
     public final float baseVelocity;
 
-    public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, int throwMaxTicks, float thrownBaseDamage, float baseVelocity) {
-        super(material, attackDamage, attackSpeed, movementSpeedPercent, reach, canSweep);
+    public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackDamageTierScale, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, int throwMaxTicks, float thrownBaseDamage, float baseVelocity) {
+        super(material, attackDamage, attackDamageTierScale, attackSpeed, movementSpeedPercent, reach, canSweep);
         this.throwMaxTicks = throwMaxTicks;
         this.thrownBaseDamage = thrownBaseDamage;
         this.baseVelocity = baseVelocity;

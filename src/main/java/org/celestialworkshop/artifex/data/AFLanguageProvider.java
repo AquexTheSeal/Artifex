@@ -54,7 +54,7 @@ public class AFLanguageProvider extends LanguageProvider {
         this.addSpecialty(AFSpecialties.UNSTOPPABLE.get(), "Unstoppable", "Successive attacks build momentum, increasing your damage reduction with each hit by %s up to 5 stacks.");
         this.addSpecialty(AFSpecialties.BOUNTIFUL_HARVEST.get(), "Bountiful Harvest", "Increases your mob looting level by %s.");
         this.addSpecialty(AFSpecialties.ROGUE.get(), "Rogue", "On impact; If your off-hand holds a matching throwable with the same enchantments, automatically fire another projectile that inherits %s damage.");
-        this.addSpecialty(AFSpecialties.IAIJUTSU.get(), "Iaijutsu", "Remaining out of combat and holding this item for 5s empowers your next strike for %s damage.");
+        this.addSpecialty(AFSpecialties.IAIJUTSU.get(), "Iaijutsu", "Stay out of combat and hold this item for %s seconds to empower your next strike for %s damage. Standing still or moving slowly triples the timer speed. Cannot crit.");
 
         this.addSpecialty(AFSpecialties.TWO_HANDED.get(), "Two-Handed", "Hides your off-hand when held; cannot be equipped in the off-hand slot.");
         this.addSpecialty(AFSpecialties.HINDERING.get(), "Hindering", "Successive attacks weakens, reducing your attack speed with each hit by %s up to 5 stacks.");
