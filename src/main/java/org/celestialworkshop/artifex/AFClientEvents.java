@@ -13,13 +13,9 @@ import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.client.AFCreativeTabOverride;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
-import org.celestialworkshop.artifex.registry.AFItems;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
 
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -34,13 +30,16 @@ public class AFClientEvents {
         AFCreativeTabOverride.tickAll();
 
         if (mc.player.tickCount % 20 == 0) {
-            List<ItemStack> pool = AFItems.ITEMS.getEntries().stream().map(obj -> new ItemStack(obj.get())).toList();
-
-            if (pool.isEmpty()) return;
-
             for (Map.Entry<CreativeModeTab, AFCreativeTabOverride.TabAnimState> entry : AFCreativeTabOverride.allEntries()) {
+                CreativeModeTab tab = entry.getKey();
                 AFCreativeTabOverride.TabAnimState state = entry.getValue();
+
+                Collection<ItemStack> displayItems = tab.getDisplayItems();
+                if (displayItems.isEmpty()) continue;
+
+                List<ItemStack> pool = new ArrayList<>(displayItems);
                 ItemStack next = pool.get(mc.level.random.nextInt(pool.size()));
+
                 if (state.currentStack.isEmpty()) {
                     state.currentStack = next;
                 } else {
