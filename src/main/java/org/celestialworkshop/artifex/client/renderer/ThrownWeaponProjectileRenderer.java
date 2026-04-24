@@ -34,6 +34,7 @@ public class ThrownWeaponProjectileRenderer extends EntityRenderer<ThrownWeaponP
 
             Minecraft.getInstance().getItemRenderer().renderStatic(pEntity.getHeldStack(), ItemDisplayContext.GROUND, pPackedLight, OverlayTexture.NO_OVERLAY, pPoseStack, pBuffer, pEntity.level(), 0);
             pPoseStack.popPose();
+
             super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
         }
     }
