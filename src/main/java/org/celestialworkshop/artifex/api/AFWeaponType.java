@@ -31,12 +31,12 @@ public enum AFWeaponType {
             "  X", " X ", " R "),
 
     BATTLEAXE("battleaxe", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 7.0F, 0.8F, 0.75F, -0.1F, 0.0F, false),
+            (mat) -> new AFTieredItem(mat, 7.0F, 0.8F, 0.75F, 0.0F, 0.0F, false),
             () -> Map.of(AFSpecialties.EXECUTE.get(), 2),
             "XXX", "XRX", " R "),
 
     FLANGED_MACE("flanged_mace", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 5.0F, 1.0F, 1.0F, -0.05F, 0.0F, false),
+            (mat) -> new AFTieredItem(mat, 5.0F, 1.0F, 1.0F, 0.0F, 0.0F, false),
             () -> Map.of(AFSpecialties.ARMOR_PIERCER.get(), 1, AFSpecialties.SHOCKWAVE.get(), 1),
             "XXX", " R ", " R "),
 
@@ -91,7 +91,7 @@ public enum AFWeaponType {
             " X ", "XP "),
 
     HALBERD("halberd", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 4.0F, 1.0F, 1.0F, 0.0F, 1.25F, true),
+            (mat) -> new AFTieredItem(mat, 4.0F, 1.0F, 1.0F, 0.0F, 1.5F, true),
             () -> Map.of(AFSpecialties.CRIPPLING.get(), 1, AFSpecialties.TWO_HANDED.get(), 1),
             "XX", "XP"),
 
@@ -101,7 +101,7 @@ public enum AFWeaponType {
             "XX", " P"),
 
     GREATSWORD("greatsword", Category.MELEE,
-            (mat) -> new AFTieredItem(mat, 6.0F, 1.0F, 1.0F, -0.1F, 1.0F, true),
+            (mat) -> new AFTieredItem(mat, 6.0F, 1.0F, 1.0F, 0.0F, 1.0F, true),
             () -> Map.of(AFSpecialties.TWO_HANDED.get(), 1, AFSpecialties.UNSTOPPABLE.get(), 1, AFSpecialties.HINDERING.get(), 1),
             " X ", " X ", " R "),
 

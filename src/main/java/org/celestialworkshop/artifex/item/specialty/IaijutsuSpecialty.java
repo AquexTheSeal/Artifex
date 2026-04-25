@@ -50,6 +50,6 @@ public class IaijutsuSpecialty extends AFSpecialty {
     }
 
     public float getDamageMultiplier(int level) {
-        return 2.5F + ((level - 1) * 0.5F);
+        return 3.0F + ((level - 1) * 0.5F);
     }
 }

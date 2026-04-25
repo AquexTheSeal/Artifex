@@ -1,7 +1,7 @@
 {
   "parent": "bettercombat:scythe",
   "attributes": {
-    "attack_range": 3.5,
+    "attack_range": 3.25,
     "attacks": []
   }
 }

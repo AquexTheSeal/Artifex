@@ -69,12 +69,12 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case GREATSWORD -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:claymore", new WeaponAttributes(
-                                3.25, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                3.5, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case JAVELIN -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:lance", new WeaponAttributes(
-                                3.5, null, null, false, "af_javelin", new WeaponAttributes.Attack[]{
+                                3.75, null, null, false, "af_javelin", new WeaponAttributes.Attack[]{
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.FORWARD_BOX,
@@ -110,17 +110,17 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case GLAIVE -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:glaive", new WeaponAttributes(
-                                3.0, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                3.00, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case HALBERD -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:halberd", new WeaponAttributes(
-                                3.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                4.00, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case SCYTHE -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:scythe", new WeaponAttributes(
-                                3.5, null, null, null, null, new WeaponAttributes.Attack[]{})
+                                3.25, null, null, null, null, new WeaponAttributes.Attack[]{})
                         ));
                     }
                     case KATANA -> {
@@ -155,7 +155,7 @@ public class MaterialBetterCombatPropertiesProvider extends BetterCombatProperti
                     }
                     case ODACHI -> {
                         this.addAttribute(weapon, new AttributesContainer("bettercombat:katana", new WeaponAttributes(
-                                3.0, "bettercombat:pose_two_handed_katana", null, true, "odachi", new WeaponAttributes.Attack[]{
+                                3.5, "bettercombat:pose_two_handed_katana", null, true, "odachi", new WeaponAttributes.Attack[]{
                                         new WeaponAttributes.Attack(
                                                 new WeaponAttributes.Condition[]{},
                                                 WeaponAttributes.HitBoxShape.HORIZONTAL_PLANE,

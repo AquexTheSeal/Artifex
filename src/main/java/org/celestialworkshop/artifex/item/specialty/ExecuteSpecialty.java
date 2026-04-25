@@ -68,7 +68,7 @@ public class ExecuteSpecialty extends AFSpecialty {
     }
 
     private float calculateDamageLimit(int level) {
-        return 5f + (level * 5f);
+        return 0f + (level * 5f);
     }
 
     private float calculateLimitedHp(int level) {
