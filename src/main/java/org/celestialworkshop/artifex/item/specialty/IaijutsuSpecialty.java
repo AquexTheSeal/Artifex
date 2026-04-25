@@ -40,13 +40,13 @@ public class IaijutsuSpecialty extends AFSpecialty {
     @Override
     public Object[] getDisplayDescriptionArgs(int level) {
         return new Object[]{
-                calculateTime(level),
+                calculateTime(level) / 20,
                 asPercentFormat(getDamageMultiplier(level))
         };
     }
 
     public int calculateTime(int level) {
-        return (300 + ((level - 1) * 100)) / 20;
+        return 300 - ((level - 1) * 100);
     }
 
     public float getDamageMultiplier(int level) {

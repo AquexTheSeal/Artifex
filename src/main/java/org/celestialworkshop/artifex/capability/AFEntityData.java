@@ -3,8 +3,12 @@ package org.celestialworkshop.artifex.capability;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.INBTSerializable;
+import org.celestialworkshop.artifex.api.AFSpecialty;
+import org.celestialworkshop.artifex.item.specialty.IaijutsuSpecialty;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
+
+import java.util.Map;
 
 public class AFEntityData implements INBTSerializable<CompoundTag> {
 
@@ -35,11 +39,13 @@ public class AFEntityData implements INBTSerializable<CompoundTag> {
 
     // IAIJUTSU
     public int getMaxIaijutsuTime() {
-        int level = 0;
-        if (ItemStackUtil.hasSpecialty(iaijutsuItemStack.getItem(), AFSpecialties.IAIJUTSU.get())) {
-            level = ItemStackUtil.getSpecialtyLevel(iaijutsuItemStack.getItem(), AFSpecialties.IAIJUTSU.get());
+        Map<AFSpecialty, Integer> specialties = ItemStackUtil.getSpecialties(iaijutsuItemStack.getItem());
+        AFSpecialty iaijutsu = AFSpecialties.IAIJUTSU.get();
+        Integer level = specialties.get(iaijutsu);
+        if (level != null) {
+            return ((IaijutsuSpecialty) iaijutsu).calculateTime(level);
         }
-        return 300 + ((level - 1) * 100);
+        return 100;
     }
 
     @Override
