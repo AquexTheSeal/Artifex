@@ -21,7 +21,7 @@ public class ExecuteSpecialty extends AFSpecialty {
 
     @Override
     public void onPostMelee(LivingEntity attacker, LivingEntity target, ItemStack itemStack, boolean wasCritical, int specialityLevel) {
-        this.triggerExecute(attacker, target, null, specialityLevel);
+        this.triggerExecute(attacker, target, attacker, specialityLevel);
     }
 
     @Override
@@ -33,15 +33,17 @@ public class ExecuteSpecialty extends AFSpecialty {
         float targetHpPercent = target.getHealth() / target.getMaxHealth();
         if (targetHpPercent <= this.calculateHpThreshold(specialityLevel)) {
             if (attacker.getRandom().nextFloat() <= this.calculateChance(specialityLevel)) {
-                DamageSource damageSource = attacker.damageSources().indirectMagic(attacker, directEntity);
                 if (target.getMaxHealth() > this.calculateLimitedHp(specialityLevel)) {
+                    DamageSource damageSource = attacker.damageSources().indirectMagic(attacker, directEntity);
+                    target.invulnerableTime = 0;
                     target.hurt(damageSource, this.calculateDamageLimit(specialityLevel));
                 } else {
                     target.kill();
-                    if (attacker.level() instanceof ServerLevel server) {
-                        server.sendParticles(AFParticleTypes.EXECUTE.get(), target.getX(), target.getY(1.0), target.getZ(), 0, 0, 0, 0, 0);
-                        server.playSound(null, target.blockPosition(), AFSoundEvents.EXECUTE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-                    }
+                }
+
+                if (attacker.level() instanceof ServerLevel server) {
+                    server.sendParticles(AFParticleTypes.EXECUTE.get(), target.getX(), target.getY(1.0), target.getZ(), 0, 0, 0, 0, 0);
+                    server.playSound(null, target.blockPosition(), AFSoundEvents.EXECUTE.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                 }
             }
         }
