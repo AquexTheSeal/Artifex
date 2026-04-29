@@ -11,6 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
+import org.celestialworkshop.artifex.item.BoltItem;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class AFItems {
     public static final RegistryObject<Item> BASIC_HILT = ITEMS.register("basic_hilt", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STANDARD_HILT = ITEMS.register("standard_hilt", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> STANDARD_POLE = ITEMS.register("standard_pole", () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> BASIC_BOLT = ITEMS.register("basic_bolt", () -> new BoltItem(new Item.Properties()));
+    public static final RegistryObject<Item> STANDARD_BOLT = ITEMS.register("standard_bolt", () -> new BoltItem(new Item.Properties()));
 
     public static final AFMaterial WOODEN_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "wooden").tier(Tiers.WOOD)
             .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)

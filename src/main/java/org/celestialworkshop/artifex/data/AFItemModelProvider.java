@@ -18,5 +18,7 @@ public class AFItemModelProvider extends MaterialItemModelProvider {
         this.handheldItem(AFItems.BASIC_HILT.get());
         this.handheldItem(AFItems.STANDARD_HILT.get());
         this.basicParentedItem(AFItems.STANDARD_POLE.get(), "artifex:item/handheld_long_middle");
+        this.basicItem(AFItems.BASIC_BOLT.get());
+        this.basicItem(AFItems.STANDARD_BOLT.get());
     }
 }

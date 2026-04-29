@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.entity.Bolt;
 import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 
 public class AFEntities {
@@ -16,5 +17,12 @@ public class AFEntities {
                     .sized(0.75F, 0.75F)
                     .updateInterval(10)
                     .build("throwable_projectile")
+    );
+
+    public static final RegistryObject<EntityType<Bolt>> BOLT = ENTITIES.register("bolt",
+            () -> EntityType.Builder.<Bolt>of(Bolt::new, MobCategory.MISC)
+                    .sized(0.75F, 0.75F)
+                    .updateInterval(10)
+                    .build("bolt")
     );
 }

@@ -18,15 +18,16 @@ import org.celestialworkshop.artifex.client.itemdecoration.AFAmmoDecoration;
 import org.celestialworkshop.artifex.client.overlay.ComboIndicatorOverlay;
 import org.celestialworkshop.artifex.client.overlay.IaijutsuIndicatorOverlay;
 import org.celestialworkshop.artifex.client.overlay.ThrowableIndicatorOverlay;
-import org.celestialworkshop.artifex.item.base.AFShieldItem;
-import org.celestialworkshop.artifex.particle.ExecuteParticle;
-import org.celestialworkshop.artifex.particle.IaijutsuParticle;
-import org.celestialworkshop.artifex.particle.ShockwaveParticle;
+import org.celestialworkshop.artifex.client.renderer.BoltRenderer;
 import org.celestialworkshop.artifex.client.renderer.ThrownWeaponProjectileRenderer;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
 import org.celestialworkshop.artifex.item.base.AFBowItem;
 import org.celestialworkshop.artifex.item.base.AFCrossbowItem;
+import org.celestialworkshop.artifex.item.base.AFShieldItem;
 import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
+import org.celestialworkshop.artifex.particle.ExecuteParticle;
+import org.celestialworkshop.artifex.particle.IaijutsuParticle;
+import org.celestialworkshop.artifex.particle.ShockwaveParticle;
 import org.celestialworkshop.artifex.registry.AFCreativeTabs;
 import org.celestialworkshop.artifex.registry.AFEntities;
 import org.celestialworkshop.artifex.registry.AFParticleTypes;
@@ -83,6 +84,7 @@ public class AFClientSetup {
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(AFEntities.THROWABLE_PROJECTILE.get(), ThrownWeaponProjectileRenderer::new);
+        event.registerEntityRenderer(AFEntities.BOLT.get(), BoltRenderer::new);
     }
 
     @SubscribeEvent
