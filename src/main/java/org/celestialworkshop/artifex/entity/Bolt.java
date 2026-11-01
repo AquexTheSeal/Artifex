@@ -9,6 +9,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import org.celestialworkshop.artifex.registry.AFEntities;
 import org.celestialworkshop.artifex.registry.AFItems;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class Bolt extends AbstractArrow {
 
@@ -16,16 +17,16 @@ public class Bolt extends AbstractArrow {
         super(pEntityType, pLevel);
     }
 
-    public Bolt(double pX, double pY, double pZ, Level pLevel) {
-        super(AFEntities.BOLT.get(), pX, pY, pZ, pLevel);
+    public Bolt(double pX, double pY, double pZ, Level pLevel, ItemStack pickupItemStack, @Nullable ItemStack firedFromWeapon) {
+        super(AFEntities.BOLT.get(), pX, pY, pZ, pLevel, pickupItemStack, firedFromWeapon);
     }
 
-    public Bolt(LivingEntity pShooter, Level pLevel) {
-        super(AFEntities.BOLT.get(), pShooter, pLevel);
+    public Bolt(LivingEntity pShooter, Level pLevel, ItemStack pickupItemStack, @Nullable ItemStack firedFromWeapon) {
+        super(AFEntities.BOLT.get(), pShooter, pLevel, pickupItemStack, firedFromWeapon);
     }
 
     @Override
-    protected @NotNull ItemStack getPickupItem() {
+    protected @NotNull ItemStack getDefaultPickupItem() {
         return new ItemStack(AFItems.BASIC_BOLT.get());
     }
 

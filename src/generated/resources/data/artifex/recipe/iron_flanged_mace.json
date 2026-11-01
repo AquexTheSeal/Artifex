@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "XXX",
+    " R ",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:iron_flanged_mace"
+  }
+}

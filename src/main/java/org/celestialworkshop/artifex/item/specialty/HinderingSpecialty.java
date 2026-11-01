@@ -8,8 +8,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.capability.AFEntityData;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import org.celestialworkshop.artifex.registry.AFAttachmentTypes;
 
 public class HinderingSpecialty extends ComboBasedSpecialty {
     public HinderingSpecialty(Category category) {
@@ -28,13 +29,13 @@ public class HinderingSpecialty extends ComboBasedSpecialty {
 
     private void manageSpeed(LivingEntity attacker, int specialityLevel) {
         if (attacker instanceof ServerPlayer) {
-            AFEntityData entityData = AFEntityDataCapability.get(attacker).resolve().get();
+            AFEntityData entityData = attacker.getData(AFAttachmentTypes.ENTITY_DATA);
 
             AttributeInstance atkSpd = attacker.getAttribute(Attributes.ATTACK_SPEED);
             if (atkSpd != null) {
-                atkSpd.removeModifier(ATTACK_SPEED_MODIFIER_UUID);
+                atkSpd.removeModifier(Artifex.prefix("finesse_attack_speed_bonus"));
                 double amount = this.calculateSpeedDecrement(specialityLevel) * entityData.comboCount;
-                AttributeModifier modifier = new AttributeModifier(ATTACK_SPEED_MODIFIER_UUID, "finesse_attack_speed_bonus", amount, AttributeModifier.Operation.ADDITION);
+                AttributeModifier modifier = new AttributeModifier(Artifex.prefix("finesse_attack_speed_bonus"), amount, AttributeModifier.Operation.ADD_VALUE);
                 atkSpd.addTransientModifier(modifier);
             }
         }
@@ -44,7 +45,7 @@ public class HinderingSpecialty extends ComboBasedSpecialty {
     public void onComboEnd(LivingEntity attacker, ItemStack itemStack, int specialityLevel) {
         AttributeInstance atkSpd = attacker.getAttribute(Attributes.ATTACK_SPEED);
         if (atkSpd != null) {
-            atkSpd.removeModifier(ATTACK_SPEED_MODIFIER_UUID);
+            atkSpd.removeModifier(Artifex.prefix("finesse_attack_speed_bonus"));
         }
     }
 

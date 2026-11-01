@@ -20,9 +20,8 @@ public class RogueSpecialty extends AFSpecialty {
             ItemStack mainhand = attacker.getMainHandItem();
             ItemStack offhand = attacker.getOffhandItem();
             if (ItemStackUtil.sameItemMatchesEnchantments(mainhand, throwable.getHeldStack()) && ItemStackUtil.sameItemMatchesEnchantments(offhand, throwable.getHeldStack())) {
-                ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(ammo.level(), attacker);
-                projectile.setHeldStack(throwable.getHeldStack().copy());
-                projectile.shootFromRotation(attacker, attacker.getXRot(), attacker.getYRot(), 0.0F, (float)ammo.getDeltaMovement().length(), 1.0F);
+                ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(ammo.level(), attacker, throwable.getHeldStack().copy());
+                projectile.shootFromRotation(attacker, attacker.getXRot(), attacker.getYRot(), 0.0F, (float) ammo.getDeltaMovement().length(), 1.0F);
                 projectile.setBaseDamage(throwable.getBaseDamage() * this.getExtraDamageMultiplier(specialityLevel));
                 projectile.isRogueProjectile = true;
                 projectile.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;

@@ -1,8 +1,9 @@
 package org.celestialworkshop.artifex.capability;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.celestialworkshop.artifex.api.AFSpecialty;
 import org.celestialworkshop.artifex.item.specialty.IaijutsuSpecialty;
 import org.celestialworkshop.artifex.registry.AFSpecialties;
@@ -23,7 +24,6 @@ public class AFEntityData implements INBTSerializable<CompoundTag> {
     public int iaijutsuTimer = 0;
     public boolean iaijutsuSpeedUp = false;
 
-    // BOUND STACK
     public void setBoundItemStack(ItemStack boundItemStack) {
         this.boundItemStack = boundItemStack;
     }
@@ -32,31 +32,36 @@ public class AFEntityData implements INBTSerializable<CompoundTag> {
         return boundItemStack;
     }
 
-    // COMBO COUNTER
     public int getMaxComboCount() {
         return 5;
     }
 
-    // IAIJUTSU
     public int getMaxIaijutsuTime() {
         Map<AFSpecialty, Integer> specialties = ItemStackUtil.getSpecialties(iaijutsuItemStack.getItem());
         AFSpecialty iaijutsu = AFSpecialties.IAIJUTSU.get();
         Integer level = specialties.get(iaijutsu);
         if (level != null) {
             return ((IaijutsuSpecialty) iaijutsu).calculateTime(level);
+        } else {
+            return 100;
         }
-        return 100;
     }
 
     @Override
-    public CompoundTag serializeNBT() {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag tag = new CompoundTag();
-        tag.put("BoundItem", boundItemStack.save(new CompoundTag()));
+        if (!boundItemStack.isEmpty()) {
+            tag.put("BoundItem", boundItemStack.save(provider, new CompoundTag()));
+        }
         return tag;
     }
 
     @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        boundItemStack = ItemStack.of(nbt.getCompound("BoundItem"));
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+        if (nbt.contains("BoundItem")) {
+            boundItemStack = ItemStack.parseOptional(provider, nbt.getCompound("BoundItem"));
+        } else {
+            boundItemStack = ItemStack.EMPTY;
+        }
     }
 }

@@ -1,38 +1,36 @@
 package org.celestialworkshop.artifex.network.packet;
 
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.network.FriendlyByteBuf;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.api.AFSpecialtyWrapper;
 import org.celestialworkshop.artifex.data.reloadlistener.AFSpecialtiesReloadListener;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
-public record S2CSyncSpecialtiesDataPacket(Map<ResourceLocation, AFSpecialtyWrapper> data) {
+public record S2CSyncSpecialtiesDataPacket(Map<ResourceLocation, AFSpecialtyWrapper> data) implements CustomPacketPayload {
+    public static final Type<S2CSyncSpecialtiesDataPacket> TYPE = new Type<>(Artifex.prefix("sync_specialties_data"));
 
-    @SuppressWarnings("deprecation")
-    public static void encode(S2CSyncSpecialtiesDataPacket packet, FriendlyByteBuf buffer) {
-        buffer.writeMap(packet.data(),
-                FriendlyByteBuf::writeResourceLocation,
-                (buf, list) -> buf.writeWithCodec(NbtOps.INSTANCE, AFSpecialtyWrapper.CODEC, list)
-        );
-    }
+    public static final StreamCodec<RegistryFriendlyByteBuf, S2CSyncSpecialtiesDataPacket> CODEC = StreamCodec.composite(
+            ByteBufCodecs.map(Object2ObjectOpenHashMap::new, ResourceLocation.STREAM_CODEC, ByteBufCodecs.fromCodec(AFSpecialtyWrapper.CODEC)), S2CSyncSpecialtiesDataPacket::data,
+            S2CSyncSpecialtiesDataPacket::new
+    );
 
-    public static S2CSyncSpecialtiesDataPacket decode(FriendlyByteBuf buffer) {
-        Map<ResourceLocation, AFSpecialtyWrapper> data = buffer.readMap(
-                FriendlyByteBuf::readResourceLocation,
-                buf -> buf.readWithCodec(NbtOps.INSTANCE, AFSpecialtyWrapper.CODEC)
-        );
-        return new S2CSyncSpecialtiesDataPacket(data);
-    }
-
-    public static void handle(S2CSyncSpecialtiesDataPacket packet, Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> {
+    public static void handle(S2CSyncSpecialtiesDataPacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> {
             AFSpecialtiesReloadListener.SPECIALTY_DATA.clear();
             AFSpecialtiesReloadListener.SPECIALTY_DATA.putAll(packet.data());
+            AFSpecialtiesReloadListener.SPECIALTY_CACHE.clear();
         });
-        context.get().setPacketHandled(true);
+    }
+
+    @Override
+    public Type<S2CSyncSpecialtiesDataPacket> type() {
+        return TYPE;
     }
 }

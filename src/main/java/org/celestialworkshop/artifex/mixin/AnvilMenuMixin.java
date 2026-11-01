@@ -3,7 +3,8 @@ package org.celestialworkshop.artifex.mixin;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
-import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
+import org.celestialworkshop.artifex.item.base.AFThrowableTieredItem;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -28,38 +29,27 @@ public abstract class AnvilMenuMixin extends ItemCombinerMenu {
         ItemStack left = this.inputSlots.getItem(0);
         ItemStack right = this.inputSlots.getItem(1);
 
-        if (left.isEmpty() || right.isEmpty() || !left.is(right.getItem())) {
-            return;
-        }
-
-        AFItemStackDataCapability.get(left).ifPresent(leftCap -> {
-            AFItemStackDataCapability.get(right).ifPresent(rightCap -> {
-
-                if (leftCap.isFull(left) && rightCap.isFull(right)) return;
-
+        if (!left.isEmpty() && !right.isEmpty() && left.is(right.getItem()) && left.getItem() instanceof AFThrowableTieredItem) {
+            if (!ItemStackUtil.isFull(left) || !ItemStackUtil.isFull(right)) {
                 ItemStack resultStack = this.resultSlots.getItem(0);
 
                 if (resultStack.isEmpty()) {
                     resultStack = left.copy();
                 }
 
-                int currentAmmo = leftCap.getAmmo();
-                int additionalAmmo = rightCap.getAmmo();
-                int maxAmmo = leftCap.getMaxAmmo(left);
+                int currentAmmo = ItemStackUtil.getAmmo(left);
+                int additionalAmmo = ItemStackUtil.getAmmo(right);
+                int maxAmmo = ItemStackUtil.getMaxAmmo(left);
 
                 int newAmmo = Math.min(maxAmmo, currentAmmo + additionalAmmo);
+                ItemStackUtil.setAmmo(resultStack, newAmmo);
 
-                ItemStack finalResultStack = resultStack;
-                AFItemStackDataCapability.get(resultStack).ifPresent(resCap -> {
-                    resCap.setAmmo(newAmmo);
+                if (this.cost.get() < 1) {
+                    this.cost.set(1);
+                }
 
-                    if (this.cost.get() < 1) {
-                        this.cost.set(1);
-                    }
-
-                    this.resultSlots.setItem(0, finalResultStack);
-                });
-            });
-        });
+                this.resultSlots.setItem(0, resultStack);
+            }
+        }
     }
 }

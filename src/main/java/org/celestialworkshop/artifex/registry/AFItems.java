@@ -1,13 +1,13 @@
 package org.celestialworkshop.artifex.registry;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
@@ -17,18 +17,17 @@ import java.util.List;
 
 public class AFItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Artifex.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, Artifex.MODID);
 
-    // Datagen iteration purposes.
     public static final List<AFMaterial> MATERIALS = new ObjectArrayList<>();
 
-    public static final RegistryObject<Item> CHARRED_STICK = ITEMS.register("charred_stick", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> BASIC_HILT = ITEMS.register("basic_hilt", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STANDARD_HILT = ITEMS.register("standard_hilt", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> STANDARD_POLE = ITEMS.register("standard_pole", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> CHARRED_STICK = ITEMS.register("charred_stick", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BASIC_HILT = ITEMS.register("basic_hilt", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> STANDARD_HILT = ITEMS.register("standard_hilt", () -> new Item(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> STANDARD_POLE = ITEMS.register("standard_pole", () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> BASIC_BOLT = ITEMS.register("basic_bolt", () -> new BoltItem(new Item.Properties()));
-    public static final RegistryObject<Item> STANDARD_BOLT = ITEMS.register("standard_bolt", () -> new BoltItem(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> BASIC_BOLT = ITEMS.register("basic_bolt", () -> new BoltItem(new Item.Properties()));
+    public static final DeferredHolder<Item, Item> STANDARD_BOLT = ITEMS.register("standard_bolt", () -> new BoltItem(new Item.Properties()));
 
     public static final AFMaterial WOODEN_MATERIAL = registerGeneralMaterial(AFMaterial.builder(ITEMS, "wooden").tier(Tiers.WOOD)
             .blacklist(AFWeaponType.CROSSBOW, AFWeaponType.BOW, AFWeaponType.LONGBOW, AFWeaponType.ARBALEST, AFWeaponType.SHIELD, AFWeaponType.WAR_DOOR)

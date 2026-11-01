@@ -1,0 +1,37 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_flanged_mace": {
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "artifex:weapon_type": {
+                "weapon_type": "flanged_mace"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_flanged_mace.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "artifex:iron_flanged_mace"
+    },
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_flanged_mace.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_flanged_mace"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

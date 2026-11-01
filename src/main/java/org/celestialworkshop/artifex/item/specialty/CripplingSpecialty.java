@@ -28,8 +28,9 @@ public class CripplingSpecialty extends AFSpecialty {
             target.hasImpulse = true;
             target.playSound(SoundEvents.WITHER_BREAK_BLOCK, 1.0f, 1.5f);
             return damage * getDamageMultiplier(level);
+        } else {
+            return damage;
         }
-        return damage;
     }
 
     private float getCripplingChance(int level) {

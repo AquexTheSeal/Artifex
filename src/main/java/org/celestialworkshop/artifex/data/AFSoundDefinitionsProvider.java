@@ -2,10 +2,10 @@ package org.celestialworkshop.artifex.data;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.SoundDefinition;
-import net.minecraftforge.common.data.SoundDefinitionsProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.SoundDefinition;
+import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
 
@@ -30,19 +30,19 @@ public class AFSoundDefinitionsProvider extends SoundDefinitionsProvider {
         }
     }
 
-    private void music(RegistryObject<SoundEvent> sound) {
+    private void music(DeferredHolder<SoundEvent, SoundEvent> sound) {
         this.add(sound.get(), subtitledSound(sound.getId().getPath())
                 .with(sound(Artifex.prefix(sound.getId().getPath())).stream())
         );
     }
 
-    private void basicSound(RegistryObject<SoundEvent> sound) {
+    private void basicSound(DeferredHolder<SoundEvent, SoundEvent> sound) {
         this.add(sound.get(), subtitledSound(sound.getId().getPath())
                 .with(sound(Artifex.prefix(sound.getId().getPath())))
         );
     }
 
-    private void variantSound(RegistryObject<SoundEvent> sound, int variants) {
+    private void variantSound(DeferredHolder<SoundEvent, SoundEvent> sound, int variants) {
         SoundDefinition soundDefinition = subtitledSound(sound.getId().getPath());
 
         for (int i = 0; i < variants; i++) {

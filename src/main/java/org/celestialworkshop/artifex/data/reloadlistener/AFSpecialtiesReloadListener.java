@@ -19,8 +19,6 @@ public class AFSpecialtiesReloadListener extends CodecBasedReloadListener<AFSpec
 
     public static final Map<Item, Map<AFSpecialty, Integer>> SPECIALTY_CACHE = new IdentityHashMap<>();
 
-    private static final Map<AFSpecialty, Integer> EMPTY = Object2IntMaps.emptyMap();
-
     public AFSpecialtiesReloadListener() {
         super("weapon_specialties", AFSpecialtyWrapper.CODEC, "Artifex Weapon Specialties");
     }
@@ -40,7 +38,7 @@ public class AFSpecialtiesReloadListener extends CodecBasedReloadListener<AFSpec
         if (SPECIALTY_DATA.containsKey(itemId)) {
             return SPECIALTY_DATA.get(itemId).specialties();
         } else {
-            return EMPTY;
+            return Object2IntMaps.emptyMap();
         }
     }
 

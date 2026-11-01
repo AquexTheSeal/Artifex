@@ -34,12 +34,14 @@ import java.util.Map;
 @Mixin(Player.class)
 public abstract class PlayerMixin extends LivingEntity {
 
-    @Shadow public abstract void setItemSlot(EquipmentSlot pSlot, ItemStack pStack);
+    @Shadow
+    public abstract void setItemSlot(EquipmentSlot pSlot, ItemStack pStack);
 
     @Shadow
     public abstract Inventory getInventory();
 
-    @Unique public boolean af$CriticalProcess = false;
+    @Unique
+    public boolean af$CriticalProcess = false;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -89,7 +91,6 @@ public abstract class PlayerMixin extends LivingEntity {
             Item item = this.artifex$getAttackingItemStack().getItem();
 
             if (AFWeaponType.getWeaponCategory(item) != AFWeaponType.Category.RANGED) {
-
                 for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(item).entrySet()) {
                     result = entry.getKey().onDamageMelee(this, livingTarget, this.artifex$getAttackingItemStack(), result, this.af$CriticalProcess, entry.getValue());
                 }
@@ -107,10 +108,9 @@ public abstract class PlayerMixin extends LivingEntity {
         Item item = this.artifex$getAttackingItemStack().getItem();
 
         if (AFWeaponType.getWeaponCategory(item) != AFWeaponType.Category.RANGED) {
-
-        for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(item).entrySet()) {
-            result = entry.getKey().onDamageSweep(this, sweepTarget, this.artifex$getAttackingItemStack(), result, originalDamage, entry.getValue());
-        }
+            for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(item).entrySet()) {
+                result = entry.getKey().onDamageSweep(this, sweepTarget, this.artifex$getAttackingItemStack(), result, originalDamage, entry.getValue());
+            }
         }
 
         return original.call(sweepTarget, source, result);
@@ -118,14 +118,13 @@ public abstract class PlayerMixin extends LivingEntity {
 
     @Inject(method = "attack", at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;doPostHurtEffects(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/Entity;)V"
+            target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;doPostAttackEffects(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;)V"
     ))
     private void triggerPostAttack(Entity pTarget, CallbackInfo ci) {
         if (pTarget instanceof LivingEntity livingTarget) {
             Item item = this.artifex$getAttackingItemStack().getItem();
 
             if (AFWeaponType.getWeaponCategory(item) != AFWeaponType.Category.RANGED) {
-
                 if (ItemStackUtil.hasComboBasedWeapon(this.artifex$getAttackingItemStack())) {
                     ComboBasedSpecialty.manageComboStack(this, this.artifex$getAttackingItemStack());
                 }
@@ -141,7 +140,7 @@ public abstract class PlayerMixin extends LivingEntity {
 
     @Inject(method = "attack", at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraftforge/event/entity/player/CriticalHitEvent;getDamageModifier()F"
+            target = "Lnet/neoforged/neoforge/event/entity/player/CriticalHitEvent;getDamageMultiplier()F"
     ))
     private void enableAFCriticalProcess(Entity pTarget, CallbackInfo ci) {
         this.af$CriticalProcess = true;

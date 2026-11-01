@@ -65,10 +65,10 @@ public class ShockwaveParticle extends SimpleAnimatedParticle {
         float v1 = this.getV1();
         int light = this.getLightColor(partialTicks);
 
-        buffer.vertex(positions[0].x(), positions[0].y(), positions[0].z()).uv(u1, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
-        buffer.vertex(positions[1].x(), positions[1].y(), positions[1].z()).uv(u1, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
-        buffer.vertex(positions[2].x(), positions[2].y(), positions[2].z()).uv(u0, v0).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
-        buffer.vertex(positions[3].x(), positions[3].y(), positions[3].z()).uv(u0, v1).color(this.rCol, this.gCol, this.bCol, this.alpha).uv2(light).endVertex();
+        buffer.addVertex(positions[0].x(), positions[0].y(), positions[0].z()).setUv(u1, v1).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setLight(light);
+        buffer.addVertex(positions[1].x(), positions[1].y(), positions[1].z()).setUv(u1, v0).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setLight(light);
+        buffer.addVertex(positions[2].x(), positions[2].y(), positions[2].z()).setUv(u0, v0).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setLight(light);
+        buffer.addVertex(positions[3].x(), positions[3].y(), positions[3].z()).setUv(u0, v1).setColor(this.rCol, this.gCol, this.bCol, this.alpha).setLight(light);
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType> {

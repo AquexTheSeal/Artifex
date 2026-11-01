@@ -1,0 +1,37 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_bow": {
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "artifex:weapon_type": {
+                "weapon_type": "bow"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_bow.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "artifex:iron_bow"
+    },
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_bow.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_bow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

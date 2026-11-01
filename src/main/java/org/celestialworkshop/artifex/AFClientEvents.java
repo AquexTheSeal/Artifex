@@ -1,59 +1,24 @@
 package org.celestialworkshop.artifex;
 
 import com.mojang.datafixers.util.Either;
-import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.client.AFCreativeTabOverride;
 import org.celestialworkshop.artifex.client.tooltip.SpecialtyTooltip;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Artifex.MODID, value = Dist.CLIENT)
 public class AFClientEvents {
-
-    @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
-        Minecraft mc = Minecraft.getInstance();
-        if (event.phase != TickEvent.Phase.END) return;
-        if (mc.player == null || mc.level == null) return;
-
-        AFCreativeTabOverride.tickAll();
-
-        if (mc.player.tickCount % 20 == 0) {
-            for (Map.Entry<CreativeModeTab, AFCreativeTabOverride.TabAnimState> entry : AFCreativeTabOverride.allEntries()) {
-                CreativeModeTab tab = entry.getKey();
-                AFCreativeTabOverride.TabAnimState state = entry.getValue();
-
-                Collection<ItemStack> displayItems = tab.getDisplayItems();
-                if (displayItems.isEmpty()) continue;
-
-                List<ItemStack> pool = new ArrayList<>(displayItems);
-                ItemStack next = pool.get(mc.level.random.nextInt(pool.size()));
-
-                if (state.currentStack.isEmpty()) {
-                    state.currentStack = next;
-                } else {
-                    state.startTransition(next);
-                }
-            }
-        }
-    }
 
     @SubscribeEvent
     public static void onGatherTooltipComponents(RenderTooltipEvent.GatherComponents event) {
         ItemStack stack = event.getItemStack();
-        AFWeaponType type = AFWeaponType.getWeaponType(stack.getItem());
-
         Map<AFSpecialty, Integer> specialties = ItemStackUtil.getSpecialties(stack.getItem());
 
         if (!specialties.isEmpty()) {

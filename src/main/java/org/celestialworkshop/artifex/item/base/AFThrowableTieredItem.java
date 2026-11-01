@@ -11,20 +11,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
-import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.celestialworkshop.artifex.entity.ThrownWeaponProjectile;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
+import org.celestialworkshop.artifex.registry.AFDataComponents;
 import org.celestialworkshop.artifex.registry.AFEnchantments;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
-import org.jetbrains.annotations.Nullable;
+import org.celestialworkshop.artifex.util.ItemStackUtil;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
     public final float baseVelocity;
 
     public AFThrowableTieredItem(AFMaterial material, float attackDamage, float attackDamageTierScale, float attackSpeed, float movementSpeedPercent, float reach, boolean canSweep, int throwMaxTicks, float thrownBaseDamage, float baseVelocity) {
-        super(material, attackDamage, attackDamageTierScale, attackSpeed, movementSpeedPercent, reach, canSweep);
+        super(material, material.getItemPropertiesSupplier().get().component(AFDataComponents.AMMO.get(), 16), attackDamage, attackDamageTierScale, attackSpeed, movementSpeedPercent, reach, canSweep);
         this.throwMaxTicks = throwMaxTicks;
         this.thrownBaseDamage = thrownBaseDamage;
         this.baseVelocity = baseVelocity;
@@ -44,17 +44,16 @@ public class AFThrowableTieredItem extends AFTieredItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack item = pPlayer.getItemInHand(pUsedHand);
-        if (AFItemStackDataCapability.get(item).isPresent()) {
-            if (!AFItemStackDataCapability.get(item).resolve().get().isEmpty()) {
-                pPlayer.startUsingItem(pUsedHand);
-                return InteractionResultHolder.consume(item);
-            }
+        if (!ItemStackUtil.isEmpty(item)) {
+            pPlayer.startUsingItem(pUsedHand);
+            return InteractionResultHolder.consume(item);
+        } else {
+            return InteractionResultHolder.fail(item);
         }
-        return InteractionResultHolder.fail(item);
     }
 
     @Override
-    public int getUseDuration(ItemStack pStack) {
+    public int getUseDuration(ItemStack pStack, LivingEntity pEntity) {
         return 72000;
     }
 
@@ -65,13 +64,11 @@ public class AFThrowableTieredItem extends AFTieredItem {
 
     @Override
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeLeft) {
-        int timeElapsed = this.getUseDuration(pStack) - pTimeLeft;
+        int timeElapsed = this.getUseDuration(pStack, pLivingEntity) - pTimeLeft;
         if (pLivingEntity instanceof Player player) {
-            pStack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(player.getUsedItemHand()));
+            pStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
 
-            ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(pLevel, player);
-
-            projectile.setHeldStack(pStack.copy());
+            ThrownWeaponProjectile projectile = new ThrownWeaponProjectile(pLevel, player, pStack.copy());
 
             float delta = (float) timeElapsed / this.getThrowMaxTicks();
 
@@ -80,7 +77,7 @@ public class AFThrowableTieredItem extends AFTieredItem {
             projectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, calculatedVelocity, 1.0F);
 
             float maxDamage = this.getThrownBaseDamage() + this.getMaterial().getItemTier().getAttackDamageBonus() * 1.12F;
-            float punctureBonus = pStack.getEnchantmentLevel(AFEnchantments.PUNCTURE.get()) * 0.75F;
+            float punctureBonus = ItemStackUtil.getEnchantmentLevel(pStack, AFEnchantments.PUNCTURE) * 0.75F;
             float calculatedDamage = Math.min(delta * maxDamage, maxDamage);
             projectile.setBaseDamage(calculatedDamage + punctureBonus);
 
@@ -90,17 +87,15 @@ public class AFThrowableTieredItem extends AFTieredItem {
 
             pLevel.addFreshEntity(projectile);
             pLevel.playSound(null, projectile, AFSoundEvents.THROWABLE_THROWN.get(), SoundSource.PLAYERS, 1.0F, 1.25F);
- 
+
             if (!player.getAbilities().instabuild) {
-                AFItemStackDataCapability.get(pStack).ifPresent(cap -> {
-                    cap.consume(1);
-                    if (player instanceof ServerPlayer serverPlayer) {
-                        int usedIdx = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? player.getInventory().selected : Inventory.SLOT_OFFHAND;
-                        AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(usedIdx, cap.getAmmo()));
-                    }
-                });
+                ItemStackUtil.consumeAmmo(pStack, 1);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    int usedIdx = player.getUsedItemHand() == InteractionHand.MAIN_HAND ? player.getInventory().selected : Inventory.SLOT_OFFHAND;
+                    AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(usedIdx, ItemStackUtil.getAmmo(pStack)));
+                }
             }
- 
+
             player.awardStat(Stats.ITEM_USED.get(this));
         }
     }
@@ -110,11 +105,12 @@ public class AFThrowableTieredItem extends AFTieredItem {
     }
 
     public int getMaximumAmmo(ItemStack stack) {
-        int stockpileLevel = stack.getEnchantmentLevel(AFEnchantments.STOCKPILE.get());
+        int stockpileLevel = ItemStackUtil.getEnchantmentLevel(stack, AFEnchantments.STOCKPILE);
         if (stockpileLevel > 0) {
             return 16 + stockpileLevel * 8;
+        } else {
+            return 16;
         }
-        return 16;
     }
 
     public float getThrownBaseDamage() {
@@ -127,26 +123,20 @@ public class AFThrowableTieredItem extends AFTieredItem {
 
     public float getRenderScale() {
         AFWeaponType type = AFWeaponType.getWeaponType(this);
-        if (type != null) {
-            switch (type) {
-                case SPEAR, JAVELIN: {
-                    return 3.0F;
-                }
-            }
+        if (type == AFWeaponType.SPEAR || type == AFWeaponType.JAVELIN) {
+            return 3.0F;
+        } else {
+            return 2.0F;
         }
-        return 2.0F;
     }
 
     public float getRenderTranslationOffset() {
         AFWeaponType type = AFWeaponType.getWeaponType(this);
-        if (type != null) {
-            switch (type) {
-                case SPEAR, JAVELIN: {
-                    return -0.35F;
-                }
-            }
+        if (type == AFWeaponType.SPEAR || type == AFWeaponType.JAVELIN) {
+            return -0.35F;
+        } else {
+            return -0.2F;
         }
-        return -0.2F;
     }
 
     @Override
@@ -158,22 +148,16 @@ public class AFThrowableTieredItem extends AFTieredItem {
     public float getItemUsingSlowdownMultiplier() {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.DAGGER)) {
             return 5.0F;
+        } else {
+            return 3.5F;
         }
-        return 3.5F;
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
         pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_description").withStyle(ChatFormatting.DARK_GRAY));
         pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_max_throw_time", this.getThrowMaxTicks() / 20.0).withStyle(ChatFormatting.GRAY));
-        AFItemStackDataCapability.get(pStack).ifPresent(cap -> {
-            pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_ammo_stack", cap.getAmmo(), cap.getMaxAmmo(pStack)).withStyle(ChatFormatting.GRAY));
-        });
-    }
-
-    @Override
-    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-        return super.canApplyAtEnchantingTable(stack, enchantment) || enchantment.category.canEnchant(this);
+        pTooltipComponents.add(Component.translatable("tooltip.artifex.throwable_ammo_stack", ItemStackUtil.getAmmo(pStack), ItemStackUtil.getMaxAmmo(pStack)).withStyle(ChatFormatting.GRAY));
     }
 }

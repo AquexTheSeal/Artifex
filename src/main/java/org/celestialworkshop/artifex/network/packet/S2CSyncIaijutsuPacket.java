@@ -1,30 +1,30 @@
 package org.celestialworkshop.artifex.network.packet;
 
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.network.ClientPacketHandler;
 
-import java.util.function.Supplier;
+public record S2CSyncIaijutsuPacket(ItemStack stack, int timer, boolean speedState) implements CustomPacketPayload {
+    public static final Type<S2CSyncIaijutsuPacket> TYPE = new Type<>(Artifex.prefix("sync_iaijutsu"));
 
-public record S2CSyncIaijutsuPacket(ItemStack stack, int timer, boolean speedState) {
+    public static final StreamCodec<RegistryFriendlyByteBuf, S2CSyncIaijutsuPacket> CODEC = StreamCodec.composite(
+            ItemStack.OPTIONAL_STREAM_CODEC, S2CSyncIaijutsuPacket::stack,
+            ByteBufCodecs.INT, S2CSyncIaijutsuPacket::timer,
+            ByteBufCodecs.BOOL, S2CSyncIaijutsuPacket::speedState,
+            S2CSyncIaijutsuPacket::new
+    );
 
-    public static void encode(S2CSyncIaijutsuPacket packet, FriendlyByteBuf buffer) {
-        buffer.writeItemStack(packet.stack, false);
-        buffer.writeInt(packet.timer);
-        buffer.writeBoolean(packet.speedState);
+    public static void handle(S2CSyncIaijutsuPacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleSyncIaijutsu(packet));
     }
 
-    public static S2CSyncIaijutsuPacket decode(FriendlyByteBuf buffer) {
-        return new S2CSyncIaijutsuPacket(buffer.readItem(), buffer.readInt(), buffer.readBoolean());
-    }
-
-    public static void handle(S2CSyncIaijutsuPacket packet, Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleSyncIaijutsu(packet));
-        });
-        context.get().setPacketHandled(true);
+    @Override
+    public Type<S2CSyncIaijutsuPacket> type() {
+        return TYPE;
     }
 }

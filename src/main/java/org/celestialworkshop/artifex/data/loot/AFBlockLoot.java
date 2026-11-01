@@ -1,17 +1,18 @@
 package org.celestialworkshop.artifex.data.loot;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.celestialworkshop.artifex.data.AFLootTableProvider;
 
 import java.util.Set;
 
 public class AFBlockLoot extends BlockLootSubProvider {
 
-    public AFBlockLoot() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public AFBlockLoot(HolderLookup.Provider provider) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
     }
 
     @Override
@@ -20,6 +21,6 @@ public class AFBlockLoot extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return AFLootTableProvider.knownSet(ForgeRegistries.BLOCKS);
+        return AFLootTableProvider.knownSet(BuiltInRegistries.BLOCK);
     }
 }

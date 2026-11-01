@@ -69,7 +69,6 @@ public class AFSpecialty {
 
     public MutableComponent getDisplayDescription(int level) {
         Object[] args = this.getDisplayDescriptionArgs(level);
-        // Color code args
         Object[] coloredArgs = new Object[args.length];
         for (int i = 0; i < args.length; i++) {
             coloredArgs[i] = Component.literal(String.valueOf(args[i])).withStyle(ChatFormatting.YELLOW);
@@ -91,14 +90,13 @@ public class AFSpecialty {
     }
 
     public ResourceLocation getId() {
-        return AFSpecialties.REGISTRY.get().getKey(this);
+        return AFSpecialties.REGISTRY.getKey(this);
     }
 
     public enum Category {
         BENEFICIAL(ChatFormatting.GREEN),
         HARMFUL(ChatFormatting.RED),
-        NEUTRAL(ChatFormatting.GRAY)
-        ;
+        NEUTRAL(ChatFormatting.GRAY);
 
         private final ChatFormatting color;
 
@@ -111,4 +109,3 @@ public class AFSpecialty {
         }
     }
 }
-

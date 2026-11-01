@@ -1,0 +1,37 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_arbalest": {
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "artifex:weapon_type": {
+                "weapon_type": "arbalest"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_arbalest.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "artifex:iron_arbalest"
+    },
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_arbalest.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_arbalest"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

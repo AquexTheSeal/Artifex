@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
 import org.celestialworkshop.artifex.network.AFNetwork;
 import org.celestialworkshop.artifex.network.packet.S2CSyncAmmoPacket;
@@ -42,12 +42,14 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         super(entityType, level);
     }
 
-    public ThrownWeaponProjectile(Level level, LivingEntity shooter) {
-        super(AFEntities.THROWABLE_PROJECTILE.get(), shooter, level);
+    public ThrownWeaponProjectile(Level level, LivingEntity shooter, ItemStack stack) {
+        super(AFEntities.THROWABLE_PROJECTILE.get(), shooter, level, stack, null);
+        this.setHeldStack(stack);
     }
 
-    public ThrownWeaponProjectile(Level level, double x, double y, double z) {
-        super(AFEntities.THROWABLE_PROJECTILE.get(), x, y, z, level);
+    public ThrownWeaponProjectile(Level level, double x, double y, double z, ItemStack stack) {
+        super(AFEntities.THROWABLE_PROJECTILE.get(), x, y, z, level, stack, null);
+        this.setHeldStack(stack);
     }
 
     @Override
@@ -74,9 +76,8 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         if (entity.hurt(damagesource, damage)) {
             entity.invulnerableTime = 0;
             if (entity instanceof LivingEntity le) {
-                if (!this.level().isClientSide && owner instanceof LivingEntity leOwner) {
-                    EnchantmentHelper.doPostHurtEffects(le, leOwner);
-                    EnchantmentHelper.doPostDamageEffects(leOwner, le);
+                if (this.level() instanceof ServerLevel serverLevel) {
+                    EnchantmentHelper.doPostAttackEffects(serverLevel, le, damagesource);
                 }
 
                 this.doPostHurtEffects(le);
@@ -120,8 +121,9 @@ public class ThrownWeaponProjectile extends AbstractArrow {
         EntityHitResult result = super.findHitEntity(pStartVec, pEndVec);
         if (result != null) {
             return result.getEntity() == this.getOwner() ? null : result;
+        } else {
+            return null;
         }
-        return null;
     }
 
     public SoundEvent getHitSound() {
@@ -132,41 +134,39 @@ public class ThrownWeaponProjectile extends AbstractArrow {
     protected boolean tryPickup(Player pPlayer) {
         if (this.pickup != Pickup.ALLOWED) {
             return super.tryPickup(pPlayer);
-        }
-        ItemStack pickupItem = this.getPickupItem();
-        Inventory inventory = pPlayer.getInventory();
+        } else {
+            ItemStack pickupItem = this.getPickupItem();
+            Inventory inventory = pPlayer.getInventory();
 
-        List<Integer> slots = new ArrayList<>();
-        // Prioritize offhand/mainhand.
-        slots.add(inventory.selected);
-        slots.add(Inventory.SLOT_OFFHAND);
-        for (int i = 0; i < inventory.getContainerSize(); i++) {
-            if (i != Inventory.SLOT_OFFHAND && i != inventory.selected) {
-                slots.add(i);
+            List<Integer> slots = new ArrayList<>();
+            slots.add(inventory.selected);
+            slots.add(Inventory.SLOT_OFFHAND);
+            for (int i = 0; i < inventory.getContainerSize(); i++) {
+                if (i != Inventory.SLOT_OFFHAND && i != inventory.selected) {
+                    slots.add(i);
+                }
             }
-        }
 
-        for (int i : slots) {
-            ItemStack stack = inventory.getItem(i);
-
-            if (ItemStackUtil.sameItemMatchesEnchantments(pickupItem, stack)) {
-
-                boolean success = AFItemStackDataCapability.get(stack).map(cap -> {
-                    if (!cap.isFull(stack)) {
-                        cap.add(stack, 1);
-
+            boolean pickedUp = false;
+            for (int i : slots) {
+                if (!pickedUp) {
+                    ItemStack stack = inventory.getItem(i);
+                    if (ItemStackUtil.sameItemMatchesEnchantments(pickupItem, stack) && !ItemStackUtil.isFull(stack)) {
+                        ItemStackUtil.addAmmo(stack, 1);
                         if (pPlayer instanceof ServerPlayer serverPlayer) {
-                            AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(i, cap.getAmmo()));
+                            AFNetwork.sendToPlayer(serverPlayer, new S2CSyncAmmoPacket(i, ItemStackUtil.getAmmo(stack)));
                         }
-                        return true;
+                        pickedUp = true;
                     }
-                    return false;
-                }).orElse(false);
-
-                if (success) return true;
+                }
             }
+            return pickedUp;
         }
-        return false;
+    }
+
+    @Override
+    protected @NotNull ItemStack getDefaultPickupItem() {
+        return this.getHeldStack();
     }
 
     @Override
@@ -175,9 +175,9 @@ public class ThrownWeaponProjectile extends AbstractArrow {
     }
 
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(HELD_STACK, ItemStack.EMPTY);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(HELD_STACK, ItemStack.EMPTY);
     }
 
     public ItemStack getHeldStack() {
@@ -191,12 +191,16 @@ public class ThrownWeaponProjectile extends AbstractArrow {
     @Override
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        pCompound.put("HeldItem", this.getHeldStack().save(new CompoundTag()));
+        if (!this.getHeldStack().isEmpty()) {
+            pCompound.put("HeldItem", this.getHeldStack().save(this.registryAccess(), new CompoundTag()));
+        }
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        this.setHeldStack(ItemStack.of(pCompound.getCompound("HeldItem")));
+        if (pCompound.contains("HeldItem")) {
+            this.setHeldStack(ItemStack.parseOptional(this.registryAccess(), pCompound.getCompound("HeldItem")));
+        }
     }
 }

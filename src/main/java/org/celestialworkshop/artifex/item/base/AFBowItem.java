@@ -5,9 +5,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.registry.AFSoundEvents;
@@ -33,8 +33,9 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     public @Nullable SoundEvent getShootSoundOverride() {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW)) {
             return AFSoundEvents.LONGBOW_SHOOT.get();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public float getDrawSpeedMultiplier() {
@@ -46,7 +47,6 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     }
 
     public void modifyArrowProperties(ItemStack bowStack, AbstractArrow original) {
-
         if (AFWeaponType.isWeaponType(this, AFWeaponType.LONGBOW)) {
             original.setDeltaMovement(original.getDeltaMovement().scale(1.8F));
         }
@@ -58,8 +58,8 @@ public class AFBowItem extends BowItem implements AFPropertyItem, AFExtension {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pContext, pTooltip, pFlag);
         AFWeaponType type = AFWeaponType.getWeaponType(this);
         if (type == AFWeaponType.LONGBOW) {
             pTooltip.add(Component.translatable("tooltip.artifex.longbow_description").withStyle(ChatFormatting.DARK_GRAY));

@@ -1,9 +1,10 @@
 package org.celestialworkshop.artifex.data;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraftforge.registries.IForgeRegistry;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.data.loot.AFBlockLoot;
 import org.celestialworkshop.artifex.data.loot.AFChestLoot;
@@ -11,19 +12,20 @@ import org.celestialworkshop.artifex.data.loot.AFChestLoot;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 public class AFLootTableProvider extends LootTableProvider {
 
-    public AFLootTableProvider(PackOutput output) {
+    public AFLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, Set.of(), List.of(
                 new SubProviderEntry(AFBlockLoot::new, LootContextParamSets.BLOCK),
                 new SubProviderEntry(AFChestLoot::new, LootContextParamSets.CHEST)
-        ));
+        ), registries);
     }
 
-    public static <T> Set<T> knownSet(final IForgeRegistry<T> registry) {
+    public static <T> Set<T> knownSet(final Registry<T> registry) {
         return StreamSupport
                 .stream(registry.spliterator(), false)
                 .filter(entry -> Optional.ofNullable(registry.getKey(entry))

@@ -1,0 +1,37 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_crossbow": {
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "artifex:weapon_type": {
+                "weapon_type": "crossbow"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_crossbow.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "artifex:iron_crossbow"
+    },
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_crossbow.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_crossbow"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

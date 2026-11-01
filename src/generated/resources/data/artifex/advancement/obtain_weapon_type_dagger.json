@@ -1,0 +1,37 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_dagger": {
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "artifex:weapon_type": {
+                "weapon_type": "dagger"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_dagger.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "artifex:iron_dagger"
+    },
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_dagger.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_dagger"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

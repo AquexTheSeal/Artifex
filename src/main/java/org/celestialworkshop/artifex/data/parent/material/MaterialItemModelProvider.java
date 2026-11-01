@@ -1,12 +1,13 @@
 package org.celestialworkshop.artifex.data.parent.material;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 
@@ -44,22 +45,23 @@ public class MaterialItemModelProvider extends ItemModelProvider {
         }
     }
 
-    public void handheldItem(Item item) {
-        this.basicParentedItem(item, "item/handheld");
+    @Override
+    public ItemModelBuilder handheldItem(Item item) {
+        return this.basicParentedItem(item, "item/handheld");
     }
 
-    public void basicParentedItem(Item item, String parent) {
-        this.basicParentedItem(item, parent, "layer0");
+    public ItemModelBuilder basicParentedItem(Item item, String parent) {
+        return this.basicParentedItem(item, parent, "layer0");
     }
 
-    public void basicParentedItem(Item item, String parent, String textureKey) {
-        ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
-        this.getBuilder(loc.toString()).parent(new ModelFile.UncheckedModelFile(parent))
+    public ItemModelBuilder basicParentedItem(Item item, String parent, String textureKey) {
+        ResourceLocation loc = BuiltInRegistries.ITEM.getKey(item);
+        return this.getBuilder(loc.toString()).parent(new ModelFile.UncheckedModelFile(parent))
                 .texture(textureKey, ResourceLocation.fromNamespaceAndPath(loc.getNamespace(), "item/" + loc.getPath()));
     }
 
     public void bowItem(Item item, String parentLocation) {
-        ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation loc = BuiltInRegistries.ITEM.getKey(item);
         String itemPath = "item/" + loc.getPath();
         ModelFile parent = new ModelFile.UncheckedModelFile(parentLocation);
         this.getBuilder(loc.toString())
@@ -77,7 +79,7 @@ public class MaterialItemModelProvider extends ItemModelProvider {
     }
 
     public void crossbowItem(Item item, String parentLocation) {
-        ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation loc = BuiltInRegistries.ITEM.getKey(item);
         String itemPath = "item/" + loc.getPath();
         ModelFile parent = new ModelFile.UncheckedModelFile(parentLocation);
         this.getBuilder(loc.toString())
@@ -101,7 +103,7 @@ public class MaterialItemModelProvider extends ItemModelProvider {
     }
 
     public void shieldItem(Item item, String parentLocation) {
-        ResourceLocation loc = ForgeRegistries.ITEMS.getKey(item);
+        ResourceLocation loc = BuiltInRegistries.ITEM.getKey(item);
         String itemPath = "item/" + loc.getPath();
         ModelFile parent = new ModelFile.UncheckedModelFile(parentLocation);
         ModelFile blockingParent = new ModelFile.UncheckedModelFile(parentLocation + "_blocking");
@@ -113,4 +115,3 @@ public class MaterialItemModelProvider extends ItemModelProvider {
                 .end();
     }
 }
-

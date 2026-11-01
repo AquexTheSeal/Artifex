@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/generated",
 	"textures": {
-		"0": "diamond/diamond_shield",
-		"particle": "diamond/diamond_shield"
+		"0": "artifex:item/diamond/diamond_shield",
+		"particle": "artifex:item/diamond/diamond_shield"
 	},
 	"gui_light": "front",
 	"display": {

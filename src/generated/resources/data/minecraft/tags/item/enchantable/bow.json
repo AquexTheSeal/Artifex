@@ -1,0 +1,12 @@
+{
+  "values": [
+    "artifex:iron_bow",
+    "artifex:iron_longbow",
+    "artifex:golden_bow",
+    "artifex:golden_longbow",
+    "artifex:diamond_bow",
+    "artifex:diamond_longbow",
+    "artifex:netherite_bow",
+    "artifex:netherite_longbow"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "values": [
+    "artifex:wooden_dagger",
+    "artifex:wooden_javelin",
+    "artifex:wooden_spear",
+    "artifex:stone_dagger",
+    "artifex:stone_javelin",
+    "artifex:stone_spear",
+    "artifex:iron_dagger",
+    "artifex:iron_javelin",
+    "artifex:iron_spear",
+    "artifex:golden_dagger",
+    "artifex:golden_javelin",
+    "artifex:golden_spear",
+    "artifex:diamond_dagger",
+    "artifex:diamond_javelin",
+    "artifex:diamond_spear",
+    "artifex:netherite_dagger",
+    "artifex:netherite_javelin",
+    "artifex:netherite_spear"
+  ]
+}

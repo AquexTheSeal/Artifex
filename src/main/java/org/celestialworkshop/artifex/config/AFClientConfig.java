@@ -1,25 +1,24 @@
 package org.celestialworkshop.artifex.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class AFClientConfig {
-    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec SPEC;
+    public static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec SPEC;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> CUSTOM_CREATIVE_TAB_RENDER;
+    public static final ModConfigSpec.ConfigValue<Boolean> CUSTOM_CREATIVE_TAB_RENDER;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> COMBO_OVERLAY_RENDER;
-    public static final ForgeConfigSpec.ConfigValue<Integer> COMBO_OVERLAY_X_OFFSET;
-    public static final ForgeConfigSpec.ConfigValue<Integer> COMBO_OVERLAY_Y_OFFSET;
+    public static final ModConfigSpec.ConfigValue<Boolean> COMBO_OVERLAY_RENDER;
+    public static final ModConfigSpec.ConfigValue<Integer> COMBO_OVERLAY_X_OFFSET;
+    public static final ModConfigSpec.ConfigValue<Integer> COMBO_OVERLAY_Y_OFFSET;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> THROWABLE_OVERLAY_RENDER;
-    public static final ForgeConfigSpec.ConfigValue<Integer> THROWABLE_OVERLAY_X_OFFSET;
-    public static final ForgeConfigSpec.ConfigValue<Integer> THROWABLE_OVERLAY_Y_OFFSET;
+    public static final ModConfigSpec.ConfigValue<Boolean> THROWABLE_OVERLAY_RENDER;
+    public static final ModConfigSpec.ConfigValue<Integer> THROWABLE_OVERLAY_X_OFFSET;
+    public static final ModConfigSpec.ConfigValue<Integer> THROWABLE_OVERLAY_Y_OFFSET;
 
-    public static final ForgeConfigSpec.ConfigValue<Boolean> IAIJUTSU_OVERLAY_RENDER;
-    public static final ForgeConfigSpec.ConfigValue<Integer> IAIJUTSU_OVERLAY_X_OFFSET;
-    public static final ForgeConfigSpec.ConfigValue<Integer> IAIJUTSU_OVERLAY_Y_OFFSET;
-
+    public static final ModConfigSpec.ConfigValue<Boolean> IAIJUTSU_OVERLAY_RENDER;
+    public static final ModConfigSpec.ConfigValue<Integer> IAIJUTSU_OVERLAY_X_OFFSET;
+    public static final ModConfigSpec.ConfigValue<Integer> IAIJUTSU_OVERLAY_Y_OFFSET;
 
     static {
         BUILDER.push("Artifex Client Settings");

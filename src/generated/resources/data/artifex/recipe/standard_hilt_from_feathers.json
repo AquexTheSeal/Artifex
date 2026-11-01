@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "artifex:charred_stick"
+    },
+    {
+      "tag": "c:feathers"
+    },
+    {
+      "tag": "c:feathers"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:standard_hilt"
+  }
+}

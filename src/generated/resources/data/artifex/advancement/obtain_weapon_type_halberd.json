@@ -1,0 +1,37 @@
+{
+  "parent": "artifex:artifex_startup",
+  "criteria": {
+    "obtained_weapon_type_halberd": {
+      "conditions": {
+        "items": [
+          {
+            "predicates": {
+              "artifex:weapon_type": {
+                "weapon_type": "halberd"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.artifex.obtain_weapon_type_halberd.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "artifex:iron_halberd"
+    },
+    "title": {
+      "translate": "advancement.artifex.obtain_weapon_type_halberd.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtained_weapon_type_halberd"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

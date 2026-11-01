@@ -1,5 +1,6 @@
 package org.celestialworkshop.artifex.mixin;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import org.celestialworkshop.artifex.registry.AFEnchantments;
@@ -16,9 +17,9 @@ public class ItemStackMixin {
             method = "enchant",
             at = @At("TAIL")
     )
-    public void enchant(Enchantment pEnchantment, int pLevel, CallbackInfo ci) {
+    public void enchant(Holder<Enchantment> pEnchantment, int pLevel, CallbackInfo ci) {
         ItemStack stack = (ItemStack) (Object) this;
-        if (AFEnchantments.STOCKPILE.isPresent() && pEnchantment == AFEnchantments.STOCKPILE.get()) {
+        if (pEnchantment.is(AFEnchantments.STOCKPILE)) {
             ItemStackUtil.fillThrowableAmmoCapacity(stack);
         }
     }

@@ -5,7 +5,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import org.celestialworkshop.artifex.capability.AFEntityData;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import org.celestialworkshop.artifex.registry.AFAttachmentTypes;
 
 public class ImpactComboSpecialty extends ComboBasedSpecialty {
     public ImpactComboSpecialty(Category category) {
@@ -28,7 +28,7 @@ public class ImpactComboSpecialty extends ComboBasedSpecialty {
     }
 
     public float manageDamage(LivingEntity attacker, LivingEntity target, float originalDamage, int specialityLevel) {
-        AFEntityData entityData = AFEntityDataCapability.get(attacker).resolve().get();
+        AFEntityData entityData = attacker.getData(AFAttachmentTypes.ENTITY_DATA);
         return originalDamage + (entityData.comboCount * originalDamage * getDamageIncrement(specialityLevel));
     }
 

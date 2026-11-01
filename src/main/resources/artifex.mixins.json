@@ -2,8 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "org.celestialworkshop.artifex.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "refmap": "artifex.refmap.json",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
     "AbstractArrowMixin",
     "AnvilMenuMixin",
@@ -17,7 +16,6 @@
     "ProjectileWeaponItemMixin"
   ],
   "client": [
-    "CreativeModeInventoryScreenMixin",
     "ItemInHandRendererMixin",
     "LocalPlayerMixin"
   ],

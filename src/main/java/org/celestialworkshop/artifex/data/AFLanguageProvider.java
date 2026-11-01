@@ -1,12 +1,13 @@
 package org.celestialworkshop.artifex.data;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.apache.commons.lang3.text.WordUtils;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.api.AFSpecialty;
@@ -22,11 +23,7 @@ public class AFLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-
-        // CREATIVE TABS
         this.add("item_group.artifex.artifex", "Artifex");
-
-        // TOOLTIPS
 
         this.add("tooltip.artifex.longbow_description", "Has a longer charge time than a regular bow, but arrows shoot faster and deal more damage.");
         this.add("tooltip.artifex.arbalest_description", "Has a longer charge time than a regular crossbow, but arrows shoot faster and deal more damage.");
@@ -40,10 +37,8 @@ public class AFLanguageProvider extends LanguageProvider {
 
         this.add("tooltip.artifex.specialty", "Weapon Class Specialties");
 
-        // ATTRIBUTES
         this.add("attribute.name.artifex.damage_reduction", "Damage Reduction");
 
-        // SPECIALTIES
         this.addSpecialty(AFSpecialties.EXECUTE.get(), "Execute", "Targets with %s health have a %s chance to be instantly killed (Only %s damage is dealt if the target’s maximum health exceeds %s).");
         this.addSpecialty(AFSpecialties.SWEEPING.get(), "Sweeping", "Sweeping attacks deal extra damage equal to %s of the focused damage.");
         this.addSpecialty(AFSpecialties.IMPACT_COMBO.get(), "Impact Combo", "Successive attacks build momentum, increasing damage with each hit by %s up to a maximum of 5 stacks.");
@@ -59,22 +54,18 @@ public class AFLanguageProvider extends LanguageProvider {
         this.addSpecialty(AFSpecialties.TWO_HANDED.get(), "Two-Handed", "Hides your off-hand when held; cannot be equipped in the off-hand slot.");
         this.addSpecialty(AFSpecialties.HINDERING.get(), "Hindering", "Successive attacks weakens, reducing your attack speed with each hit by %s up to 5 stacks.");
 
-        // ITEMS
-        for (RegistryObject<Item> item : AFItems.ITEMS.getEntries()) {
+        for (DeferredHolder<Item, ? extends Item> item : AFItems.ITEMS.getEntries()) {
             if (!(item.get() instanceof BlockItem) && !(item.get() instanceof SmithingTemplateItem)) {
                 this.addItem(item, WordUtils.capitalize(item.getId().getPath().replace("_", " ")));
             }
         }
 
-        // ENCHANTMENTS
-        for (RegistryObject<Enchantment> enchantment : AFEnchantments.ENCHANTMENTS.getEntries()) {
-            this.addEnchantment(enchantment, WordUtils.capitalize(enchantment.getId().getPath().replace("_", " ")));
-        }
+        this.add("enchantment.artifex.puncture", "Puncture");
+        this.add("enchantment.artifex.stockpile", "Stockpile");
 
         this.addEnchantmentDescription(AFEnchantments.PUNCTURE, "Increases damage for thrown projectiles.");
         this.addEnchantmentDescription(AFEnchantments.STOCKPILE, "Increases the throwable weapon's ammo capacity.");
 
-        // ADVANCEMENTS
         this.addAdvancement("artifex_startup", "Artifex", "Explore the wide range of armaments!");
 
         this.addAdvancement("obtain_weapon_type_knuckles", "Iron Fist", "Obtain a Knuckle.");
@@ -112,9 +103,8 @@ public class AFLanguageProvider extends LanguageProvider {
         this.add("advancement.artifex." + name + ".description", desc);
     }
 
-    public void addEnchantmentDescription(RegistryObject<Enchantment> enchantment, String desc) {
-        String key = String.format("enchantment.%s.%s.desc", enchantment.getId().getNamespace(), enchantment.getId().getPath());
+    public void addEnchantmentDescription(ResourceKey<Enchantment> enchantment, String desc) {
+        String key = String.format("enchantment.%s.%s.desc", enchantment.location().getNamespace(), enchantment.location().getPath());
         this.add(key, desc);
     }
-
 }

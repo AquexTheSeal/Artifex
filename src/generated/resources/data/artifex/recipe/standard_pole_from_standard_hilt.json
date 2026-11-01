@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "artifex:standard_hilt"
+    },
+    {
+      "item": "artifex:standard_hilt"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:standard_pole"
+  }
+}

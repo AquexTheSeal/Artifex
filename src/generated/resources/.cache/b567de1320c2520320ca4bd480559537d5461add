@@ -1,1 +1,11 @@
-// 1.20.1	2026-04-05T20:58:22.7218381	Tags for minecraft:item mod id artifex
+// 1.21.1	2026-10-29T21:59:36.720111	Tags for minecraft:item mod id artifex
+f7a00a2969bd676c7b61cc480081539f57cded4a data/artifex/tags/item/bolts.json
+dbcc4cc10708375eb26925d2ce2aa686c8f211cc data/artifex/tags/item/enchantable/throwable.json
+2834b927e875945f7a465711055b276d41d20e12 data/minecraft/tags/item/enchantable/bow.json
+13f2caae2e52e61542612edfa8a3aaac61f2fa36 data/minecraft/tags/item/enchantable/crossbow.json
+99b19ba8c4e1ad9519a07196ae5c4e2d38d48339 data/minecraft/tags/item/enchantable/durability.json
+707ef0e7593aec6f27bcde31fc2f2d8d14f0bac9 data/minecraft/tags/item/enchantable/fire_aspect.json
+707ef0e7593aec6f27bcde31fc2f2d8d14f0bac9 data/minecraft/tags/item/enchantable/sharp_weapon.json
+707ef0e7593aec6f27bcde31fc2f2d8d14f0bac9 data/minecraft/tags/item/enchantable/sword.json
+99b19ba8c4e1ad9519a07196ae5c4e2d38d48339 data/minecraft/tags/item/enchantable/vanishing.json
+707ef0e7593aec6f27bcde31fc2f2d8d14f0bac9 data/minecraft/tags/item/enchantable/weapon.json

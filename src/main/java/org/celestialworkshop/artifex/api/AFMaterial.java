@@ -1,14 +1,13 @@
 package org.celestialworkshop.artifex.api;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.registry.AFItems;
 
@@ -18,13 +17,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 public class AFMaterial {
 
-    private static final ObjectArrayList<AFMaterial> ALL_MATERIALS = new ObjectArrayList<>();
     public static final Reference2ObjectOpenHashMap<Item, AFWeaponType> ITEM_TO_WEAPON_TYPE = new Reference2ObjectOpenHashMap<>();
 
-    private final Object2ObjectOpenHashMap<AFWeaponType, RegistryObject<Item>> registeredWeaponsMap = new Object2ObjectOpenHashMap<>();
+    private final Object2ObjectOpenHashMap<AFWeaponType, DeferredHolder<Item, Item>> registeredWeaponsMap = new Object2ObjectOpenHashMap<>();
 
     private final Supplier<Map<AFSpecialty, Integer>> weaponTypeSpecialties;
     private final Supplier<Ingredient> craftingHiltItem;
@@ -56,23 +55,20 @@ public class AFMaterial {
 
             if (builderGet.weaponTypeBlacklist.contains(weaponType)) {
                 Artifex.LOGGER.debug("Skipping excluded weapon type: {}", itemId);
-                continue;
+            } else {
+                DeferredHolder<Item, Item> registered = builderGet.itemRegister.register(itemId, () -> {
+                    Item item = weaponType.getMaker().create(this);
+                    ITEM_TO_WEAPON_TYPE.put(item, weaponType);
+                    return item;
+                });
+
+                registeredWeaponsMap.put(weaponType, registered);
             }
-
-            RegistryObject<Item> registered = builderGet.itemRegister.register(itemId, () -> {
-                Item item = weaponType.getMaker().create(this);
-                ITEM_TO_WEAPON_TYPE.put(item, weaponType);
-                return item;
-            });
-
-            registeredWeaponsMap.put(weaponType, registered);
         }
-        ALL_MATERIALS.add(this);
     }
 
-
     public Item getWeapon(AFWeaponType weaponType) {
-        RegistryObject<Item> item = registeredWeaponsMap.get(weaponType);
+        DeferredHolder<Item, Item> item = registeredWeaponsMap.get(weaponType);
         return item != null ? item.get() : null;
     }
 
@@ -104,10 +100,13 @@ public class AFMaterial {
         return registeredWeaponsMap.keySet();
     }
 
-    public Tier getItemTier() { return itemTier; }
+    public Tier getItemTier() {
+        return itemTier;
+    }
 
-    public Supplier<Item.Properties> getItemPropertiesSupplier() { return itemProperties; }
-
+    public Supplier<Item.Properties> getItemPropertiesSupplier() {
+        return itemProperties;
+    }
 
     public static Builder builder(DeferredRegister<Item> itemRegister, String materialId) {
         return new Builder(itemRegister, materialId);
@@ -189,5 +188,6 @@ public class AFMaterial {
         }
     }
 
-    public record SmithingConfig(Supplier<Item> template, Supplier<Ingredient> ingot, AFMaterial baseMaterial) {}
+    public record SmithingConfig(Supplier<Item> template, Supplier<Ingredient> ingot, AFMaterial baseMaterial) {
+    }
 }

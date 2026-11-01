@@ -2,8 +2,8 @@
 	"format_version": "1.9.0",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "iron_knuckles",
-		"particle": "iron_knuckles"
+		"0": "artifex:item/iron/iron_knuckles",
+		"particle": "artifex:item/iron/iron_knuckles"
 	},
 	"elements": [
 		{

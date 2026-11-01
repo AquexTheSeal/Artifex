@@ -5,9 +5,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 import org.celestialworkshop.artifex.api.AFMaterial;
 import org.celestialworkshop.artifex.api.AFWeaponType;
 import org.celestialworkshop.artifex.item.BoltItem;
@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFExtension {
-
-    public static final Predicate<ItemStack> BOLT_ONLY = ARROW_ONLY.or((stack) -> stack.getItem() instanceof BoltItem);
 
     private final AFMaterial material;
 
@@ -38,15 +36,17 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     public @Nullable SoundEvent getLoadingStartSoundOverride(int enchantmentLevel) {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return AFSoundEvents.ARBALEST_START.get();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public @Nullable SoundEvent getLoadingEndSoundOverride() {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return AFSoundEvents.ARBALEST_LOADED.get();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public @Nullable SoundEvent getLoadingMiddleSoundOverride() {
@@ -56,8 +56,9 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     public @Nullable SoundEvent getShootSoundOverride() {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return AFSoundEvents.ARBALEST_SHOOT.get();
+        } else {
+            return null;
         }
-        return null;
     }
 
     public float getChargingSpeedReductionScale(ItemStack crossbowStack) {
@@ -83,20 +84,21 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
 
     @Override
     public @NotNull Predicate<ItemStack> getAllSupportedProjectiles() {
-        return super.getAllSupportedProjectiles().or(BOLT_ONLY);
+        return super.getAllSupportedProjectiles().or(stack -> stack.getItem() instanceof BoltItem);
     }
 
     @Override
     public @NotNull Predicate<ItemStack> getSupportedHeldProjectiles() {
-        return super.getSupportedHeldProjectiles().or(BOLT_ONLY);
+        return super.getSupportedHeldProjectiles().or(stack -> stack.getItem() instanceof BoltItem);
     }
 
     @Override
     public float getItemUsingSlowdownMultiplier() {
         if (AFWeaponType.isWeaponType(this, AFWeaponType.ARBALEST)) {
             return 0.5F;
+        } else {
+            return 1.0F;
         }
-        return 1.0F;
     }
 
     @Override
@@ -105,8 +107,8 @@ public class AFCrossbowItem extends CrossbowItem implements AFPropertyItem, AFEx
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+    public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pContext, pTooltip, pFlag);
         AFWeaponType type = AFWeaponType.getWeaponType(this);
         if (type == AFWeaponType.ARBALEST) {
             pTooltip.add(Component.translatable("tooltip.artifex.arbalest_description").withStyle(ChatFormatting.DARK_GRAY));

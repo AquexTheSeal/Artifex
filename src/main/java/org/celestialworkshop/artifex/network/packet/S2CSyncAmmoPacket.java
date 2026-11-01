@@ -1,28 +1,28 @@
 package org.celestialworkshop.artifex.network.packet;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.network.ClientPacketHandler;
 
-import java.util.function.Supplier;
+public record S2CSyncAmmoPacket(int idx, int ammo) implements CustomPacketPayload {
+    public static final Type<S2CSyncAmmoPacket> TYPE = new Type<>(Artifex.prefix("sync_ammo"));
 
-public record S2CSyncAmmoPacket(int idx, int ammo) {
+    public static final StreamCodec<RegistryFriendlyByteBuf, S2CSyncAmmoPacket> CODEC = StreamCodec.composite(
+            ByteBufCodecs.INT, S2CSyncAmmoPacket::idx,
+            ByteBufCodecs.INT, S2CSyncAmmoPacket::ammo,
+            S2CSyncAmmoPacket::new
+    );
 
-    public static void encode(S2CSyncAmmoPacket packet, FriendlyByteBuf buffer) {
-        buffer.writeInt(packet.idx);
-        buffer.writeInt(packet.ammo);
+    public static void handle(S2CSyncAmmoPacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> ClientPacketHandler.handleSyncAmmo(packet));
     }
 
-    public static S2CSyncAmmoPacket decode(FriendlyByteBuf buffer) {
-        return new S2CSyncAmmoPacket(buffer.readInt(), buffer.readInt());
-    }
-
-    public static void handle(S2CSyncAmmoPacket packet, Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleSyncAmmo(packet));
-        });
-        context.get().setPacketHandled(true);
+    @Override
+    public Type<S2CSyncAmmoPacket> type() {
+        return TYPE;
     }
 }

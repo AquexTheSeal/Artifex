@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:bow"
+    },
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "RX",
+    "XB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:diamond_bow"
+  }
+}

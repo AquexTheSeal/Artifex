@@ -1,4 +1,4 @@
-// 1.20.1	2026-04-15T23:31:09.1021743	Global Loot Modifiers : artifex
-a322bde3309b7c6bc3f2a2d38ff5ba7fb00d4ef2 data/artifex/loot_modifiers/blacksmith_pool.json
-8c94c71e2d48d75887f3d2583c156849d6247334 data/artifex/loot_modifiers/end_city_pool.json
-1f02effbe75c9f1fe916c0eae1f80491d2a81b02 data/forge/loot_modifiers/global_loot_modifiers.json
+// 1.21.1	2026-10-29T21:59:36.7083754	Global Loot Modifiers : artifex
+f9bd03ff590b51f139a6a3fa4f18488a1e3d57a3 data/artifex/loot_modifiers/blacksmith_pool.json
+e4baa459522ea15b1a2f3e84cafcf1192061adf4 data/artifex/loot_modifiers/end_city_pool.json
+65881da0f8913864d8d1dfb39ba01ca30b05d39a data/neoforge/loot_modifiers/global_loot_modifiers.json

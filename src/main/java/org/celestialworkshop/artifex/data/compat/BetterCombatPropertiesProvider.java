@@ -5,11 +5,11 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.bettercombat.api.AttributesContainer;
 import net.bettercombat.api.WeaponAttributes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +29,7 @@ public abstract class BetterCombatPropertiesProvider implements DataProvider {
     }
 
     public void addAttribute(Item item, AttributesContainer attribute) {
-        String path = ForgeRegistries.ITEMS.getKey(item).getPath();
+        String path = BuiltInRegistries.ITEM.getKey(item).getPath();
         data.put(path, Pair.of(item, attribute));
     }
 
@@ -47,7 +47,7 @@ public abstract class BetterCombatPropertiesProvider implements DataProvider {
     }
 
     protected CompletableFuture<?> save(CachedOutput pOutput, Item item, AttributesContainer attribute) {
-        String path = ForgeRegistries.ITEMS.getKey(item).getPath();
+        String path = BuiltInRegistries.ITEM.getKey(item).getPath();
         Path target = this.output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(this.modid).resolve("weapon_attributes").resolve(path + ".json");
         return DataProvider.saveStable(pOutput, compileAttributeJson(attribute), target);
     }

@@ -17,9 +17,6 @@ import java.util.Map;
 
 public record SpecialtyTooltip(Map<AFSpecialty, Integer> values) implements TooltipComponent, ClientTooltipComponent {
 
-    public static final int MAX_TEXT_WIDTH = 200;
-    public static final int GAP = 2;
-
     @Override
     public int getHeight() {
         Font font = Minecraft.getInstance().font;
@@ -27,7 +24,7 @@ public record SpecialtyTooltip(Map<AFSpecialty, Integer> values) implements Tool
         for (Map.Entry<AFSpecialty, Integer> entry : values.entrySet()) {
             rY += font.lineHeight;
             if (this.shouldShowDescription()) {
-                rY += font.wordWrapHeight(entry.getKey().getDisplayDescription(entry.getValue()), MAX_TEXT_WIDTH);
+                rY += font.wordWrapHeight(entry.getKey().getDisplayDescription(entry.getValue()), 200);
             }
         }
         return rY;
@@ -38,11 +35,11 @@ public record SpecialtyTooltip(Map<AFSpecialty, Integer> values) implements Tool
         int largest = pFont.width(this.getSpecialityTitle());
 
         for (Map.Entry<AFSpecialty, Integer> entry : values.entrySet()) {
-            largest = Math.max(largest, pFont.width(entry.getKey().getDisplayName(entry.getValue())) + pFont.lineHeight + GAP);
+            largest = Math.max(largest, pFont.width(entry.getKey().getDisplayName(entry.getValue())) + pFont.lineHeight + 2);
             if (this.shouldShowDescription()) {
-                List<FormattedText> descLines = pFont.getSplitter().splitLines(entry.getKey().getDisplayDescription(entry.getValue()), MAX_TEXT_WIDTH, Style.EMPTY);
+                List<FormattedText> descLines = pFont.getSplitter().splitLines(entry.getKey().getDisplayDescription(entry.getValue()), 200, Style.EMPTY);
                 for (FormattedText line : descLines) {
-                    largest = Math.max(largest, pFont.width(line) + pFont.lineHeight + GAP);
+                    largest = Math.max(largest, pFont.width(line) + pFont.lineHeight + 2);
                 }
             }
         }
@@ -61,14 +58,13 @@ public record SpecialtyTooltip(Map<AFSpecialty, Integer> values) implements Tool
         pGuiGraphics.drawString(pFont, this.getSpecialityTitle(), pX, rY, 0xFFFFFF);
 
         for (Map.Entry<AFSpecialty, Integer> entry : values.entrySet()) {
-
             rY += pFont.lineHeight;
 
             MutableComponent name = entry.getKey().getDisplayName(entry.getValue());
             MutableComponent description = entry.getKey().getDisplayDescription(entry.getValue());
 
             int intColor = entry.getKey().getCategory().getColor().getColor().intValue();
-            pGuiGraphics.drawString(pFont, name, pX + pFont.lineHeight + GAP, rY, intColor);
+            pGuiGraphics.drawString(pFont, name, pX + pFont.lineHeight + 2, rY, intColor);
 
             float r = FastColor.ARGB32.red(intColor) / 255.0F;
             float g = FastColor.ARGB32.green(intColor) / 255.0F;
@@ -79,8 +75,8 @@ public record SpecialtyTooltip(Map<AFSpecialty, Integer> values) implements Tool
 
             if (this.shouldShowDescription()) {
                 rY += pFont.lineHeight;
-                pGuiGraphics.drawWordWrap(pFont, description, pX + pFont.lineHeight + GAP, rY, MAX_TEXT_WIDTH, 0x636363);
-                rY += pFont.wordWrapHeight(description, MAX_TEXT_WIDTH) - pFont.lineHeight;
+                pGuiGraphics.drawWordWrap(pFont, description, pX + pFont.lineHeight + 2, rY, 200, 0x636363);
+                rY += pFont.wordWrapHeight(description, 200) - pFont.lineHeight;
             }
         }
     }

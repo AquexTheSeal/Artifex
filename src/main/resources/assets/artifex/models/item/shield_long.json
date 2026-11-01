@@ -3,8 +3,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "item/generated",
 	"textures": {
-		"0": "diamond/diamond_war_door",
-		"particle": "diamond/diamond_war_door"
+		"0": "artifex:item/diamond/diamond_war_door",
+		"particle": "artifex:item/diamond/diamond_war_door"
 	},
 	"gui_light": "front",
 	"display": {

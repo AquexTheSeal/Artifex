@@ -13,9 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import org.celestialworkshop.artifex.api.AFSpecialty;
-import org.celestialworkshop.artifex.capability.AFEntityData;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
 import org.celestialworkshop.artifex.item.specialty.ComboBasedSpecialty;
+import org.celestialworkshop.artifex.registry.AFAttachmentTypes;
 import org.celestialworkshop.artifex.util.ItemStackUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,10 +44,9 @@ public abstract class AbstractArrowMixin extends Projectile {
     protected boolean modifyArrowDamage(Entity target, DamageSource pSource, float pAmount, Operation<Boolean> original) {
         float result = pAmount;
         AbstractArrow arrow = (AbstractArrow) (Object) this;
-        ItemStack heldStack = AFEntityDataCapability.get(arrow).map(AFEntityData::getBoundItemStack).orElse(ItemStack.EMPTY);
+        ItemStack heldStack = arrow.getData(AFAttachmentTypes.ENTITY_DATA).getBoundItemStack();
 
         if (!heldStack.isEmpty() && this.getOwner() instanceof LivingEntity leOwner && target instanceof LivingEntity leTarget) {
-
             for (Map.Entry<AFSpecialty, Integer> entry : ItemStackUtil.getSpecialties(heldStack.getItem()).entrySet()) {
                 result = entry.getKey().onDamageRanged(leOwner, leTarget, heldStack, arrow, result, this.isCritArrow(), entry.getValue());
             }
@@ -66,10 +64,9 @@ public abstract class AbstractArrowMixin extends Projectile {
     )
     protected void addPostHurtArrow(EntityHitResult pResult, CallbackInfo ci, @Local(ordinal = 0) Entity target) {
         AbstractArrow arrow = (AbstractArrow) (Object) this;
-        ItemStack heldStack = AFEntityDataCapability.get(arrow).map(AFEntityData::getBoundItemStack).orElse(ItemStack.EMPTY);
+        ItemStack heldStack = arrow.getData(AFAttachmentTypes.ENTITY_DATA).getBoundItemStack();
 
         if (!heldStack.isEmpty() && this.getOwner() instanceof LivingEntity leOwner && target instanceof LivingEntity leTarget) {
-
             if (ItemStackUtil.hasComboBasedWeapon(heldStack)) {
                 ComboBasedSpecialty.manageComboStack(leOwner, heldStack);
             }

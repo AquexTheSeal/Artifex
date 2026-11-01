@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "minecraft:bow"
+    },
+    "T": {
+      "tag": "c:strings"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "XXT",
+    "XB ",
+    "T  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:diamond_longbow"
+  }
+}

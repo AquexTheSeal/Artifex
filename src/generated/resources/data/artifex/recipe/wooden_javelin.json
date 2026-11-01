@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": {
+      "item": "artifex:standard_pole"
+    },
+    "X": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "X",
+    "P",
+    "X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:wooden_javelin"
+  }
+}

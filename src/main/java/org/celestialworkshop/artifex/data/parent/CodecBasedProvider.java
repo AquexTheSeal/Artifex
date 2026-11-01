@@ -39,18 +39,20 @@ public abstract class CodecBasedProvider<TYPE> implements DataProvider {
     public CompletableFuture<?> run(CachedOutput cache) {
         addEntries();
 
-        if (data.isEmpty()) return CompletableFuture.allOf();
+        if (!data.isEmpty()) {
+            Path basePath = output.getOutputFolder(target).resolve(modid).resolve(folder);
 
-        Path basePath = output.getOutputFolder(target).resolve(modid).resolve(folder);
+            List<CompletableFuture<?>> futures = new ArrayList<>();
 
-        List<CompletableFuture<?>> futures = new ArrayList<>();
+            data.forEach((id, value) -> {
+                JsonElement json = codec.encodeStart(JsonOps.INSTANCE, value).getOrThrow(IllegalStateException::new);
+                Path target = basePath.resolve(id.getPath() + ".json");
+                futures.add(DataProvider.saveStable(cache, json, target));
+            });
 
-        data.forEach((id, value) -> {
-            JsonElement json = codec.encodeStart(JsonOps.INSTANCE, value).getOrThrow(false, Artifex.LOGGER::error);
-            Path target = basePath.resolve(id.getPath() + ".json");
-            futures.add(DataProvider.saveStable(cache, json, target));
-        });
-
-        return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
+            return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
+        } else {
+            return CompletableFuture.allOf();
+        }
     }
 }

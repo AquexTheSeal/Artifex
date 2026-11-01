@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:crossbow"
+    },
+    "S": {
+      "item": "artifex:basic_hilt"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XCX",
+    " S "
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:diamond_crossbow"
+  }
+}

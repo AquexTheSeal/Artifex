@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": {
+      "item": "artifex:standard_pole"
+    },
+    "X": {
+      "tag": "minecraft:stone_tool_materials"
+    }
+  },
+  "pattern": [
+    "XX",
+    "XP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:stone_halberd"
+  }
+}

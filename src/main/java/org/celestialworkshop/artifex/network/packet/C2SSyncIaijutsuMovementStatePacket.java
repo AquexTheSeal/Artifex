@@ -1,31 +1,31 @@
 package org.celestialworkshop.artifex.network.packet;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import org.celestialworkshop.artifex.Artifex;
+import org.celestialworkshop.artifex.capability.AFEntityData;
+import org.celestialworkshop.artifex.registry.AFAttachmentTypes;
 
-import java.util.function.Supplier;
+public record C2SSyncIaijutsuMovementStatePacket(boolean value) implements CustomPacketPayload {
+    public static final Type<C2SSyncIaijutsuMovementStatePacket> TYPE = new Type<>(Artifex.prefix("sync_iaijutsu_movement_state"));
 
-public record C2SSyncIaijutsuMovementStatePacket(boolean value) {
+    public static final StreamCodec<RegistryFriendlyByteBuf, C2SSyncIaijutsuMovementStatePacket> CODEC = StreamCodec.composite(
+            ByteBufCodecs.BOOL, C2SSyncIaijutsuMovementStatePacket::value,
+            C2SSyncIaijutsuMovementStatePacket::new
+    );
 
-    public static void encode(C2SSyncIaijutsuMovementStatePacket packet, FriendlyByteBuf buffer) {
-        buffer.writeBoolean(packet.value);
-    }
-
-    public static C2SSyncIaijutsuMovementStatePacket decode(FriendlyByteBuf buffer) {
-        return new C2SSyncIaijutsuMovementStatePacket(buffer.readBoolean());
-    }
-
-    public static void handle(C2SSyncIaijutsuMovementStatePacket packet, Supplier<NetworkEvent.Context> context) {
-        context.get().enqueueWork(() -> {
-            ServerPlayer sender = context.get().getSender();
-            if (sender != null) {
-                AFEntityDataCapability.get(sender).ifPresent(cap -> {
-                    cap.iaijutsuSpeedUp = packet.value;
-                });
-            }
+    public static void handle(C2SSyncIaijutsuMovementStatePacket packet, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            AFEntityData cap = context.player().getData(AFAttachmentTypes.ENTITY_DATA);
+            cap.iaijutsuSpeedUp = packet.value;
         });
-        context.get().setPacketHandled(true);
+    }
+
+    @Override
+    public Type<C2SSyncIaijutsuMovementStatePacket> type() {
+        return TYPE;
     }
 }

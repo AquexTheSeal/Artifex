@@ -14,17 +14,17 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
- 
+
 @Mixin(LocalPlayer.class)
 public abstract class LocalPlayerMixin extends AbstractClientPlayer {
- 
+
     @Shadow
     public Input input;
- 
+
     public LocalPlayerMixin(ClientLevel p_250460_, GameProfile p_249912_) {
         super(p_250460_, p_249912_);
     }
- 
+
     @Inject(
             method = "aiStep",
             at = @At(
@@ -50,12 +50,11 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
             )
     )
     private boolean cancelItemUseSprintBlock(boolean original) {
-        if (this.getUseItem().getItem() instanceof AFExtension shield) {
-            if (shield.allowUseSprinting((LocalPlayer) (Object) this)) {
-                return false;
-            }
+        if (this.getUseItem().getItem() instanceof AFExtension shield && shield.allowUseSprinting((LocalPlayer) (Object) this)) {
+            return false;
+        } else {
+            return original;
         }
-        return original;
     }
 
     @ModifyExpressionValue(
@@ -66,12 +65,11 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
             )
     )
     private boolean allowSprintingInCanStart(boolean original) {
-        if (this.getUseItem().getItem() instanceof AFExtension shield) {
-            if (shield.allowUseSprinting((LocalPlayer) (Object) this)) {
-                return false;
-            }
+        if (this.getUseItem().getItem() instanceof AFExtension shield && shield.allowUseSprinting((LocalPlayer) (Object) this)) {
+            return false;
+        } else {
+            return original;
         }
-        return original;
     }
 
     @WrapWithCondition(
@@ -86,7 +84,8 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
     private boolean shouldSetSprintTriggerTime(LocalPlayer instance, int value) {
         if (this.getUseItem().getItem() instanceof AFExtension shield) {
             return !shield.allowUseSprinting((LocalPlayer) (Object) this);
+        } else {
+            return true;
         }
-        return true;
     }
 }

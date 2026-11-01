@@ -17,10 +17,8 @@ public abstract class CodecBasedReloadListener<T> extends SimpleJsonResourceRelo
     private final Codec<T> codec;
     private final String dataName;
 
-    private static final Gson GSON = new Gson();
-
     public CodecBasedReloadListener(String folder, Codec<T> codec, String dataName) {
-        super(GSON, folder);
+        super(new Gson(), folder);
         this.codec = codec;
         this.dataName = dataName;
     }

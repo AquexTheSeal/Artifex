@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": {
+      "item": "minecraft:crossbow"
+    },
+    "R": {
+      "item": "artifex:standard_hilt"
+    },
+    "T": {
+      "tag": "c:strings"
+    },
+    "X": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "XCX",
+    "XTX",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:golden_arbalest"
+  }
+}

@@ -1,52 +1,43 @@
 package org.celestialworkshop.artifex.network;
 
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.simple.SimpleChannel;
-import org.celestialworkshop.artifex.Artifex;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.celestialworkshop.artifex.network.packet.*;
 
 public class AFNetwork {
-    private static final String PROTOCOL_VERSION = "1.0";
-    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            Artifex.prefix("main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
-    );
 
-    public static void register() {
-        int id = 0;
+    public static void register(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar("1.0");
 
-        // S2C
-        INSTANCE.registerMessage(id++, S2CSyncAmmoPacket.class, S2CSyncAmmoPacket::encode, S2CSyncAmmoPacket::decode, S2CSyncAmmoPacket::handle);
-        INSTANCE.registerMessage(id++, S2CSyncComboStatePacket.class, S2CSyncComboStatePacket::encode, S2CSyncComboStatePacket::decode, S2CSyncComboStatePacket::handle);
-        INSTANCE.registerMessage(id++, S2CSyncIaijutsuPacket.class, S2CSyncIaijutsuPacket::encode, S2CSyncIaijutsuPacket::decode, S2CSyncIaijutsuPacket::handle);
-        INSTANCE.registerMessage(id++, S2CSyncSpecialtiesDataPacket.class, S2CSyncSpecialtiesDataPacket::encode, S2CSyncSpecialtiesDataPacket::decode, S2CSyncSpecialtiesDataPacket::handle);
+        registrar.playToClient(S2CSyncAmmoPacket.TYPE, S2CSyncAmmoPacket.CODEC, S2CSyncAmmoPacket::handle);
+        registrar.playToClient(S2CSyncComboStatePacket.TYPE, S2CSyncComboStatePacket.CODEC, S2CSyncComboStatePacket::handle);
+        registrar.playToClient(S2CSyncIaijutsuPacket.TYPE, S2CSyncIaijutsuPacket.CODEC, S2CSyncIaijutsuPacket::handle);
+        registrar.playToClient(S2CSyncSpecialtiesDataPacket.TYPE, S2CSyncSpecialtiesDataPacket.CODEC, S2CSyncSpecialtiesDataPacket::handle);
 
-        // C2S
-        INSTANCE.registerMessage(id++, C2SSyncIaijutsuMovementStatePacket.class, C2SSyncIaijutsuMovementStatePacket::encode, C2SSyncIaijutsuMovementStatePacket::decode, C2SSyncIaijutsuMovementStatePacket::handle);
+        registrar.playToServer(C2SSyncIaijutsuMovementStatePacket.TYPE, C2SSyncIaijutsuMovementStatePacket.CODEC, C2SSyncIaijutsuMovementStatePacket::handle);
     }
 
-    public static void sendToAll(Object packet) {
-        INSTANCE.send(PacketDistributor.ALL.noArg(), packet);
+    public static void sendToAll(CustomPacketPayload packet) {
+        PacketDistributor.sendToAllPlayers(packet);
     }
 
-    public static void sendToTrackingEntity(Entity entity, Object packet) {
-        INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
+    public static void sendToTrackingEntity(Entity entity, CustomPacketPayload packet) {
+        PacketDistributor.sendToPlayersTrackingEntity(entity, packet);
     }
 
-    public static void sendToTrackingEntityAndSelf(Entity entity, Object packet) {
-        INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> entity), packet);
+    public static void sendToTrackingEntityAndSelf(Entity entity, CustomPacketPayload packet) {
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, packet);
     }
 
-    public static void sendToPlayer(ServerPlayer player, Object packet) {
-        INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
+    public static void sendToPlayer(ServerPlayer player, CustomPacketPayload packet) {
+        PacketDistributor.sendToPlayer(player, packet);
     }
 
-    public static void sendToServer(Object packet) {
-        INSTANCE.sendToServer(packet);
+    public static void sendToServer(CustomPacketPayload packet) {
+        PacketDistributor.sendToServer(packet);
     }
 }

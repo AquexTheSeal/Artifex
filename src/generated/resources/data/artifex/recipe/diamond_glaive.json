@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "P": {
+      "item": "artifex:standard_pole"
+    },
+    "X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    " X ",
+    "XP "
+  ],
+  "result": {
+    "count": 1,
+    "id": "artifex:diamond_glaive"
+  }
+}

@@ -1,7 +1,7 @@
 package org.celestialworkshop.artifex.data;
 
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.data.parent.material.MaterialItemModelProvider;
 import org.celestialworkshop.artifex.registry.AFItems;

@@ -1,15 +1,18 @@
 package org.celestialworkshop.artifex.data.parent.material;
 
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 import org.celestialworkshop.artifex.Artifex;
 import org.celestialworkshop.artifex.advancement.IngredientPredicate;
 import org.celestialworkshop.artifex.api.AFMaterial;
@@ -17,20 +20,20 @@ import org.celestialworkshop.artifex.api.AFWeaponType;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.concurrent.CompletableFuture;
 
 public class MaterialRecipeProvider extends RecipeProvider implements IConditionBuilder {
     private final String modid;
     private final List<AFMaterial> materials;
 
-    public MaterialRecipeProvider(PackOutput output, String modid, List<AFMaterial> materials) {
-        super(output);
+    public MaterialRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, String modid, List<AFMaterial> materials) {
+        super(output, registries);
         this.modid = modid;
         this.materials = materials;
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         for (AFMaterial material : materials) {
             Ingredient craftingHilt = material.getCraftingHiltItem();
             Ingredient craftingReinforcedHilt = material.getCraftingReinforcedHiltItem();
@@ -41,52 +44,53 @@ public class MaterialRecipeProvider extends RecipeProvider implements ICondition
             for (AFWeaponType weaponType : material.getAvailableWeaponTypes()) {
                 Item weapon = material.getWeapon(weaponType);
 
-                if (weapon == null) continue;
+                if (weapon != null) {
+                    String name = BuiltInRegistries.ITEM.getKey(weapon).getPath();
+                    boolean handledBySmithing = false;
 
-                String name = ForgeRegistries.ITEMS.getKey(weapon).getPath();
-
-                if (smithingConfig != null) {
-                    AFMaterial baseMaterial = smithingConfig.baseMaterial();
-                    Item baseWeapon = baseMaterial.getWeapon(weaponType);
-                    if (baseWeapon != null) {
-                        SmithingTransformRecipeBuilder.smithing(
-                                        Ingredient.of(smithingConfig.template().get()),
-                                        Ingredient.of(baseWeapon),
-                                        smithingConfig.ingot().get(),
-                                        RecipeCategory.COMBAT,
-                                        weapon)
-                                .unlocks("has_base_weapon", has(baseWeapon))
-                                .save(consumer, ResourceLocation.fromNamespaceAndPath(modid, "smithing/" + name));
-                        continue;
-                    }
-                }
-
-                if (craftingMaterial.isEmpty()) continue;
-
-                try {
-                    ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, weapon);
-                    String[] pattern = weaponType.getRecipePattern();
-                    for (String row : pattern) {
-                        builder.pattern(row);
+                    if (smithingConfig != null) {
+                        AFMaterial baseMaterial = smithingConfig.baseMaterial();
+                        Item baseWeapon = baseMaterial.getWeapon(weaponType);
+                        if (baseWeapon != null) {
+                            SmithingTransformRecipeBuilder.smithing(
+                                            Ingredient.of(smithingConfig.template().get()),
+                                            Ingredient.of(baseWeapon),
+                                            smithingConfig.ingot().get(),
+                                            RecipeCategory.COMBAT,
+                                            weapon)
+                                    .unlocks("has_base_weapon", has(baseWeapon))
+                                    .save(consumer, ResourceLocation.fromNamespaceAndPath(modid, "smithing/" + name));
+                            handledBySmithing = true;
+                        }
                     }
 
-                    this.tryDefineSymbol(pattern, builder, 'S', craftingHilt);
-                    this.tryDefineSymbol(pattern, builder, 'R', craftingReinforcedHilt);
-                    this.tryDefineSymbol(pattern, builder, 'P', craftingPole);
-                    this.tryDefineSymbol(pattern, builder, 'X', craftingMaterial);
+                    if (!handledBySmithing && !craftingMaterial.isEmpty()) {
+                        try {
+                            ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, weapon);
+                            String[] pattern = weaponType.getRecipePattern();
+                            for (String row : pattern) {
+                                builder.pattern(row);
+                            }
 
-                    this.tryDefineSymbol(pattern, builder, 'T', Ingredient.of(Tags.Items.STRING));
-                    this.tryDefineSymbol(pattern, builder, 'B', Ingredient.of(Items.BOW));
-                    this.tryDefineSymbol(pattern, builder, 'C', Ingredient.of(Items.CROSSBOW));
-                    this.tryDefineSymbol(pattern, builder, 'I', Ingredient.of(Tags.Items.INGOTS_IRON));
-                    this.tryDefineSymbol(pattern, builder, 'H', Ingredient.of(Items.IRON_TRAPDOOR));
+                            this.tryDefineSymbol(pattern, builder, 'S', craftingHilt);
+                            this.tryDefineSymbol(pattern, builder, 'R', craftingReinforcedHilt);
+                            this.tryDefineSymbol(pattern, builder, 'P', craftingPole);
+                            this.tryDefineSymbol(pattern, builder, 'X', craftingMaterial);
 
-                    builder.unlockedBy("has_material", has(craftingHilt, craftingReinforcedHilt, craftingPole))
-                            .save(consumer, ResourceLocation.fromNamespaceAndPath(modid, name));
+                            this.tryDefineSymbol(pattern, builder, 'T', Ingredient.of(Tags.Items.STRINGS));
+                            this.tryDefineSymbol(pattern, builder, 'B', Ingredient.of(Items.BOW));
+                            this.tryDefineSymbol(pattern, builder, 'C', Ingredient.of(Items.CROSSBOW));
+                            this.tryDefineSymbol(pattern, builder, 'I', Ingredient.of(Tags.Items.INGOTS_IRON));
+                            this.tryDefineSymbol(pattern, builder, 'H', Ingredient.of(Items.IRON_TRAPDOOR));
 
-                } catch (Exception e) {
-                    Artifex.LOGGER.debug("Failed to generate recipe for weapon: {}", name);
-                    e.printStackTrace();
+                            builder.unlockedBy("has_material", has(craftingHilt, craftingReinforcedHilt, craftingPole))
+                                    .save(consumer, ResourceLocation.fromNamespaceAndPath(modid, name));
+
+                        } catch (Exception e) {
+                            Artifex.LOGGER.debug("Failed to generate recipe for weapon: {}", name);
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
         }
@@ -99,7 +103,7 @@ public class MaterialRecipeProvider extends RecipeProvider implements ICondition
         }
     }
 
-    protected static InventoryChangeTrigger.TriggerInstance has(Ingredient... ingredient) {
-        return inventoryTrigger(new IngredientPredicate(ingredient));
+    protected static Criterion<InventoryChangeTrigger.TriggerInstance> has(Ingredient... ingredient) {
+        return inventoryTrigger(ItemPredicate.Builder.item().withSubPredicate(IngredientPredicate.TYPE, new IngredientPredicate(ingredient)));
     }
 }

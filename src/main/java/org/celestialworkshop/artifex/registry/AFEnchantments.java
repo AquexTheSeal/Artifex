@@ -1,27 +1,47 @@
 package org.celestialworkshop.artifex.registry;
 
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import org.celestialworkshop.artifex.AFTags;
 import org.celestialworkshop.artifex.Artifex;
-import org.celestialworkshop.artifex.enchantment.AFEnchantment;
 
 public class AFEnchantments {
 
-    public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, Artifex.MODID);
+    public static final ResourceKey<Enchantment> PUNCTURE = ResourceKey.create(Registries.ENCHANTMENT, Artifex.prefix("puncture"));
+    public static final ResourceKey<Enchantment> STOCKPILE = ResourceKey.create(Registries.ENCHANTMENT, Artifex.prefix("stockpile"));
 
-    public static final RegistryObject<Enchantment> PUNCTURE = ENCHANTMENTS.register("puncture",
-            () -> new AFEnchantment(Enchantment.Rarity.COMMON, AFEnchantment.THROWABLE, 5,
-                    (level) -> 1 + (level * 10),
-                    (level, minCost) -> minCost + 20
-            )
-    );
+    public static void bootstrap(BootstrapContext<Enchantment> context) {
+        HolderGetter<Item> items = context.lookup(Registries.ITEM);
 
-    public static final RegistryObject<Enchantment> STOCKPILE = ENCHANTMENTS.register("stockpile",
-            () -> new AFEnchantment(Enchantment.Rarity.COMMON, AFEnchantment.THROWABLE, 2,
-                    (level) -> 2 + (level * 15),
-                    (level, minCost) -> minCost + 30
-            )
-    );
+        context.register(PUNCTURE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(AFTags.THROWABLE_ENCHANTABLE),
+                        10,
+                        5,
+                        Enchantment.dynamicCost(11, 10),
+                        Enchantment.dynamicCost(31, 10),
+                        1,
+                        EquipmentSlotGroup.MAINHAND,
+                        EquipmentSlotGroup.OFFHAND
+                )
+        ).build(PUNCTURE.location()));
+
+        context.register(STOCKPILE, Enchantment.enchantment(
+                Enchantment.definition(
+                        items.getOrThrow(AFTags.THROWABLE_ENCHANTABLE),
+                        10,
+                        2,
+                        Enchantment.dynamicCost(17, 15),
+                        Enchantment.dynamicCost(47, 15),
+                        1,
+                        EquipmentSlotGroup.MAINHAND,
+                        EquipmentSlotGroup.OFFHAND
+                )
+        ).build(STOCKPILE.location()));
+    }
 }

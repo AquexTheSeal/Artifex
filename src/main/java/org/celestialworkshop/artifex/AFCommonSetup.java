@@ -1,34 +1,28 @@
 package org.celestialworkshop.artifex;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.celestialworkshop.artifex.advancement.AFWeaponTypePredicate;
 import org.celestialworkshop.artifex.advancement.IngredientPredicate;
-import org.celestialworkshop.artifex.capability.AFEntityDataCapability;
-import org.celestialworkshop.artifex.capability.AFItemStackDataCapability;
 import org.celestialworkshop.artifex.registry.AFAttributes;
 
-@Mod.EventBusSubscriber(modid = Artifex.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Artifex.MODID)
 public class AFCommonSetup {
 
     @SubscribeEvent
-    public static void onCommonSetup(FMLCommonSetupEvent event) {
-        AFWeaponTypePredicate.register();
-        IngredientPredicate.register();
-    }
-
-    @SubscribeEvent
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        AFEntityDataCapability.register(event);
-        AFItemStackDataCapability.register(event);
+    public static void onRegister(RegisterEvent event) {
+        event.register(Registries.ITEM_SUB_PREDICATE_TYPE, helper -> {
+            helper.register(Artifex.prefix("weapon_type"), AFWeaponTypePredicate.TYPE);
+            helper.register(Artifex.prefix("ingredient"), IngredientPredicate.TYPE);
+        });
     }
 
     @SubscribeEvent
     public static void onAttributeModification(EntityAttributeModificationEvent event) {
-        event.add(EntityType.PLAYER, AFAttributes.DAMAGE_REDUCTION.get());
+        event.add(EntityType.PLAYER, AFAttributes.DAMAGE_REDUCTION);
     }
 }
